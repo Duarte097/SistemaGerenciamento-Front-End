@@ -1,8 +1,12 @@
-<div class="telaLogin">
-  <form #form="ngForm" (submit)="onSubmit()">
-    <h1>Login</h1>
-    <label for="username">Email:</label>
-    <input type="text" name="username" placeholder="leonardo@gmail.com" id="username" [(ngModel)]="loginDatas.username">
-  </form>
+<div class="container">
+  <div class="telaLogin">
+    <form #form="ngForm" (submit)="onSubmit()">
+      <h1>Login</h1>
+      <label for="username">Email:</label>
+      <input type="email" name="email" placeholder="leonardo@gmail.com" id="email" [(ngModel)]="loginDatas.username">
+      <label for="username">Password:</label>
+      <input type="password" name="password" placeholder="leonardo@gmail.com" id="password" [(ngModel)]="loginDatas.password">
+    </form>
+  </div>
 </div>
 <app-login-card *ngIf="loginDatas" [loginDatasInput]="loginDatas"></app-login-card>
