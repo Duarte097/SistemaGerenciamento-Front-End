@@ -1,0 +1,8 @@
+<div class="telaLogin">
+  <form #form="ngForm" (submit)="onSubmit()">
+    <h1>Login</h1>
+    <label for="username">Email:</label>
+    <input type="text" name="username" placeholder="leonardo@gmail.com" id="username" [(ngModel)]="loginDatas.username">
+  </form>
+</div>
+<app-login-card *ngIf="loginDatas" [loginDatasInput]="loginDatas"></app-login-card>
