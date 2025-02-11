@@ -1,24 +1,25 @@
-<div class="container">
+<div class="login-container">
   <div class="telaLogin">
     <form>
       <h1>Login<hr></h1>
 
-      <div class="input-group">
-        <label for="username">Email</label>
-        <input type="email" name="email" placeholder="leonardo@gmail.com" id="email" >
+      <div class="login-input-group">
+        <i class="fa-regular fa-circle-user">
+          <input type="email" name="email" placeholder="leonardo@gmail.com" id="email" >
+        </i>
       </div>
 
-      <div class="input-group">
+      <div class="login-input-group">
         <label for="username">Password</label>
         <input type="password" name="password"  id="password" placeholder="********">
       </div>
 
-      <div class="button-container">
-        <button class="button" (click)="onSubmit()" type="submit">
-          <span class="button-content">Login</span>
+      <div class="login-button-container">
+        <button class="login-button" (click)="onSubmit()" type="submit">
+          <span class="login-button-content">Login</span>
         </button>
       </div>
     </form>
   </div>
 </div>
-<app-login-card *ngIf="loginDatas" [loginDatasInput]="loginDatas"></app-login-card>
+<!--app-login-card *ngIf="loginDatas" [loginDatasInput]="loginDatas"></-app-login-card-->

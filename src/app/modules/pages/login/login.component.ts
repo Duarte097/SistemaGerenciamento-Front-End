@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from '../../service/login.service';
 import { LoginDatas } from 'src/app/models/interfaces/Login';
 import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +11,7 @@ import { Subject, takeUntil } from 'rxjs';
 })
 export class LoginComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-  constructor(private loginService: LoginService){}
+  constructor(private loginService: LoginService, private router: Router){}
 
   initialNome = 'Leonardo';
   loginDatas!: LoginDatas;
@@ -34,8 +35,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
-    this.getLoginDatas(this.initialNome);
-    this.initialNome = '';
+    //this.getLoginDatas(this.initialNome);
+    //this.initialNome = '';
+    this.router.navigate(['/home']);
   }
   ngOnDestroy(): void {
     this.destroy$.next();
