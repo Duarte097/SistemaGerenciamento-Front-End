@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/pages/login/login.component';
 import { HomeComponent } from './modules/pages/home/home.component';
 import { DashboardHomeComponent } from './modules/dashboard/dashboard-home1/dashboard-home.component';
+import { AuthGuard } from './guards/auth-guard.service';
 
 const routes: Routes = [{
   path: '',
@@ -19,7 +20,8 @@ const routes: Routes = [{
 },
 {
   path: 'dashboard',
-  loadChildren: () => import('./modules/dashboard/dashBoard.module').then(m => m.DashboardModule)
+  loadChildren: () => import('./modules/dashboard/dashBoard.module').then(m => m.DashboardModule),
+  canActivate: [AuthGuard]
 }
 ];
 

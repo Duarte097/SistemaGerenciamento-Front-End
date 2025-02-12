@@ -1,3 +1,4 @@
+import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -10,6 +11,8 @@ import { ToolbarModule } from "primeng/toolbar";
 import { ToastModule } from "primeng/toast";
 import { CookieService } from "ngx-cookie-service";
 import { MessageService } from "primeng/api";
+import {} from 'src/app/shared/shared.module';
+
 @NgModule({
   declarations: [
     DashboardHomeComponent
@@ -22,7 +25,8 @@ import { MessageService } from "primeng/api";
     SidebarModule,
     ButtonModule,
     ToolbarModule,
-    ToastModule
+    ToastModule,
+    SharedModule,
   ],
   providers: [MessageService, CookieService],
 })

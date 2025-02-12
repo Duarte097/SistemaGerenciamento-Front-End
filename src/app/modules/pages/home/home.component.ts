@@ -1,6 +1,7 @@
-import { SignupService } from './../../service/signup.service';
+import { UserService } from '../../../service/user/User.service';
 import { Component } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -23,9 +24,10 @@ export class HomeComponent {
 
   constructor(
     //private formBuilder: FormBuilder,
-    private signupService : SignupService,
-    private cookieService: CookieService
+    private userService : UserService,
+    private cookieService: CookieService,
     //private messageService: MessageService
+    private router: Router
   ) {}
 
   onSubmitLoginForm(): void {
@@ -36,6 +38,7 @@ export class HomeComponent {
             this.cookieService.set('USER_INFO', response?.token);
 
             this.loginForm.reset();
+            this.router.navigate(['/dashboard']);
 
             this.messageService.add({
               severity: 'success',
