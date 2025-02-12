@@ -14,13 +14,15 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
 import { HomeComponent } from './modules/pages/home/home.component';
+import { DashboardHomeComponent } from './modules/dashboard/dashboard-home1/dashboard-home.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
     LoginCardComponent,
-    HomeComponent
+    HomeComponent,
+    DashboardHomeComponent
   ],
   imports: [
     BrowserModule,
