@@ -14,7 +14,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
 import { HomeComponent } from './modules/pages/home/home.component';
-import { DashboardHomeComponent } from './modules/dashboard/dashboard-home1/dashboard-home.component';
+
+
 
 @NgModule({
   declarations: [
@@ -22,7 +23,6 @@ import { DashboardHomeComponent } from './modules/dashboard/dashboard-home1/dash
     LoginComponent,
     LoginCardComponent,
     HomeComponent,
-    DashboardHomeComponent
   ],
   imports: [
     BrowserModule,
@@ -40,3 +40,4 @@ import { DashboardHomeComponent } from './modules/dashboard/dashboard-home1/dash
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+

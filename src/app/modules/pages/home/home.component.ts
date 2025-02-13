@@ -1,16 +1,18 @@
 import { UserService } from '../../../service/user/User.service';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { CookieService } from 'ngx-cookie-service';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnDestroy{
+  private destroy$ = new Subject<void>();
   /*loginForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required]
@@ -32,7 +34,10 @@ export class HomeComponent {
 
   onSubmitLoginForm(): void {
     /*if(this.loginForm.value && this.loginForm.valid){
-      this.signupService.authUser(this.loginForm.value).subscribe({
+      this.signupService
+      .sinignUser(this.loginForm.value as SignupUserRequest)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
         next: (response) => {
           if(response) {
             this.cookieService.set('USER_INFO', response?.token);
@@ -60,5 +65,10 @@ export class HomeComponent {
         }
       })
     }*/
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }

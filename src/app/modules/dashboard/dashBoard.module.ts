@@ -2,7 +2,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { DashboardHomeComponent } from "./dashboard-home1/dashboard-home.component";
+import { DashboardHomeComponent } from "./dashboard-home/dashboard-home.component";
 import { RouterModule } from "@angular/router";
 import { DASHBOARD_ROUTES } from "./darshboard.routing";
 import { SidebarModule } from 'primeng/sidebar';

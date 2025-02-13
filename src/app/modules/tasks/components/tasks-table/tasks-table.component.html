@@ -1,0 +1,78 @@
+<div class="grid">
+  <div class="col-12">
+    <p-card
+      styleClass="shadow-3 m-5 text-indigo-800"
+      header="Tarefas"
+    >
+      <p-table
+        #tasksTable
+        [value]="tasksDatas"
+        [rows]="10"
+        [paginator]="true"
+        [responsive]="true"
+        [globalFilterFiedls]="['name', 'amount']"
+        [tableStyle]="{ 'min-width': '75rem' }"
+        [(selection)]="selectedTasks"
+        [rowHover]="true"
+        dataKey="id"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+        [showCurrentPageReport]="true"
+      >
+        <ng-template pTemplate="header">
+          <tr>
+            <th pSortableColumn="name">
+              <div class="flex justify-content-between align-items-center">
+                <div class="flex justify-content-between align-items-center">
+                  Nome
+                </div>
+                <div class="flex justify-content-between align-items-center">
+                  <p-sortIcon field="name"></p-sortIcon>
+                  <p-columnFilter
+                    type="text"
+                    field="name"
+                    display="menu"
+                    matchMode="contains"
+                    [showMatchModes]="false"
+                    [showOperator]="false"
+                    [showAddButton]="false"
+                  >
+                  </p-columnFilter>
+                </div>
+              </div>
+            </th>
+            <th>
+              <div class="flex justify-content-center">
+                <p-button
+                  styleClass="p-button-info"
+                  icon="pi pi-plus"
+                  label="Adicionar"
+                  pTooltip="Adicionar Tarefa"
+                  tolltipPosition="top"
+                >
+                </p-button>
+              </div>
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-task>
+          <tr>
+            <td>{{ task.name }}</td>
+            <td>
+              <div class="flex justify-content-center gap-3 aling-items-center align-content-center">
+                <button
+                  pButton
+                  pRipple
+                  icon="pi pi-pencil"
+                  class="p-button-rounded p-button-warning"
+                  pTooltip="Editar"
+                  tooltipPosition="top"
+                >
+                </button>
+              </div>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </p-card>
+  </div>
+</div>
