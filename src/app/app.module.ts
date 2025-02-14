@@ -19,7 +19,7 @@ import { MessageService } from 'primeng/api';
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,

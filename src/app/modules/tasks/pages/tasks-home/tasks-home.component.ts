@@ -6,6 +6,9 @@ import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-da
 import { TasksService } from 'src/app/service/tasks/tasks.service';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
+import { EventAction } from 'src/app/models/interfaces/tasks/event/EventAction';
+import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { TaskFormComponent } from '../../components/task-form/task-form.component';
 
 @Component({
   selector: 'app-tasks-home',
@@ -15,12 +18,14 @@ import { Router } from '@angular/router';
 export class TasksHomeComponent  {
   private readonly destroy$: Subject<void> = new Subject();
   public tasksDatas: Array<GetAllTasksResponse> = [];
+  private ref!: DynamicDialogRef;
   constructor(
     private toolbar: ToolbarModule,
     private tasksDtService: TasksDataTransferService,
     private tasksService: TasksService,
     private router: Router,
     private messageService: MessageService,
+    private dialogService: DialogService
   ) {}
 
   getServiceTasksDatas() {
@@ -29,7 +34,6 @@ export class TasksHomeComponent  {
     if (tasksLoaded.length > 0) {
       this.tasksDatas = tasksLoaded;
     } else this.getAPITasksDatas();
-
   }
 
   getAPITasksDatas() {
@@ -53,5 +57,25 @@ export class TasksHomeComponent  {
           this.router.navigate(['/dashboard']);
         },
       });
+  }
+  handleTasksAction(event: EventAction): void{
+    if(event){
+      this.ref = this.dialogService.open(TaskFormComponent,{
+        header: event?.action,
+        width: '70%',
+        contentStyle: {overflow: 'auto'},
+        baseZIndex: 1000,
+        maximizable: true,
+        data: {
+          event: event,
+          tasksDatas: this.tasksDatas,
+        }
+      });
+      this.ref.onClose
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => this.getAPITasksDatas(),
+      })
+    }
   }
 }

@@ -1,2 +1,6 @@
 <app-toolbar-navigation></app-toolbar-navigation>
-<app-tasks-table [tasksDatas]="tasksDatas"></app-tasks-table>
+<app-tasks-table
+  [tasksDatas]="tasksDatas"
+  (tasksEvent)="handleTasksAction($event)">
+</app-tasks-table>
+

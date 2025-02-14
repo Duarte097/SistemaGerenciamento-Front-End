@@ -12,9 +12,10 @@ import { TasksTableComponent } from "../components/tasks-table/tasks-table.compo
 import { RouterModule } from '@angular/router';
 import { TASKS_ROUTES } from "./tasks.routing";
 import { CardModule } from "primeng/card";
+import { TaskFormComponent } from "../components/task-form/task-form.component";
 
 @NgModule({
-  declarations: [TasksHomeComponent, TasksTableComponent],
+  declarations: [TasksHomeComponent, TasksTableComponent, TaskFormComponent],
   imports: [
     CommonModule,
     FormsModule,
