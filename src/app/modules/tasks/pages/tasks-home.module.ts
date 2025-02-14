@@ -5,6 +5,7 @@ import { SidebarModule } from 'primeng/sidebar';
 import { ButtonModule } from "primeng/button";
 import { ToolbarModule } from "primeng/toolbar";
 import { ToastModule } from "primeng/toast";
+import { TableModule } from 'primeng/table';
 import { SharedModule} from 'src/app/shared/shared.module';
 import { TasksHomeComponent } from "./tasks-home/tasks-home.component";
 import { TasksTableComponent } from "../components/tasks-table/tasks-table.component";
@@ -24,6 +25,7 @@ import { CardModule } from "primeng/card";
     ToastModule,
     SharedModule,
     CardModule,
+    TableModule,
     RouterModule.forChild(TASKS_ROUTES)
   ]
 })

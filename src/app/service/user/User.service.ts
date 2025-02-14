@@ -16,11 +16,11 @@ export class UserService {
 
   constructor(private http: HttpClient, private cookie: CookieService) {}
   signupUser(requestDatas: SignupUserRequest): Observable<SignupUserResponse>{
-    return this.http.post<SignupUserResponse>(`${this.API_URL}/signup`, requestDatas);
+    return this.http.post<SignupUserResponse>(`${this.API_URL}/login`, requestDatas);
   }
 
   authUser(requestDatas:AuthRequest): Observable<AuthResponse>{
-    return this.http.post<AuthResponse>(`${this.API_URL}/auth`, requestDatas);
+    return this.http.post<AuthResponse>(`${this.API_URL}/login`, requestDatas);
   }
 
   isLoggedIn(): boolean {

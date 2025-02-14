@@ -10,6 +10,6 @@ export class LoginService {
   constructor(private http:HttpClient) {}
 
   getLoginDatas(nome: string): Observable<any> {
-    return this.http.get(`https://api.giphy.com/v1/gifs/search?q=${nome}&api_key=${this.apiKey}`, {});
+    return this.http.get(`https://localhost:8081/search?q=${nome}&api_key=${this.apiKey}`, {});
   }
 }

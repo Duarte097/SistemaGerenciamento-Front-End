@@ -5,15 +5,14 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { LoginComponent } from './modules/pages/login/login.component';
-import { LoginCardComponent } from './modules/components/login-card/login-card.component';
 import { CardModule} from 'primeng/card';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
-import { HomeComponent } from './modules/pages/home/home.component';
+import { MessageService } from 'primeng/api';
 
 
 
@@ -21,8 +20,6 @@ import { HomeComponent } from './modules/pages/home/home.component';
   declarations: [
     AppComponent,
     LoginComponent,
-    LoginCardComponent,
-    HomeComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,9 +31,12 @@ import { HomeComponent } from './modules/pages/home/home.component';
     CardModule,
     InputTextModule,
     ButtonModule,
-    ToastModule
+    ToastModule,
+    ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    MessageService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
