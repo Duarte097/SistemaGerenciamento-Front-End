@@ -12,6 +12,6 @@ export class ToolbarNavigationComponent {
 
   handleLogout(): void {
     this.cookie.delete('USER_INFO');
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 }

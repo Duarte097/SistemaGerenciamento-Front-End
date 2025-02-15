@@ -13,6 +13,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
 import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
+import { ToolbarModule } from 'primeng/toolbar';
+import { CookieService } from 'ngx-cookie-service';
 
 
 
@@ -32,9 +34,12 @@ import { MessageService } from 'primeng/api';
     InputTextModule,
     ButtonModule,
     ToastModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToolbarModule,
+    BrowserModule,
   ],
   providers: [
+    CookieService,
     MessageService
   ],
   bootstrap: [AppComponent]

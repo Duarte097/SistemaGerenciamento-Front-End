@@ -1,20 +1,24 @@
 <div class="login-container">
   <div class="telaLogin">
     <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
-      <h1>Login<hr></h1>
-      <label>Email:</label>
-      <input type="email" formControlName="email" placeholder="Digite seu email">
-      <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
-        <small>Email inválido!</small>
+      <div class="login-icon">
+        <i class="fa-solid fa-circle-user"></i>
       </div>
-
-      <label>Senha:</label>
-      <input type="password" formControlName="password" placeholder="Digite sua senha">
-      <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
-        <small>A senha deve ter pelo menos 6 caracteres!</small>
+      <h1>Seja Bem Vindo!</h1>
+      <div class="login-input-group">
+        <input type="email" formControlName="email" placeholder="Digite seu email">
+        <div *ngIf="loginForm.controls['email'].invalid && loginForm.controls['email'].touched">
+          <small>Email inválido!</small>
+        </div>
+        <input type="password" formControlName="password" placeholder="Digite sua senha">
+        <div *ngIf="loginForm.controls['password'].invalid && loginForm.controls['password'].touched">
+          <small>A senha deve ter pelo menos 6 caracteres!</small>
+        </div>
       </div>
-
-      <button type="submit" [disabled]="loginForm.invalid">Entrar</button>
+      <div class="login-button-container">
+        <button class="login-button" [disabled]="loginForm.invalid">
+          <span class="login-button-content">Entrar</span></button>
+      </div>
     </form>
   </div>
 </div>

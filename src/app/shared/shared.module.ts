@@ -13,13 +13,13 @@ import { ToolbarNavigationComponent } from './components/toolbar-navigation/tool
     ToolbarNavigationComponent
   ],
   imports: [
-    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
+    //PrimeNg
     ToolbarModule,
     CardModule,
-    ButtonModule
+    ButtonModule,
   ],
   exports: [
     ToolbarNavigationComponent,

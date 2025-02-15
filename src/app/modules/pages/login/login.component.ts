@@ -1,5 +1,5 @@
 import { UserService } from './../../../service/user/User.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit,  ViewEncapsulation} from '@angular/core';
 import { LoginService } from '../../../service/user/login.service';
 import { LoginDatas } from 'src/app/models/interfaces/Login';
 import { Subject, takeUntil } from 'rxjs';
@@ -8,11 +8,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthRequest } from 'src/app/models/interfaces/user/AuthRequest';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
+import { DOCUMENT } from '@angular/common';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.css'],
+  encapsulation: ViewEncapsulation.None
 })
 export class LoginComponent implements OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
@@ -24,6 +26,7 @@ export class LoginComponent implements OnDestroy {
     private messageService: MessageService,
     private router: Router,
     private formBuilder: FormBuilder,
+    @Inject(DOCUMENT) private document: Document,
   ){}
 
   loginForm = this.formBuilder.group({
