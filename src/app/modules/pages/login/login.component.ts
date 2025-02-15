@@ -16,7 +16,6 @@ import { MessageService } from 'primeng/api';
 })
 export class LoginComponent implements OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-  loginForm!: FormGroup;
   loginDatas!: LoginDatas;
   constructor(
     private loginService: LoginService,
@@ -27,14 +26,12 @@ export class LoginComponent implements OnDestroy {
     private formBuilder: FormBuilder,
   ){}
 
-  ngOnInit() {
-    this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
-  }
+  loginForm = this.formBuilder.group({
+    email: ['', Validators.required],
+    password: ['', Validators.required],
+  });
 
-  getLoginDatas(nome: string): void {
+  /*getLoginDatas(nome: string): void {
 
     this.loginService.getLoginDatas(nome)
     .pipe(
@@ -46,9 +43,10 @@ export class LoginComponent implements OnDestroy {
       console.log(error);
     }
     });
-  }
+  }*/
 
   onSubmit(): void {
+    console.log("onSubmit chamado", this.loginForm.value);
     if (this.loginForm.value && this.loginForm.valid) {
       this.userService
         .authUser(this.loginForm.value as AuthRequest)

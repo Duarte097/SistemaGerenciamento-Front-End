@@ -13,10 +13,6 @@ const routes: Routes = [{
   component: LoginComponent,
 },
 {
-  path: '**',
-  redirectTo: '/login'
-},
-{
   path: 'dashboard',
   loadChildren: () => import('./modules/dashboard/dashBoard.module').then(m => m.DashboardModule),
   canActivate: [AuthGuard]
