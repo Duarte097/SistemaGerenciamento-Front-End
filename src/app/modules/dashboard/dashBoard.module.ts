@@ -16,6 +16,8 @@ import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { OverlayModule } from 'primeng/overlay';
+import { CdkMenuModule } from '@angular/cdk/menu';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     SharedModule,
     MenubarModule,
     BadgeModule,
-    AvatarModule
+    AvatarModule,
+    OverlayModule,
+    CdkMenuModule
   ],
   providers: [MessageService, CookieService],
 })

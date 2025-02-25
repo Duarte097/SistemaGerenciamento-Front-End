@@ -21,6 +21,9 @@ import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { CommonModule } from '@angular/common';
 import { PrimeIcons } from 'primeng/api';
 import { BodyComponent } from './modules/body/body.component';
+import { OverlayModule } from 'primeng/overlay';
+import { CdkMenuModule } from '@angular/cdk/menu';
+
 
 @NgModule({
   declarations: [
@@ -28,7 +31,7 @@ import { BodyComponent } from './modules/body/body.component';
     LoginComponent,
     AtividadesComponent,
     ProjetosComponent,
-    UsuariosComponent
+    UsuariosComponent,
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,8 @@ import { BodyComponent } from './modules/body/body.component';
     ReactiveFormsModule,
     ToolbarModule,
     BrowserModule,
+    OverlayModule,
+    CdkMenuModule
   ],
   providers: [
     CookieService,
