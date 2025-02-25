@@ -15,15 +15,23 @@ import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CookieService } from 'ngx-cookie-service';
-
-
+import { AtividadesComponent } from './modules/atividades/atividades.component';
+import { ProjetosComponent } from './modules/projetos/projetos.component';
+import { UsuariosComponent } from './modules/usuarios/usuarios.component';
+import { CommonModule } from '@angular/common';
+import { PrimeIcons } from 'primeng/api';
+import { BodyComponent } from './modules/body/body.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent
+    LoginComponent,
+    AtividadesComponent,
+    ProjetosComponent,
+    UsuariosComponent
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,

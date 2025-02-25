@@ -7,12 +7,20 @@ import { ButtonModule } from 'primeng/button';
 import { ToolbarModule } from 'primeng/toolbar';
 import { DialogService } from 'primeng/dynamicdialog';
 import { ToolbarNavigationComponent } from './components/toolbar-navigation/toolbar-navigation.component';
+import { MenubarModule } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BodyComponent } from '../modules/body/body.component';
 
 @NgModule({
   declarations: [
-    ToolbarNavigationComponent
+    ToolbarNavigationComponent,
+    BodyComponent
   ],
   imports: [
+    FontAwesomeModule,
+    CommonModule,
     FormsModule,
     ReactiveFormsModule,
     RouterModule,
@@ -20,9 +28,13 @@ import { ToolbarNavigationComponent } from './components/toolbar-navigation/tool
     ToolbarModule,
     CardModule,
     ButtonModule,
+    MenubarModule,
+    BadgeModule,
+    AvatarModule,
   ],
   exports: [
     ToolbarNavigationComponent,
+    BodyComponent,
     CardModule
   ],
   providers: [DialogService, CurrencyPipe],

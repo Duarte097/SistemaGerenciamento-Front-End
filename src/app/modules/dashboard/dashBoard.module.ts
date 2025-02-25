@@ -12,6 +12,10 @@ import { ToastModule } from "primeng/toast";
 import { CookieService } from "ngx-cookie-service";
 import { MessageService } from "primeng/api";
 import {} from 'src/app/shared/shared.module';
+import { MenubarModule } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -23,10 +27,14 @@ import {} from 'src/app/shared/shared.module';
     ReactiveFormsModule,
     RouterModule.forChild(DASHBOARD_ROUTES),
     SidebarModule,
+    FontAwesomeModule,
     ButtonModule,
     ToolbarModule,
     ToastModule,
     SharedModule,
+    MenubarModule,
+    BadgeModule,
+    AvatarModule
   ],
   providers: [MessageService, CookieService],
 })
