@@ -1,18 +1,23 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { RouterModule } from '@angular/router'; // Para usar router-outlet
 
 @Component({
   selector: 'app-body',
   templateUrl: './body.component.html',
-  styleUrls: ['./body.component.css']
+  styleUrls: ['./body.component.css'],
+  standalone: true,
+  imports: [CommonModule, RouterModule]
 })
 export class BodyComponent {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
-  getBodyClass() : string {
+
+  getBodyClass(): string {
     let styleClass = '';
-    if(this.collapsed && this.screenWidth > 768) {
+    if (this.collapsed && this.screenWidth > 768) {
       styleClass = 'body-trummed';
-    }else if(this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0 ) {
+    } else if (this.collapsed && this.screenWidth <= 768 && this.screenWidth > 0) {
       styleClass = 'body-md-screen';
     }
     return styleClass;

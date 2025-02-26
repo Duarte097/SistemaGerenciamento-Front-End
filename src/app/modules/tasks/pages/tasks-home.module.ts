@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+/*import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { SidebarModule } from 'primeng/sidebar';
@@ -30,4 +30,4 @@ import { TaskFormComponent } from "../components/task-form/task-form.component";
     RouterModule.forChild(TASKS_ROUTES)
   ]
 })
-export class TasksHomeModule { }
+export class TasksHomeModule { }*/

@@ -1,4 +1,4 @@
-import { SharedModule } from '../../shared/shared.module';
+/*import { SharedModule } from '../../shared/shared.module';
 import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
@@ -42,4 +42,4 @@ import { CdkMenuModule } from '@angular/cdk/menu';
   ],
   providers: [MessageService, CookieService],
 })
-export class DashboardModule{}
+export class DashboardModule{}*/

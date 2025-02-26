@@ -1,6 +1,6 @@
-import { UserService } from './../../../service/user/User.service';
-import { Component, Inject, OnDestroy, OnInit,  ViewEncapsulation} from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
 import { LoginService } from '../../../service/user/login.service';
+import { UserService } from './../../../service/user/User.service';
 import { LoginDatas } from 'src/app/models/interfaces/Login';
 import { Subject, takeUntil } from 'rxjs';
 import { Router } from '@angular/router';
@@ -9,16 +9,20 @@ import { AuthRequest } from 'src/app/models/interfaces/user/AuthRequest';
 import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
 import { DOCUMENT } from '@angular/common';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  standalone: true, // Define o componente como autônomo
+  imports: [ReactiveFormsModule] // Certifique-se de que os módulos relevantes estejam importados
 })
 export class LoginComponent implements OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   loginDatas!: LoginDatas;
+
   constructor(
     private loginService: LoginService,
     private userService: UserService,
@@ -27,30 +31,16 @@ export class LoginComponent implements OnDestroy {
     private router: Router,
     private formBuilder: FormBuilder,
     @Inject(DOCUMENT) private document: Document,
-  ){}
+  ) {}
 
   loginForm = this.formBuilder.group({
     email: ['', Validators.required],
     password: ['', Validators.required],
   });
 
-  /*getLoginDatas(nome: string): void {
-
-    this.loginService.getLoginDatas(nome)
-    .pipe(
-      takeUntil(this.destroy$)
-    ).subscribe({next:(response) => {
-      response && (this.loginDatas = response);
-      console.log(this.loginDatas.username);
-    }, error:(error) => {
-      console.log(error);
-    }
-    });
-  }*/
-
   onSubmit(): void {
     console.log("onSubmit chamado", this.loginForm.value);
-    if (this.loginForm.value && this.loginForm.valid) {
+    if (this.loginForm.valid) {
       this.userService
         .authUser(this.loginForm.value as AuthRequest)
         .pipe(takeUntil(this.destroy$))
@@ -60,11 +50,10 @@ export class LoginComponent implements OnDestroy {
               this.cookieService.set('USER_INFO', response?.token);
               this.loginForm.reset();
               this.router.navigate(['/dashboard']);
-
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
-                detail: `Bem vindo de volta ${response?.name}!`,
+                detail: `Bem-vindo de volta ${response?.name}!`,
                 life: 2000,
               });
             }
@@ -81,6 +70,7 @@ export class LoginComponent implements OnDestroy {
         });
     }
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

@@ -1,4 +1,4 @@
-import { ToolbarModule } from 'primeng/toolbar';
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
 import { Subject, takeUntil } from 'rxjs';
@@ -9,18 +9,21 @@ import { Router } from '@angular/router';
 import { EventAction } from 'src/app/models/interfaces/tasks/event/EventAction';
 import { DialogService, DynamicDialogRef } from 'primeng/dynamicdialog';
 import { TaskFormComponent } from '../../components/task-form/task-form.component';
+import { ToolbarModule } from 'primeng/toolbar'; // Importar o ToolbarModule aqui
 
 @Component({
   selector: 'app-tasks-home',
   templateUrl: './tasks-home.component.html',
-  styleUrls: ['./tasks-home.component.css']
+  styleUrls: ['./tasks-home.component.css'],
+  standalone: true,
+  imports: [CommonModule, ToolbarModule], // Incluindo o ToolbarModule nas importações
 })
-export class TasksHomeComponent  {
+export class TasksHomeComponent {
   private readonly destroy$: Subject<void> = new Subject();
   public tasksDatas: Array<GetAllTasksResponse> = [];
   private ref!: DynamicDialogRef;
+
   constructor(
-    private toolbar: ToolbarModule,
     private tasksDtService: TasksDataTransferService,
     private tasksService: TasksService,
     private router: Router,
@@ -33,7 +36,9 @@ export class TasksHomeComponent  {
 
     if (tasksLoaded.length > 0) {
       this.tasksDatas = tasksLoaded;
-    } else this.getAPITasksDatas();
+    } else {
+      this.getAPITasksDatas();
+    }
   }
 
   getAPITasksDatas() {
@@ -47,7 +52,7 @@ export class TasksHomeComponent  {
           }
         },
         error: (err) => {
-          console.log(err);
+          console.error(err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
@@ -58,24 +63,26 @@ export class TasksHomeComponent  {
         },
       });
   }
-  handleTasksAction(event: EventAction): void{
-    if(event){
-      this.ref = this.dialogService.open(TaskFormComponent,{
+
+  handleTasksAction(event: EventAction): void {
+    if (event) {
+      this.ref = this.dialogService.open(TaskFormComponent, {
         header: event?.action,
         width: '70%',
-        contentStyle: {overflow: 'auto'},
+        contentStyle: { overflow: 'auto' },
         baseZIndex: 1000,
         maximizable: true,
         data: {
           event: event,
           tasksDatas: this.tasksDatas,
-        }
+        },
       });
+
       this.ref.onClose
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => this.getAPITasksDatas(),
-      })
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: () => this.getAPITasksDatas(),
+        });
     }
   }
 }

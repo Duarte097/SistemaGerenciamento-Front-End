@@ -1,21 +1,24 @@
-import { style } from '@angular/animations';
+import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { CdkMenuModule } from '@angular/cdk/menu'
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
+  standalone: true,
+  imports: [CommonModule, CdkMenuModule] // Caso use diretivas do Angular.
 })
-export class HeaderComponent implements OnInit{
+export class HeaderComponent implements OnInit {
   @Input() collapsed = false;
   @Input() screenWidth = 0;
 
   canShowSearchAsOverlay = false;
 
-  constructor(){}
+  constructor() {}
 
-  @HostListener('window:riseze', ['$event'])
-  onResize(event: any){
+  @HostListener('window:resize', ['$event']) // Corrigido "riseze" para "resize".
+  onResize(event: any) {
     this.checkCanShowSearchAsOverlay(event.target.innerWidth);
   }
 
@@ -25,20 +28,15 @@ export class HeaderComponent implements OnInit{
 
   getHeadClass(): string {
     let styleClass = '';
-    if(this.collapsed && this.screenWidth > 768){
+    if (this.collapsed && this.screenWidth > 768) {
       styleClass = 'header-trimmed';
-    }else {
+    } else {
       styleClass = 'header-md-screen';
     }
     return styleClass;
   }
 
   checkCanShowSearchAsOverlay(innerWidth: number): void {
-    if(innerWidth < 845){
-      this.canShowSearchAsOverlay = true;
-    }else {
-      this.canShowSearchAsOverlay = false;
-    }
+    this.canShowSearchAsOverlay = innerWidth < 845;
   }
-
 }
