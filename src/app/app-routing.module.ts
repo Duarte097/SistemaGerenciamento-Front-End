@@ -22,6 +22,16 @@ const routes: Routes = [{
   path: 'projetos',
   loadComponent: () => import('./modules/projetos/projetos.component').then(m => m.ProjetosComponent),
   canActivate: [AuthGuard]
+},
+{
+  path: 'atividades',
+  loadComponent: () => import('./modules/atividades/atividades.component').then(m => m.AtividadesComponent),
+  canActivate: [AuthGuard]
+},
+{
+  path: 'criacaoProjeto',
+  loadComponent: () => import('./modules/projetos/criacao-projeto/criacao-projeto.component').then(m => m.CriacaoProjetoComponent),
+  canActivate: [AuthGuard]
 }
 ];
 

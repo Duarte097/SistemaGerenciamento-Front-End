@@ -9,8 +9,12 @@ export const navbarData= [{
   label: 'Projetos'
 },
 {
-  routerLink: '/atividade',
+  routerLink: '/atividades',
   icon: 'fa-solid fa-chart-line',
   label: 'Atividades'
+},
+{
+  routerLink: '/criacaoProjeto',
+  label: 'CriacaoProjeto'
 },
 ];

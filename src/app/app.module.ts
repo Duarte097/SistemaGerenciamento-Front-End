@@ -15,12 +15,11 @@ import {ToastModule} from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CookieService } from 'ngx-cookie-service';
-import { AtividadesComponent } from './modules/atividades/atividades.component';
 import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { CommonModule } from '@angular/common';
 import { OverlayModule } from 'primeng/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
-import { ToolbarNavigationComponent } from './shared/components/toolbar-navigation/toolbar-navigation.component';
+import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar-navigation.component';
 import { BodyComponent } from './modules/body/body.component';
 import { HeaderComponent } from './modules/header/header.component';
 import { RouterModule } from '@angular/router';
@@ -33,11 +32,10 @@ import { AvatarModule } from 'primeng/avatar';
   declarations: [
     AppComponent,
     LoginComponent,
-    AtividadesComponent,
     UsuariosComponent,
     ToolbarNavigationComponent,
     BodyComponent,
-    HeaderComponent
+    HeaderComponent,
   ],
   imports: [
     CommonModule,

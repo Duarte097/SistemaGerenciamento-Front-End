@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
-import { navbarData } from './shared/components/toolbar-navigation/nav-data';
+import { navbarData } from './modules/toolbar-navigation/nav-data';
 
 interface SideNavToggle {
   screenWidth: number;
