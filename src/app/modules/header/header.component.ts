@@ -1,5 +1,6 @@
 import { style } from '@angular/animations';
 import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { notifications, userItems } from './header-dummy-data';
 
 @Component({
   selector: 'app-header',
@@ -11,6 +12,8 @@ export class HeaderComponent implements OnInit{
   @Input() screenWidth = 0;
 
   canShowSearchAsOverlay = false;
+  notifications = notifications;
+  userItems = userItems;
 
   constructor(){}
 

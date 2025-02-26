@@ -1,3 +1,4 @@
+import { DashboardHomeComponent } from './modules/dashboard/dashboard-home/dashboard-home.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './modules/pages/login/login.component';
@@ -14,14 +15,14 @@ const routes: Routes = [{
 },
 {
   path: 'dashboard',
-  loadChildren: () => import('./modules/dashboard/dashBoard.module').then(m => m.DashboardModule),
+  loadComponent: () => import('./modules/dashboard/dashboard-home/dashboard-home.component').then(m => m.DashboardHomeComponent),
   canActivate: [AuthGuard]
 },
-/*{
+{
   path: 'projetos',
-  loadChildren: () => import('./modules/projetos').then(m => m.ProjetosModule),
+  loadComponent: () => import('./modules/projetos/projetos.component').then(m => m.ProjetosComponent),
   canActivate: [AuthGuard]
-}*/
+}
 ];
 
 @NgModule({

@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+/*import { NgModule } from '@angular/core';
 import { CommonModule, CurrencyPipe } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
@@ -46,4 +46,4 @@ import { CdkMenuModule } from '@angular/cdk/menu';
   ],
   providers: [DialogService, CurrencyPipe],
 })
-export class SharedModule { }
+export class SharedModule { }*/

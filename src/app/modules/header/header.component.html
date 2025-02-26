@@ -19,22 +19,19 @@
     <div class="head-content-right">
       <div class="head-menu">
         <div class="head-menu-item">
-          <button class="head-menu-item-btn ripple">
+          <button class="head-menu-item-btn ripple" [cdkMenuTriggerFor]="notificationOverlay">
             <i class="fas fa-bell menu-icon"></i>
           </button>
         </div>
         <div class="head-menu-item">
-          <button class="head-menu-item-btn ripple">
+          <button class="head-menu-item-btn ripple" >
             <i class="fas fa-comment menu-icon"></i>
           </button>
         </div>
-        <div class="head-user-avatar-container">
-          <div class="head-user-avatar">
-            <img src="" alt="user" class="user-avatar">
-            <div class="circle-indicator pulse">
-
-            </div>
-          </div>
+        <div class="head-menu-item" >
+          <button class="head-menu-item-btn ripple" [cdkMenuTriggerFor]="userOverlay" >
+            <i class="fas fa-user menu-icon"></i>
+          </button>
         </div>
       </div>
     </div>
@@ -47,5 +44,45 @@
     <button class="search-btn">
       <i class="fas fa-search search-icon"></i>
     </button>
+  </div>
+</ng-template>
+
+<ng-template #notificationOverlay>
+  <div class="overlay overlay-notification overlay-fall" cdkMenu>
+    <ul>
+      <li class="notification-head-container">
+        <div class="notification-head">Notificação</div>
+          <span class="view-all-link">
+            <a>Ver tudo</a>
+          </span>
+      </li>
+      <li class="notification-message-container"
+        *ngFor="let notification of notifications"
+        cdkMenuItem
+      >
+        <i [class]="notification.icon"></i>
+          <div>
+            <div class="notification-subject">
+              {{notification.subject}}
+            </div>
+            <p class="notification-desc">
+              {{notification.description}}
+            </p>
+          </div>
+      </li>
+    </ul>
+  </div>
+</ng-template>
+
+<ng-template #userOverlay>
+  <div class="overlay overlay-user overlay-fall" cdkMenu>
+    <ul>
+      <li *ngFor="let item of userItems" cdkMenuItem>
+        <a>
+          <i class="icon" [ngClass]="item.icon"></i>
+          <span>{{item.label}}</span>
+        </a>
+      </li>
+    </ul>
   </div>
 </ng-template>

@@ -16,13 +16,17 @@ import { MessageService } from 'primeng/api';
 import { ToolbarModule } from 'primeng/toolbar';
 import { CookieService } from 'ngx-cookie-service';
 import { AtividadesComponent } from './modules/atividades/atividades.component';
-import { ProjetosComponent } from './modules/projetos/projetos.component';
 import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { CommonModule } from '@angular/common';
-import { PrimeIcons } from 'primeng/api';
-import { BodyComponent } from './modules/body/body.component';
 import { OverlayModule } from 'primeng/overlay';
 import { CdkMenuModule } from '@angular/cdk/menu';
+import { ToolbarNavigationComponent } from './shared/components/toolbar-navigation/toolbar-navigation.component';
+import { BodyComponent } from './modules/body/body.component';
+import { HeaderComponent } from './modules/header/header.component';
+import { RouterModule } from '@angular/router';
+import { MenubarModule } from 'primeng/menubar';
+import { BadgeModule } from 'primeng/badge';
+import { AvatarModule } from 'primeng/avatar';
 
 
 @NgModule({
@@ -30,8 +34,10 @@ import { CdkMenuModule } from '@angular/cdk/menu';
     AppComponent,
     LoginComponent,
     AtividadesComponent,
-    ProjetosComponent,
     UsuariosComponent,
+    ToolbarNavigationComponent,
+    BodyComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,
@@ -49,7 +55,11 @@ import { CdkMenuModule } from '@angular/cdk/menu';
     ToolbarModule,
     BrowserModule,
     OverlayModule,
-    CdkMenuModule
+    CdkMenuModule,
+    RouterModule,
+    MenubarModule,
+    BadgeModule,
+    AvatarModule,
   ],
   providers: [
     CookieService,

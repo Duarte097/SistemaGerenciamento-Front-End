@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subject, takeUntil } from 'rxjs';
@@ -5,13 +6,11 @@ import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/Ge
 import { TasksService } from 'src/app/service/tasks/tasks.service';
 import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
 
-interface SideNavToggle {
-  screenWidth: number;
-  collapsed: boolean;
-}
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
+  standalone: true,
+  imports: [CommonModule],
   styleUrls: ['./dashboard-home.component.css']
 })
 export class DashboardHomeComponent implements OnInit, OnDestroy {
@@ -22,15 +21,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     private messageService: MessageService,
     private tasksDtService: TasksDataTransferService
   ){}
-
-  isSideNavCollapsed = false;
-  screenWidth = 0;
-
-
-  onToggleSideNav(data: SideNavToggle): void{
-    this.screenWidth = data.screenWidth;
-    this.isSideNavCollapsed = data.collapsed;
-  }
 
 
   ngOnInit(): void {
