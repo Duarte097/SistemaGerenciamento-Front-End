@@ -1,5 +1,8 @@
 export interface CreateTaskRequest {
-  name: string;
-  description: string;
-  amount: number;
+  nome: string;
+  descricao: string;
+  dataInicio: Date;
+  dataFim: Date;
+  status: string;
+  idUsuario: string;
 }

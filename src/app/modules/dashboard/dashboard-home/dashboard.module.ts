@@ -1,12 +1,10 @@
+/*import { DashboardHomeComponent } from './dashboard-home.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { LoginComponent } from './modules/pages/login/login.component';
 import { CardModule} from 'primeng/card';
 import {InputTextModule} from 'primeng/inputtext';
 import {ButtonModule} from 'primeng/button';
@@ -21,16 +19,15 @@ import { RouterModule } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
-import { UsuariosComponent } from './modules/usuarios/usuarios.component';
-import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar-navigation.component';
-import { BodyComponent } from './modules/body/body.component';
-import { HeaderComponent } from './modules/header/header.component';
+import { UsuariosComponent } from 'src/app/modules/usuarios/usuarios.component';
+import { ToolbarNavigationComponent } from 'src/app/modules/toolbar-navigation/toolbar-navigation.component';
+import { AppRoutingModule } from 'src/app/app-routing.module';
+import { BodyComponent } from '../../body/body.component';
+import { HeaderComponent } from '../../header/header.component';
 
 
 @NgModule({
   declarations: [
-    AppComponent,
-    LoginComponent,
     UsuariosComponent,
     ToolbarNavigationComponent,
     BodyComponent,
@@ -62,7 +59,8 @@ import { HeaderComponent } from './modules/header/header.component';
     CookieService,
     MessageService
   ],
-  bootstrap: [AppComponent]
+  exports: [
+    DashboardHomeComponent
+  ]
 })
-export class AppModule { }
-
+export class DashboardModule { }*/

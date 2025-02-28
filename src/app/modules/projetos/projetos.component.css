@@ -184,10 +184,8 @@
 .button-create-icon:hover{
   border: none;
   border-radius: 10px;
-  background-color: #15bd87 ;
-  box-shadow: transparent #15bd87 ;
   cursor: pointer;
-  color: #fff;
+  color: #15bd87;
   font-size: 20px;
 }
 

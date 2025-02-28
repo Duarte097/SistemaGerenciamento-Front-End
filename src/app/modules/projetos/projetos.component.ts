@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
-import { navbarData } from '../toolbar-navigation/nav-data';
+import { navbarData } from './nav-data';
+import {CriacaoProjetoComponent} from './criacao-projeto/criacao-projeto.component'
 
 interface Projetos {
   nome: string;
@@ -15,7 +16,7 @@ interface Projetos {
   selector: 'app-projetos',
   templateUrl: './projetos.component.html',
   standalone: true,
-  imports: [CommonModule, MenuModule],
+  imports: [CommonModule, MenuModule, CriacaoProjetoComponent],
   styleUrls: ['./projetos.component.css']
 })
 export class ProjetosComponent {
@@ -26,6 +27,16 @@ export class ProjetosComponent {
     { nome: 'Front-End da Empresa E', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 12, 20), status: 'CONCLUIDO' },
     { nome: 'Front-End da Empresa D', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 5, 1), status: 'CANCELADO' },
   ];
+
+  isModalOpen = false;
+
+  openModal() {
+    this.isModalOpen = true;  // Abre o modal
+  }
+
+  closeModal() {
+    this.isModalOpen = false;  // Fecha o modal
+  }
 
   getStatusClass(status: string): any {
     switch (status) {
@@ -41,7 +52,7 @@ export class ProjetosComponent {
         return { 'bg-gray-300': true, 'text-white': true, 'border-gray-500': true };
     }
   }
-  
+
 
   getStatusIcon(status: string): string {
     switch (status) {
@@ -56,18 +67,18 @@ export class ProjetosComponent {
       default:
         return 'pi pi-question-circle text-gray-500'; // Ícone de interrogação para status desconhecido ❓
     }
-  }  
+  }
 
   getStatusBorderClass(status: string): any {
     return { 'border-green-200': status === 'CONCLUIDO', 'border-yellow-200': status === 'EM_ANDAMENTO', 'border-red-200': status === 'CANCELADO', 'border-gray-200': status === 'PLANEJADO' };
   }
-  
+
   getTextColorClass(status: string): any {
     return { 'text-green-700': status === 'CONCLUIDO', 'text-yellow-700': status === 'EM_ANDAMENTO', 'text-red-700': status === 'CANCELADO', 'text-gray-700': status === 'PLANEJADO' };
   }
-  
+
   getBadgeClass(status: string): any {
     return { 'bg-green-400 text-green-900': status === 'CONCLUIDO', 'bg-yellow-400 text-yellow-900': status === 'EM_ANDAMENTO', 'bg-red-400 text-red-900': status === 'CANCELADO', 'bg-gray-400 text-gray-900': status === 'PLANEJADO' };
   }
-  
+
 }

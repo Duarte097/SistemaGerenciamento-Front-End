@@ -6,6 +6,7 @@ import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/Ge
 import { TasksService } from 'src/app/service/tasks/tasks.service';
 import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
 
+
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
@@ -22,10 +23,10 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     private tasksDtService: TasksDataTransferService
   ){}
 
-
   ngOnInit(): void {
     this.getTasksDatas();
   }
+
 
   getTasksDatas(): void {
     this.tasksServices

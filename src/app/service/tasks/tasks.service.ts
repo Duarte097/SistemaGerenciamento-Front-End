@@ -24,7 +24,7 @@ export class TasksService {
 
   getAllTasks(): Observable<Array<GetAllTasksResponse>>{
     return this.http.get<Array<GetAllTasksResponse>>(
-      `${this.API_URL}/tasks`,
+      `${this.API_URL}/projetos`,
       this.httpOptions
     )
     .pipe(
@@ -33,10 +33,10 @@ export class TasksService {
   }
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
-    return this.http.post<CreateTaskResponse>(`${this.API_URL}/tasks/create`, requestDatas, this.httpOptions);
+    return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
   }
 
   editTask(requestDatas: EditTaskRequest): Observable<void>{
-    return this.http.put<void>(`${this.API_URL}/tasks/edit`, requestDatas, this.httpOptions);
+    return this.http.put<void>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
   }
 }

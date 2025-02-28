@@ -1,6 +1,9 @@
 export interface CreateTaskResponse {
   id: string;
-  description: string;
-  name: string;
-  amount: number;
+  nome: string;
+  descricao: string;
+  dataInicio: Date;
+  dataFim: Date;
+  status: string;
+  idUsuario: string;
 }

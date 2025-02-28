@@ -16,19 +16,17 @@ export class AppComponent {
   title = 'SistemaGerenciamento-Front-End';
 
   constructor(private primeNgConfig: PrimeNGConfig) {}
-   navData = navbarData;
+
+  navData = navbarData;
 
   isSideNavCollapsed = false;
   screenWidth = 0;
-
 
 
   onToggleSideNav(data: SideNavToggle): void{
     this.screenWidth = data.screenWidth;
     this.isSideNavCollapsed = data.collapsed;
   }
-
-
 
   ngOnInit(): void {
     this.primeNgConfig.ripple = true;
