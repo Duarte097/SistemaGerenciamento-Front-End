@@ -14,8 +14,8 @@ import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/Ge
 interface Projetos {
   nome: string;
   descricao: string;
-  dataInicio: Date;
-  dataFim: Date;
+  dataInicio: string;
+  dataFim: string;
   prioridade: 'ALTA' | 'BAIXA' | 'MÉDIA';
   status: 'PLANEJADO' | 'EM_ANDAMENTO' | 'CONCLUIDO' | 'CANCELADO';
 }
@@ -41,16 +41,11 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   ){}
   ngOnInit(): void {
     this.getTasksDatas()
+
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }
-  projetos: Projetos[] = [
-    { nome: 'Front-End da Empresa X', descricao: "Desenvolver o Front-end", prioridade:"ALTA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 9, 10), status: 'PLANEJADO'},
-    { nome: 'Front-End da Empresa Y', descricao: "Desenvolver o Front-end", prioridade:"MÉDIA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 10, 21), status: 'EM_ANDAMENTO' },
-    { nome: 'Front-End da Empresa E', descricao: "Desenvolver o Front-end", prioridade:"BAIXA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 12, 20), status: 'CONCLUIDO' },
-    { nome: 'Front-End da Empresa D', descricao: "Desenvolver o Front-end", prioridade:"ALTA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 5, 1), status: 'CANCELADO' },
-  ];
 
   isModalOpen = false;
 
@@ -62,6 +57,8 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     this.isModalOpen = false;  // Fecha o modal
   }
 
+
+
   getTasksDatas(): void {
     this.tasksServices
     .getAllTasks()
@@ -69,8 +66,10 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     .subscribe({
       next:(response) => {
         if(response.length > 0) {
-          this.tasksList = response;
+          this.tasksList = response
           this.tasksDtService.setTasksDatas(this.tasksList);
+          console.log(response);
+          console.log(this.tasksList);
         }
       },
       error: (err) => {
@@ -85,7 +84,13 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     })
   }
 
+  convertToDate(dateString: string): Date {
+    const [day, month, year] = dateString.split('/');
+    return new Date(+year, +month - 1, +day); // Mês é zero-indexado.
+  }
+
   getStatusClass(status: string): any {
+    console.log("Status:", status);
     switch (status) {
       case 'CONCLUIDO':
         return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };

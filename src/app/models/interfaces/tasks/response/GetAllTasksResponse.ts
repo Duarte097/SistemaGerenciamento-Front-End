@@ -3,8 +3,8 @@ export interface GetAllTasksResponse {
   idProjeto: number;
   nomeProjeto: string;
   descricao: string;
-  dataInicio: Date;
-  dataFim: Date;
+  dataInicio: string;
+  dataFim: string;
   status: string;
   prioridade: string;
   idUsuarios: string;
