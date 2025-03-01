@@ -1,5 +1,5 @@
 export interface GetAllUsersResponse {
   amount: number;
-  id: number;
-  name: string;
+  id_usuarios: number;
+  nome: string;
 }

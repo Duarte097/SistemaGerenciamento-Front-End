@@ -1,14 +1,22 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { navbarData } from './nav-data';
 import {CriacaoProjetoComponent} from './criacao-projeto/criacao-projeto.component'
+import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
+import { TasksService } from 'src/app/service/tasks/tasks.service';
+import { CookieService } from 'ngx-cookie-service';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
+import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
 
 interface Projetos {
   nome: string;
   descricao: string;
   dataInicio: Date;
   dataFim: Date;
+  prioridade: 'ALTA' | 'BAIXA' | 'MÉDIA';
   status: 'PLANEJADO' | 'EM_ANDAMENTO' | 'CONCLUIDO' | 'CANCELADO';
 }
 
@@ -19,13 +27,29 @@ interface Projetos {
   imports: [CommonModule, MenuModule, CriacaoProjetoComponent],
   styleUrls: ['./projetos.component.css']
 })
-export class ProjetosComponent {
+export class ProjetosComponent implements OnInit, OnDestroy{
+  private readonly destroy$: Subject<void> = new Subject();
+  public tasksList: Array<GetAllTasksResponse> = [];
   navbarData = navbarData;
+
+  constructor(
+    private tasksDtService: TasksDataTransferService,
+    private tasksServices: TasksService,
+    private cookieService: CookieService,
+    private messageService: MessageService,
+    private router: Router,
+  ){}
+  ngOnInit(): void {
+    this.getTasksDatas()
+  }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
   projetos: Projetos[] = [
-    { nome: 'Front-End da Empresa X', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 9, 10), status: 'PLANEJADO'},
-    { nome: 'Front-End da Empresa Y', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 10, 21), status: 'EM_ANDAMENTO' },
-    { nome: 'Front-End da Empresa E', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 12, 20), status: 'CONCLUIDO' },
-    { nome: 'Front-End da Empresa D', descricao: "Desenvolver o Front-end", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 5, 1), status: 'CANCELADO' },
+    { nome: 'Front-End da Empresa X', descricao: "Desenvolver o Front-end", prioridade:"ALTA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 9, 10), status: 'PLANEJADO'},
+    { nome: 'Front-End da Empresa Y', descricao: "Desenvolver o Front-end", prioridade:"MÉDIA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 10, 21), status: 'EM_ANDAMENTO' },
+    { nome: 'Front-End da Empresa E', descricao: "Desenvolver o Front-end", prioridade:"BAIXA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 12, 20), status: 'CONCLUIDO' },
+    { nome: 'Front-End da Empresa D', descricao: "Desenvolver o Front-end", prioridade:"ALTA", dataInicio: new Date(2020, 9, 10), dataFim: new Date(2021, 5, 1), status: 'CANCELADO' },
   ];
 
   isModalOpen = false;
@@ -38,16 +62,39 @@ export class ProjetosComponent {
     this.isModalOpen = false;  // Fecha o modal
   }
 
+  getTasksDatas(): void {
+    this.tasksServices
+    .getAllTasks()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next:(response) => {
+        if(response.length > 0) {
+          this.tasksList = response;
+          this.tasksDtService.setTasksDatas(this.tasksList);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao buscar produtos!',
+          life: 2500,
+        })
+      }
+    })
+  }
+
   getStatusClass(status: string): any {
     switch (status) {
       case 'CONCLUIDO':
-        return { 'bg-green-500': true, 'text-white': true, 'border-green-700': true };
+        return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };
       case 'EM_ANDAMENTO':
-        return { 'bg-blue-500': true, 'text-white': true, 'border-blue-700': true };
+        return { 'bg-blue-500': true, 'text-blue-700': true, 'border-blue-700': true };
       case 'CANCELADO':
-        return { 'bg-red-500': true, 'text-white': true, 'border-red-700': true };
+        return { 'bg-red-500': true, 'text-red-700': true, 'border-red-700': true };
       case 'PLANEJADO':
-        return { 'bg-gray-500': true, 'text-white': true, 'border-gray-700': true };
+        return { 'bg-gray-500': true, 'text-gray-700': true, 'border-gray-700': true };
       default:
         return { 'bg-gray-300': true, 'text-white': true, 'border-gray-500': true };
     }
@@ -80,5 +127,6 @@ export class ProjetosComponent {
   getBadgeClass(status: string): any {
     return { 'bg-green-400 text-green-900': status === 'CONCLUIDO', 'bg-yellow-400 text-yellow-900': status === 'EM_ANDAMENTO', 'bg-red-400 text-red-900': status === 'CANCELADO', 'bg-gray-400 text-gray-900': status === 'PLANEJADO' };
   }
+
 
 }

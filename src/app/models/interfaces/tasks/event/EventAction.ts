@@ -1,4 +1,4 @@
-export interface EventAction {
+/*export interface EventAction {
   action: string;
   id?: string;
-}
+}*/

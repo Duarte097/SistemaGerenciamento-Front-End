@@ -56,31 +56,40 @@ export class LoginComponent implements OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
-            if (response) {
-              this.cookieService.set('USER_INFO', response?.token);
+            console.log("Resposta da API:", response); // 🔹 Debugando a resposta
+
+            const token = response?.accessToken; // 🔹 Pegue o token correto
+
+            if (token) {
+              this.cookieService.set('USER_INFO', token, { path: '/' });
+              console.log("Token salvo:", this.cookieService.get('USER_INFO'));
+
               this.loginForm.reset();
               this.router.navigate(['/dashboard']);
 
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
-                detail: `Bem vindo de volta ${response?.name}!`,
+                detail: `Bem-vindo de volta!`,
                 life: 2000,
               });
+            } else {
+              console.log("Erro: Token não encontrado na resposta da API");
             }
           },
           error: (err) => {
+            console.log("Erro ao fazer login:", err); // 🔹 Mostra o erro no console
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
               detail: `Erro ao fazer o login!`,
               life: 2000,
             });
-            console.log(err);
           },
         });
     }
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

@@ -1,5 +1,10 @@
 export interface EditTaskRequest {
-  name: string;
-  description: string;
+  idProjeto: number;
+  nomeProjeto: string;
+  descricao: string;
+  dataInicio: Date;
+  dataFim: Date;
+  status: string;
+  prioridade: string;
   amount: number;
 }

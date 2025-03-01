@@ -1,6 +1,6 @@
 
 export interface SignupUserResponse  {
-  id: string;
+  id_usuarios: string;
   name: string;
   email: string;
 }

@@ -18,8 +18,7 @@ export class TasksDataTransferService {
 
   getTasksDatas(){
     this.tasksDataEmitter$.pipe(
-      take(1),
-      map((data) => data?.filter((task) => task?.amount > 0))
+      take(1)
     )
     .subscribe({
       next: (response) => {

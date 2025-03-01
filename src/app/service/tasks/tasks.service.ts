@@ -22,15 +22,23 @@ export class TasksService {
   }
   constructor(private http: HttpClient, private cookie: CookieService) { }
 
-  getAllTasks(): Observable<Array<GetAllTasksResponse>>{
+  private getHeaders() {
+    const token = this.cookie.get('USER_INFO');
+    return {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Authorization: token ? `Bearer ${token}` : ''
+      })
+    };
+  }
+
+  getAllTasks(): Observable<Array<GetAllTasksResponse>> {
     return this.http.get<Array<GetAllTasksResponse>>(
       `${this.API_URL}/projetos`,
-      this.httpOptions
-    )
-    .pipe(
-      map((task) => task.filter((data) => data?.amount > 0))
+      this.getHeaders() // Atualizando os headers dinamicamente
     );
   }
+
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
     return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);

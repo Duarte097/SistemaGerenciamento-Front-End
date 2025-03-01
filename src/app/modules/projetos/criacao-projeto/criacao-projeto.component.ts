@@ -6,17 +6,15 @@ import { FormBuilder, FormGroup, FormsModule, Validators } from '@angular/forms'
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import {  DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
-import { AuthRequest } from 'src/app/models/interfaces/user/AuthRequest';
 import { Subject, takeUntil } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
+import { ToastModule } from 'primeng/toast';
 import { TasksService } from 'src/app/service/tasks/tasks.service';
 import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
 import { CreateTaskRequest } from 'src/app/models/interfaces/tasks/request/CreateTaskRequest';
 import { ReactiveFormsModule } from '@angular/forms';
 import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersResponse copy';
+import { UsersDataTransferService } from 'src/app/shared/services/users/users-data-transfer.service';
 
 
 
@@ -31,7 +29,8 @@ import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersR
     FormsModule,
     DropdownModule,
     InputTextareaModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ToastModule
   ],
   styleUrls: ['./criacao-projeto.component.css']
 })
@@ -45,23 +44,22 @@ export class CriacaoProjetoComponent implements OnInit, OnDestroy  {
   date3: Date | undefined;
   status: any[] = [];
   usuarios: any[] = [];
+  prioridade: any[] = [];
 
   constructor(
     private formBuilder: FormBuilder,
-    private tasksDtService: TasksDataTransferService,
-    private usersDtService: TasksDataTransferService,
+    private usersDtService: UsersDataTransferService,
     private tasksServices: TasksService,
     private userService : UserService,
-    private cookieService: CookieService,
     private messageService: MessageService,
-    private router: Router,
   ){
     this.createProjetoForm = this.formBuilder.group({
-      nome: ['', Validators.required],
+      nomeProjeto: ['', Validators.required],
       descricao: ['', Validators.required],
       dataInicio: ['', Validators.required],
       dataFim: ['', Validators.required],
       status: ['', Validators.required],
+      prioridade: ['', Validators.required],
       idUsuario: ['', Validators.required],
     });
   }
@@ -73,42 +71,61 @@ export class CriacaoProjetoComponent implements OnInit, OnDestroy  {
     this.closeModal.emit();  // Emite um evento para o componente pai fechar o modal
   }
 
-  selectedProjetos: any;
+  selectedStatus: any;
   selectedUsuarios: any;
+  selectedPrioridade: any;
+
 
   ngOnInit() {
+    this.getUsersDatas()
+    this.messageService.add({ severity: 'success', summary: 'Teste', detail: 'Mensagem de teste!' });
     this.status = [
       { name: 'CONCLUIDO', code: 'CONCLUIDO' },
       { name: 'EM_ANDAMENTO', code: 'EM_ANDAMENTO' },
       { name: 'CANCELADO', code: 'CANCELADO' },
       { name: 'PLANEJADO', code: 'PLANEJADO' }
     ];
-    this.usuarios = [
-      {nome: 'Leonardo Ramalho Duarte', code: 'Leonardo Ramalho Duarte'},
+    this.prioridade = [
+      { name: 'ALTA', code: 'ALTA' },
+      { name: 'MÉDIA', code: 'MEDIA' },
+      { name: 'BAIXA', code: 'BAIXA' }
     ];
+  }
+
+  visualizarDados(): void {
+    console.log('Dados do formulário:', this.createProjetoForm.value);
+    console.log('Status selecionado:', this.selectedStatus);
+    console.log('Usuário selecionado:', this.selectedUsuarios);
+    console.log('Prioridade selecionada:', this.selectedPrioridade);
   }
 
   onSubmit(): void {
     console.log('Formulário enviado', this.createProjetoForm.value);
     if (this.createProjetoForm.valid) {
-      // Chamando o serviço para criar o projeto (ou tarefa)
       const taskData: CreateTaskRequest = {
-        nome: this.createProjetoForm.value.nome,
+        nomeProjeto: this.createProjetoForm.value.nomeProjeto,
         descricao: this.createProjetoForm.value.descricao,
         dataInicio: this.createProjetoForm.value.dataInicio,
         dataFim: this.createProjetoForm.value.dataFim,
         status: this.createProjetoForm.value.status,
+        prioridade: this.createProjetoForm.value.prioridade,
         idUsuario: this.createProjetoForm.value.idUsuario,
       };
+      console.log('Chamando tasksServices.createTask...');
       this.tasksServices.createTask(taskData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
             if (response) {
-              this.cookieService.set('USER_INFO', response.id);
-              this.createProjetoForm.reset();
-              this.router.navigate(['/projetos']);
-
+              //this.createProjetoForm.reset();
+              this.closeModal.emit();
+              console.log('Chamando messageService.add() com sucesso...');
+              console.log('Mensagem de sucesso:', {
+                severity: 'success',
+                summary: 'Sucesso',
+                detail: 'Projeto criado com sucesso!',
+                life: 2000
+              });
               this.messageService.add({
                 severity: 'success',
                 summary: 'Sucesso',
@@ -118,64 +135,58 @@ export class CriacaoProjetoComponent implements OnInit, OnDestroy  {
             }
           },
           error: (err) => {
+            console.log('Chamando messageService.add() com erro...');
+            console.log('Mensagem de erro:', {
+              severity: 'error',
+              summary: 'Erro',
+              detail: 'Erro ao criar o projeto!',
+              life: 2000
+            });
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
               detail: 'Erro ao criar o projeto!',
               life: 2000
             });
-            console.log(err);
+            setTimeout(() => {
+              new this.closeModal(); // Fecha o modal após um pequeno delay
+            }, 1000);
           }
         }
       );
     }
   }
 
-
-  getTasksDatas(): void {
-    this.tasksServices
-    .getAllTasks()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next:(response) => {
-        if(response.length > 0) {
-          this.tasksList = response;
-          this.tasksDtService.setTasksDatas(this.tasksList);
-        }
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao buscar produtos!',
-          life: 2500,
-        })
-      }
-    })
-  }
-
   getUsersDatas(): void {
     this.userService
-    .getAllUsers()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next:(response) => {
-        if(response.length > 0) {
-          this.userList = response;
-          this.tasksDtService.setTasksDatas(this.tasksList);
+      .getAllUsers()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          console.log('Resposta da API de usuários:', response);
+          if (response.length > 0) {
+            this.userList = response; // Armazena a lista de usuários retornados
+
+            this.usuarios = response.map(user => ({
+              nome: user.nome,
+              id_usuarios: user.id_usuarios
+            }));
+
+            console.log('Usuários carregados:', this.usuarios); // Log da lista de usuários carregados
+            this.usersDtService.setUsersDatas(this.userList);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao buscar os usuários!',
+            life: 2500,
+          });
         }
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao buscar os usuários!',
-          life: 2500,
-        })
       }
-    })
+    );
   }
 
   ngOnDestroy(): void {

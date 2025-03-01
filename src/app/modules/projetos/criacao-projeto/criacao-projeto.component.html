@@ -7,11 +7,11 @@
       </button>
     </div>
     <div class="input-content">
-      <input type="text" formControlName="nome" placeholder="Digite o nome do projeto">
+      <input type="text" formControlName="nomeProjeto" placeholder="Digite o nome do projeto">
       <div class="card flex justify-content-center">
         <textarea class="textarea-content"
           formControlName="descricao"
-          rows="5"
+          rows="3"
           cols="30"
           pInputTextarea
           [autoResize]="true">
@@ -23,7 +23,7 @@
       </div>
       <p-dropdown
         formControlName="status"
-        [(ngModel)]="selectedProjetos"
+        [(ngModel)]="selectedStatus"
         [options]="status"
         optionLabel="name"
         optionValue="code"
@@ -36,13 +36,23 @@
         [(ngModel)]="selectedUsuarios"
         [options]="usuarios"
         optionLabel="nome"
-        optionValue="code"
+        optionValue="id_usuarios"
         placeholder="Selecione o Usuario responsavel"
         [style]="{ minWidth: '14rem' }"
         class="dropdown-content">
       </p-dropdown>
+      <p-dropdown
+        formControlName="prioridade"
+        [(ngModel)]="selectedPrioridade"
+        [options]="prioridade"
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Selecione a prioridade"
+        [style]="{ minWidth: '14rem' }"
+        class="dropdown-content">
+      </p-dropdown>
       <div class="button-salvar-container">
-        <button class="button-salvar" [disabled]="createProjetoForm.invalid">Salvar</button>
+        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="createProjetoForm.invalid">Salvar</button>
       </div>
     </div>
   </form>
