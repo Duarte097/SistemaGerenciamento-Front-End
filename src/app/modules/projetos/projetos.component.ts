@@ -85,9 +85,13 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   }
 
   convertToDate(dateString: string): Date {
-    const [day, month, year] = dateString.split('/');
-    return new Date(+year, +month - 1, +day); // Mês é zero-indexado.
+    const parts = dateString.split('/');
+    if (parts.length !== 3) return new Date(); // Retorna uma data padrão se o formato estiver errado
+
+    const [day, month, year] = parts.map(Number); // Converte para números
+    return new Date(year, month - 1, day); // O mês em JavaScript começa do 0
   }
+
 
   getStatusClass(status: string): any {
     console.log("Status:", status);
@@ -101,7 +105,7 @@ export class ProjetosComponent implements OnInit, OnDestroy{
       case 'PLANEJADO':
         return { 'bg-gray-500': true, 'text-gray-700': true, 'border-gray-700': true };
       default:
-        return { 'bg-gray-300': true, 'text-white': true, 'border-gray-500': true };
+        return { 'bg-blue-500': true, 'text-blue-700': true, 'border-gray-500': true };
     }
   }
 
@@ -120,6 +124,7 @@ export class ProjetosComponent implements OnInit, OnDestroy{
         return 'pi pi-question-circle text-gray-500'; // Ícone de interrogação para status desconhecido ❓
     }
   }
+
 
   getStatusBorderClass(status: string): any {
     return { 'border-green-200': status === 'CONCLUIDO', 'border-yellow-200': status === 'EM_ANDAMENTO', 'border-red-200': status === 'CANCELADO', 'border-gray-200': status === 'PLANEJADO' };

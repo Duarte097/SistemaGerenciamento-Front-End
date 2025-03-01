@@ -1,74 +1,46 @@
 <div class="surface-card shadow-2 border-round p-4">
   <div class="flex justify-content-end align-items-center mb-5 card-tarefas">
     <span class="text-xl text-900 font-medium">Projetos</span>
-    <div class="button-create">
-      <button  icon="pi pi-plus" class="button-create-icon" (click)="openModal()">
+    <div style="display: flex; justify-content: flex-end; flex-grow: 1;">
+      <button class="button-create-icon" (click)="openModal()">
         <span class="p-button-icon pi pi-plus"></span>
       </button>
     </div>
   </div>
-  <div class="surface-card shadow-2 border-round p-4">
-    <div class="colun-projects">
-      <div class="table-nome">
-        <h4>Nome</h4>
-      </div>
-      <div class="table-descricao">
-        <h4>Descrição</h4>
-      </div>
-      <div class="table-prioridade">
-        <h4>Prioridade</h4>
-      </div>
-      <div class="table-Inicio">
-        <h4>Inicio</h4>
-      </div>
-      <div class="table-fim">
-        <h4>Fim</h4>
-      </div>
-      <div class="table-status">
-        <h4>Status</h4>
-      </div>
+  <div class="surface-card shadow-2 border-round p-4 card-tarefas">
+    <div class="table-header">
+      <span>Nome</span>
+      <span>Descrição</span>
+      <span>Prioridade</span>
+      <span>Início</span>
+      <span>Fim</span>
+      <span>Status</span>
+      <span>Ações</span>
     </div>
-    <ul class="list-none p-0 m-0">
-      <li class="flex flex-column md:flex-row md:align-items-center md:justify-content-between p-3 border-1 mb-3"
-          *ngFor="let task of tasksList"
-          [ngClass]="getStatusClass(task.status)"
-          style="border-radius: 7px;">
 
-        <div class="flex align-items-center">
-          <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle "
-                [ngClass]="getStatusBorderClass(task.status)">
+    <ul class="list-none p-0 m-0">
+      <li class="table-row" *ngFor="let task of tasksList" [ngClass]="getStatusClass(task.status)">
+
+        <span class="nome-com-icone">
+          <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
             <i [ngClass]="getStatusIcon(task.status)"></i>
           </span>
-            <span class="font-bold ml-2" [ngClass]="getTextColorClass(task.status)">{{task.nomeProjeto}}</span>
-          <p class="notification-desc" [ngClass]="getTextColorClass(task.status)">
-            {{ task.descricao }}
-          </p>
-          <p class="prioridade-desc" [ngClass]="getTextColorClass(task.status)">
-            {{ task.prioridade }}
-          </p>
-        </div>
-        <p class="mt-2 mb-0" [ngClass]="getTextColorClass(task.status)">
-          <span class="font-medium">{{ task.dataInicio | date: 'dd/MM/yyyy' }}</span>
-        </p>
-        <p class="mt-2 mb-0" [ngClass]="getTextColorClass(task.status)">
-          <span class="font-medium">{{ task.dataFim | date: 'dd/MM/yyyy' }}</span>
-        </p>
-        <div class="flex align-items-center justify-content-between md:justify-content-end mt-3 md:mt-0">
-          <span class="font-bold text-sm py-1 px-2"
-                [ngClass]="getBadgeClass(task.status)"
-                style="border-radius: 10px;">
-            {{ task.status }}
-          </span>
-          <div class="text-right ml-3">
-            <span class="font-bold" [ngClass]="getTextColorClass(task.status)">
-              <button class="text-right ml-3">
-                <i class="fa-regular fa-pen-to-square text-red-600"></i>
-              </button>
-              <button >
-                  <i class="fa-solid fa-trash text-white-500 text-xl"></i>
-              </button>
-            </span>
-          </div>
+          {{ task.nomeProjeto }}
+        </span>
+
+        <span class="descricao">{{ task.descricao }}</span>
+        <span class="prioridade">{{ task.prioridade }}</span>
+        <span class="data">{{ convertToDate(task.dataInicio) | date: 'dd/MM/yyyy' }}</span>
+        <span class="data">{{ convertToDate(task.dataFim) | date: 'dd/MM/yyyy' }}</span>
+        <span class="status">{{ task.status }}</span>
+
+        <div class="action-buttons">
+          <button class="edit-button">
+            <i class="fa-regular fa-pen-to-square"></i>
+          </button>
+          <button class="delete-button">
+            <i class="fa-solid fa-trash"></i>
+          </button>
         </div>
       </li>
     </ul>

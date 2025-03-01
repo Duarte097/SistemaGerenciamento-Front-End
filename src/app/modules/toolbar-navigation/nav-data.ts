@@ -13,8 +13,4 @@ export const navbarData= [{
   icon: 'fa-solid fa-chart-line',
   label: 'Atividades'
 },
-{
-  routerLink: '/criacaoProjeto',
-  label: 'CriacaoProjeto'
-},
 ];
