@@ -1,17 +1,17 @@
 <div class="modal-backdrop"></div>
 <div class="modal-content">
-  <form [formGroup]="createProjetoForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="editProjetoForm" (ngSubmit)="onSubmit()">
     <div class="button-fechar-container">
       <button icon="pi pi-times" class="button-fechar" (click)="close()">
         <span class="p-button-icon pi pi-times"></span>
       </button>
     </div>
     <div class="input-content">
-      <input type="text" formControlName="nomeProjeto" placeholder="Digite o nome do projeto">
+      <input type="text" formControlName="nomeProjeto" [(ngModel)]="projectData.nomeProjeto">
       <div class="card flex justify-content-center">
         <textarea class="textarea-content"
+          [(ngModel)]="projectData.descricao"
           formControlName="descricao"
-          placeholder="Digite a descrição do projeto"
           rows="3"
           cols="30"
           pInputTextarea
@@ -19,12 +19,12 @@
         </textarea>
       </div>
       <div class="calendar-container">
-        <p-calendar placeholder="Data de Inicio" formControlName="dataInicio" [(ngModel)]="date2" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
-        <p-calendar placeholder="Data de Fim" formControlName="dataFim" [(ngModel)]="date3" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
+        <p-calendar placeholder="Data de Inicio" formControlName="dataInicio" [(ngModel)]="projectData.dataInicio" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
+        <p-calendar placeholder="Data de Fim" formControlName="dataFim" [(ngModel)]="projectData.dataFim" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
       </div>
       <p-dropdown
         formControlName="status"
-        [(ngModel)]="selectedStatus"
+        [(ngModel)]="projectData.status"
         [options]="status"
         optionLabel="name"
         optionValue="code"
@@ -34,7 +34,7 @@
       </p-dropdown>
       <p-dropdown
         formControlName="idUsuario"
-        [(ngModel)]="selectedUsuarios"
+        [(ngModel)]="userData.nome"
         [options]="usuarios"
         optionLabel="nome"
         optionValue="id_usuarios"
@@ -44,7 +44,7 @@
       </p-dropdown>
       <p-dropdown
         formControlName="prioridade"
-        [(ngModel)]="selectedPrioridade"
+        [(ngModel)]="projectData.prioridade"
         [options]="prioridade"
         optionLabel="name"
         optionValue="code"
@@ -53,7 +53,7 @@
         class="dropdown-content">
       </p-dropdown>
       <div class="button-salvar-container">
-        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="createProjetoForm.invalid">Salvar</button>
+        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="editProjetoForm.invalid">Salvar</button>
       </div>
     </div>
   </form>

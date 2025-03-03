@@ -39,12 +39,16 @@ export class TasksService {
     );
   }
 
+  getProjectById(id_projeto: number): Observable<Array<GetAllTasksResponse>>{
+    return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos/${id_projeto}`, this.getHeaders());
+  }
+
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
     return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
   }
 
-  editTask(requestDatas: EditTaskRequest): Observable<void>{
-    return this.http.put<void>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
+  editTask(requestDatas: EditTaskRequest, id_projeto: number): Observable<void>{
+    return this.http.put<void>(`${this.API_URL}/projetos/${id_projeto}`, requestDatas, this.httpOptions);
   }
 }

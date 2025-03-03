@@ -4,7 +4,7 @@
       <div class="search-container">
         <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
           <input type="search" class="search"
-            placeholder="Pesquisar..." name="" id="">
+            placeholder="Pesquisar..." name="" id="">{{searchTerm}}
           <i class="fas fa-search search-icon"></i>
         </div>
         <div *ngIf="canShowSearchAsOverlay">

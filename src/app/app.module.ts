@@ -34,7 +34,7 @@ import { HeaderComponent } from './modules/header/header.component';
     UsuariosComponent,
     ToolbarNavigationComponent,
     BodyComponent,
-    HeaderComponent,
+    HeaderComponent
   ],
   imports: [
     CommonModule,

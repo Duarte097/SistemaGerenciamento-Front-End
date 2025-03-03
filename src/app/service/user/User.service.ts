@@ -34,6 +34,10 @@ export class UserService {
     );
   }
 
+    getUsersById(id_usuarios: number): Observable<Array<GetAllUsersResponse>>{
+      return this.http.get<Array<GetAllUsersResponse>>(`${this.API_URL}/users/${id_usuarios}`, this.getHeaders());
+    }
+
 
   signupUser(requestDatas: SignupUserRequest): Observable<SignupUserResponse> {
     return this.http.post<SignupUserResponse>(`${this.API_URL}/register`, requestDatas);

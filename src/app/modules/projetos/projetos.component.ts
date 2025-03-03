@@ -5,11 +5,12 @@ import { navbarData } from './nav-data';
 import {CriacaoProjetoComponent} from './criacao-projeto/criacao-projeto.component'
 import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
 import { TasksService } from 'src/app/service/tasks/tasks.service';
-import { CookieService } from 'ngx-cookie-service';
 import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
+import { ViewProjectComponent } from "./view-project/view-project.component";
+import { EditProjectComponent } from './edit-project/edit-project.component';
+import { HeaderComponent } from '../header/header.component';
 
 interface Projetos {
   nome: string;
@@ -24,39 +25,68 @@ interface Projetos {
   selector: 'app-projetos',
   templateUrl: './projetos.component.html',
   standalone: true,
-  imports: [CommonModule, MenuModule, CriacaoProjetoComponent],
+  imports: [
+    CommonModule,
+    MenuModule,
+    CriacaoProjetoComponent,
+    ViewProjectComponent,
+    EditProjectComponent,
+  ],
   styleUrls: ['./projetos.component.css']
 })
 export class ProjetosComponent implements OnInit, OnDestroy{
   private readonly destroy$: Subject<void> = new Subject();
   public tasksList: Array<GetAllTasksResponse> = [];
   navbarData = navbarData;
+  public selectedProjectId: number | null = null;
+
 
   constructor(
     private tasksDtService: TasksDataTransferService,
     private tasksServices: TasksService,
-    private cookieService: CookieService,
     private messageService: MessageService,
-    private router: Router,
+    private header: HeaderComponent,
   ){}
   ngOnInit(): void {
     this.getTasksDatas()
-
+    console.log("Id" + this.selectedProjectId);
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
   }
 
-  isModalOpen = false;
+  isModalCreateOpen = false;
+  isModalViewOpen = false;
+  isModalEditOpen = false;
 
-  openModal() {
-    this.isModalOpen = true;  // Abre o modal
+  openModalCreate() {
+    this.isModalCreateOpen = true;  // Abre o modal
   }
 
-  closeModal() {
-    this.isModalOpen = false;  // Fecha o modal
+  closeModalCreate() {
+    this.isModalCreateOpen = false;  // Fecha o modal
+    this.getTasksDatas()
   }
 
+  openModalView(projectId: number) {
+    this.selectedProjectId = projectId;
+    this.isModalViewOpen = true;
+    console.log(projectId);
+  }
+
+  closeModalView() {
+    this.isModalViewOpen = false;  // Fecha o modal
+  }
+
+  openModalEdit(projectId: number) {
+    this.selectedProjectId = projectId;
+    this.isModalEditOpen = true;
+  }
+
+  closeModalEdit() {
+    this.isModalEditOpen = false;
+    this.getTasksDatas();
+  }
 
 
   getTasksDatas(): void {
@@ -68,8 +98,6 @@ export class ProjetosComponent implements OnInit, OnDestroy{
         if(response.length > 0) {
           this.tasksList = response
           this.tasksDtService.setTasksDatas(this.tasksList);
-          console.log(response);
-          console.log(this.tasksList);
         }
       },
       error: (err) => {
@@ -94,7 +122,6 @@ export class ProjetosComponent implements OnInit, OnDestroy{
 
 
   getStatusClass(status: string): any {
-    console.log("Status:", status);
     switch (status) {
       case 'CONCLUIDO':
         return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };

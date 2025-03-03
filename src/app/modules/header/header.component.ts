@@ -1,3 +1,4 @@
+import { ProjetosComponent } from './../projetos/projetos.component';
 import { style } from '@angular/animations';
 import { Component, Input, OnInit, HostListener } from '@angular/core';
 import { notifications, userItems } from './header-dummy-data';
@@ -10,6 +11,7 @@ import { notifications, userItems } from './header-dummy-data';
 export class HeaderComponent implements OnInit{
   @Input() collapsed = false;
   @Input() screenWidth = 0;
+  public searchTerm: string = '';
 
   canShowSearchAsOverlay = false;
   notifications = notifications;

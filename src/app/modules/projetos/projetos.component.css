@@ -18,7 +18,7 @@
 /* Cada linha (projeto) */
 .table-row {
   display: grid;
-  grid-template-columns: 1.6fr 2.3fr 1fr 1fr 1fr 1.2fr 0.3fr;
+  grid-template-columns: 2fr 2.8fr 0.99fr 1fr 1fr 1.2fr 0.3fr;
   align-items: center;
   gap: 10px;
   padding: 12px;
@@ -60,7 +60,7 @@
   gap: 10px;
 }
 
-.edit-button, .delete-button {
+.edit-button, .view-button {
   border: none;
   background-color: transparent;
   cursor: pointer;
@@ -71,7 +71,7 @@
   color: #ff9100;
 }
 
-.delete-button i {
+.view-button i {
   color: #d63031;
 }
 
@@ -112,28 +112,28 @@
 }
 
 .table-header span:first-child {
-  padding-left: 2.5rem;
+  padding-left: 2.3rem;
 }
+
 
 .table-header span:nth-child(2) {
-  margin-left: -0.3rem;
+  margin-left: 1.2rem;
 }
 
-.table-header span:nth-child(1) {
-  padding-left: 2.5rem;
+.table-header span:nth-child(3) {
+  margin-left: 2.8rem;
 }
 
 .table-header span:nth-child(4) {
-  margin-left: -0.7rem;
+  margin-left: 1.8rem;
 }
 
 .table-header span:nth-child(5) {
-  margin-left: -0.4rem;
+  margin-left: 1.5rem;
 }
 
-
 .table-header span:nth-child(6) {
-  padding-left: 1.7rem;
+  padding-left: 2.5rem;
 }
 
 .table-header span:nth-child(7) {
