@@ -1,0 +1,174 @@
+.surface-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estiliza o cabeçalho */
+.table-header {
+  display: grid;
+  grid-template-columns: 2.5fr 3fr 2fr 1.5fr 1fr 1.5fr 1fr;
+  font-weight: bold;
+  text-align: left;
+  padding: 10px 0;
+  border-bottom: 2px solid #ddd;
+}
+
+/* Cada linha (projeto) */
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 2.8fr 0.99fr 1fr 1fr 1.2fr 0.3fr;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  margin-bottom: 10px;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-tarefas{
+  margin-bottom: 30px;
+}
+
+/* Fundo de acordo com o status */
+.table-row.CONCLUIDO {
+  background-color: #eafbe2;
+  border: 1px solid #008000;
+}
+
+.table-row.CANCELADO {
+  background-color: #fdeaea;
+  border: 1px solid #ff0000;
+}
+
+/* Ajuste no texto para evitar quebras desnecessárias */
+.table-row span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botões de ação */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.edit-button, .view-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.edit-button i {
+  color: #ff9100;
+}
+
+.view-button i {
+  color: #d63031;
+}
+
+.button-create {
+  justify-content: flex-end;
+  margin-left: auto;/* Alinha o botão à direita */
+}
+
+.button-create button {
+  margin-left: auto;
+}
+
+.flex.justify-content-end.align-items-center.mb-5.card-tarefas {
+  position: relative;
+}
+
+.button-create-icon{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #000;
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+}
+.button-create-icon:hover{
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #15bd87;
+  font-size: 20px;
+}
+
+.nome-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaçamento entre o ícone e o nome */
+}
+
+.table-header span:first-child {
+  padding-left: 2.3rem;
+}
+
+
+.table-header span:nth-child(2) {
+  margin-left: 1.2rem;
+}
+
+.table-header span:nth-child(3) {
+  margin-left: 2.8rem;
+}
+
+.table-header span:nth-child(4) {
+  margin-left: 1.8rem;
+}
+
+.table-header span:nth-child(5) {
+  margin-left: 1.5rem;
+}
+
+.table-header span:nth-child(6) {
+  padding-left: 2.5rem;
+}
+
+.table-header span:nth-child(7) {
+  padding-left: 1.7rem;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .table-header,
+  .table-row {
+    grid-template-columns: 1fr 1fr;
+    font-size: 14px;
+  }
+}
+
+.bg-green-500 { background-color: #e8f5e9; }
+.border-green-700 { border-color: #a5d6a9; }
+.text-green-700 { color: #388e3c; }
+
+.bg-blue-500 { background-color: #e3f2fd; }
+.border-blue-700 { border-color: #90caf9; }
+.text-blue-700 { color: #1976d2; }
+
+.bg-red-500 { background-color: #ffebee; }
+.border-red-700 { border-color: #ef9a9a; }
+.text-red-700 { color: #d32f2f; }
+
+.bg-gray-500 { background-color: #f5f5f5; }
+.border-gray-700 { border-color: #bdbdbd; }
+text-gray-700 { color: #424242; }
+
+.bg-gray-300 { background-color: #f0f0f0; }
+
+.bg-pending-400 { background: #fff8e1; color: #ffc107; }
+.bg-paid-400 { background: #e8f5e9; color: #4caf50; }
+bg-unpaid-400 { background: #ffebee; color: #f44336; }
+

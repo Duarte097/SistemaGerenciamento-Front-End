@@ -4,8 +4,8 @@
       <div class="search-container">
         <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
           <input type="search" class="search"
-            placeholder="Pesquisar..." name="" id="">{{searchTerm}}
-          <i class="fas fa-search search-icon"></i>
+            placeholder="Pesquisar..." name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm">
+          <i class="fas fa-search search-icon" (click)="submitSearch()"></i>
         </div>
         <div *ngIf="canShowSearchAsOverlay">
           <button [cdkMenuTriggerFor]="searchOverlay"
@@ -77,7 +77,7 @@
 <ng-template #userOverlay>
   <div class="overlay overlay-user overlay-fall" cdkMenu>
     <ul>
-      <li *ngFor="let item of userItems" cdkMenuItem>
+      <li *ngFor="let item of userItems" cdkMenuItem cdkMenuItem (click)="handleUserItemClick(item)">
         <a>
           <i class="icon" [ngClass]="item.icon"></i>
           <span>{{item.label}}</span>

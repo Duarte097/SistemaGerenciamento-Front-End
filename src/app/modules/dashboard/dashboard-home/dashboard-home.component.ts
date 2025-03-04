@@ -24,11 +24,11 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   ){}
 
   ngOnInit(): void {
-    this.getTasksDatas();
+    //this.getTasksDatas();
   }
 
 
-  getTasksDatas(): void {
+  /*getTasksDatas(): void {
     this.tasksServices
     .getAllTasks()
     .pipe(takeUntil(this.destroy$))
@@ -49,7 +49,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         })
       }
     })
-  }
+  }*/
 
   ngOnDestroy(): void {
     this.destroy$.next();

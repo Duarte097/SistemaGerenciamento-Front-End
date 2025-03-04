@@ -1,14 +1,22 @@
-import { ProjetosComponent } from './../projetos/projetos.component';
-import { style } from '@angular/animations';
-import { Component, Input, OnInit, HostListener } from '@angular/core';
+import { Component, Input, OnInit, HostListener, EventEmitter, Output } from '@angular/core';
 import { notifications, userItems } from './header-dummy-data';
+import { CommonModule } from '@angular/common';
+import { CdkMenuModule } from '@angular/cdk/menu';
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { SearchService } from 'src/app/service/tasks/search.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
+  standalone: true,
+  imports: [CommonModule, CdkMenuModule, FormsModule],
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit{
+  @Output() searchSubmitted = new EventEmitter<string>();
   @Input() collapsed = false;
   @Input() screenWidth = 0;
   public searchTerm: string = '';
@@ -17,7 +25,7 @@ export class HeaderComponent implements OnInit{
   notifications = notifications;
   userItems = userItems;
 
-  constructor(){}
+  constructor(private searchService: SearchService, private cookie: CookieService, private router: Router){}
 
   @HostListener('window:riseze', ['$event'])
   onResize(event: any){
@@ -26,6 +34,18 @@ export class HeaderComponent implements OnInit{
 
   ngOnInit(): void {
     this.checkCanShowSearchAsOverlay(window.innerWidth);
+  }
+
+  handleUserItemClick(item: any): void {
+    if (item.click === 'logout') {
+      this.handleLogout();
+    }
+    // Adicione outras ações aqui, se necessário
+  }
+
+  handleLogout(): void {
+    this.cookie.delete('USER_INFO');
+    this.router.navigate(['/login']);
   }
 
   getHeadClass(): string {
@@ -44,6 +64,9 @@ export class HeaderComponent implements OnInit{
     }else {
       this.canShowSearchAsOverlay = false;
     }
+  }
+  submitSearch() {
+    this.searchSubmitted.emit(this.searchTerm);
   }
 
 }

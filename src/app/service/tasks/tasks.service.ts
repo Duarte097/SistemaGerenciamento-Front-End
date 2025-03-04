@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { map, Observable } from 'rxjs';
@@ -43,6 +43,10 @@ export class TasksService {
     return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos/${id_projeto}`, this.getHeaders());
   }
 
+  getProjectByName(nomeProjeto: string): Observable<Array<GetAllTasksResponse>> {
+    const params = new HttpParams().set('nomeProjeto', nomeProjeto);
+    return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos`, { ...this.getHeaders(), params });
+  }
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
     return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);

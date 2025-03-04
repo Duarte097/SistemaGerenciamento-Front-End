@@ -24,7 +24,7 @@ import { AvatarModule } from 'primeng/avatar';
 import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar-navigation.component';
 import { BodyComponent } from './modules/body/body.component';
-import { HeaderComponent } from './modules/header/header.component';
+import { HeaderComponent } from "./modules/header/header.component";
 
 
 @NgModule({
@@ -33,8 +33,7 @@ import { HeaderComponent } from './modules/header/header.component';
     LoginComponent,
     UsuariosComponent,
     ToolbarNavigationComponent,
-    BodyComponent,
-    HeaderComponent
+    BodyComponent
   ],
   imports: [
     CommonModule,
@@ -57,7 +56,8 @@ import { HeaderComponent } from './modules/header/header.component';
     MenubarModule,
     BadgeModule,
     AvatarModule,
-  ],
+    HeaderComponent
+],
   providers: [
     CookieService,
     MessageService

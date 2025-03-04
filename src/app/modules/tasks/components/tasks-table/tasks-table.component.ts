@@ -1,4 +1,4 @@
-import { TasksEvent } from './../../../../models/enums/tasks/TasksEvent';
+/*import { TasksEvent } from './../../../../models/enums/tasks/TasksEvent';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
 import {  EventAction } from 'src/app/models/interfaces/tasks/event/EventAction';
@@ -22,3 +22,4 @@ export class TasksTableComponent {
     }
   }
 }
+*/

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
 import { navbarData } from './nav-data';
 import {CriacaoProjetoComponent} from './criacao-projeto/criacao-projeto.component'
@@ -10,7 +10,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/GetAllTasksResponse';
 import { ViewProjectComponent } from "./view-project/view-project.component";
 import { EditProjectComponent } from './edit-project/edit-project.component';
-import { HeaderComponent } from '../header/header.component';
+import { SearchService } from 'src/app/service/tasks/search.service';
+
 
 interface Projetos {
   nome: string;
@@ -30,7 +31,7 @@ interface Projetos {
     MenuModule,
     CriacaoProjetoComponent,
     ViewProjectComponent,
-    EditProjectComponent,
+    EditProjectComponent
   ],
   styleUrls: ['./projetos.component.css']
 })
@@ -39,20 +40,26 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   public tasksList: Array<GetAllTasksResponse> = [];
   navbarData = navbarData;
   public selectedProjectId: number | null = null;
+  @Input() searchTerm: string = '';
 
 
   constructor(
     private tasksDtService: TasksDataTransferService,
     private tasksServices: TasksService,
     private messageService: MessageService,
-    private header: HeaderComponent,
+    private searchService: SearchService,
   ){}
   ngOnInit(): void {
     this.getTasksDatas()
     console.log("Id" + this.selectedProjectId);
+    this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
+      this.searchTerm = searchTerm;
+      this.getTasksByName();
+    });
   }
   ngOnDestroy(): void {
-    throw new Error('Method not implemented.');
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   isModalCreateOpen = false;
@@ -97,6 +104,7 @@ export class ProjetosComponent implements OnInit, OnDestroy{
       next:(response) => {
         if(response.length > 0) {
           this.tasksList = response
+          console.log(this.tasksList);
           this.tasksDtService.setTasksDatas(this.tasksList);
         }
       },
@@ -110,6 +118,35 @@ export class ProjetosComponent implements OnInit, OnDestroy{
         })
       }
     })
+  }
+
+  getTasksByName(): void {
+    if (this.searchTerm) {
+      this.tasksServices
+      .getProjectByName(this.searchTerm)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response.length > 0) {
+            this.tasksList = response;
+            this.tasksDtService.setTasksDatas(this.tasksList);
+          } else {
+            this.tasksList = [];
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao buscar projetos!',
+            life: 2500,
+          });
+        },
+      });
+    } else {
+        this.getTasksDatas(); // Se searchTerm estiver vazio, busca todos os projetos
+    }
   }
 
   convertToDate(dateString: string): Date {
