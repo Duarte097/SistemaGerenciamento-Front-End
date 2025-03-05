@@ -25,6 +25,8 @@ import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar-navigation.component';
 import { BodyComponent } from './modules/body/body.component';
 import { HeaderComponent } from "./modules/header/header.component";
+import { EditActivityComponent } from './modules/atividades/edit-activity/edit-activity.component';
+import { ViewActivityComponent } from './modules/atividades/view-activity/view-activity.component';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { HeaderComponent } from "./modules/header/header.component";
     LoginComponent,
     UsuariosComponent,
     ToolbarNavigationComponent,
-    BodyComponent
+    BodyComponent,
+    ViewActivityComponent
   ],
   imports: [
     CommonModule,

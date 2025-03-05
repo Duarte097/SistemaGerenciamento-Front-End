@@ -2,7 +2,7 @@ export interface GetAllActivityResponse {
   amount: number;
   id_atividade: number;
   nomeAtividade: string;
-  descricao: string;
+  descricao_atividade: string;
   dataInicio: string;
   dataFim: string;
   status: string;

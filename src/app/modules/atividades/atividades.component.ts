@@ -6,6 +6,8 @@ import { Subject, takeUntil } from 'rxjs';
 import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/GetAllActivityResponse';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
+import { CriacaoAtividadeComponent } from "./criacao-atividade/criacao-atividade.component";
+import { EditActivityComponent } from "./edit-activity/edit-activity.component";
 
 
 @Component({
@@ -15,14 +17,16 @@ import { ActivityDataTransferService } from 'src/app/shared/services/activity/ac
   imports: [
     CommonModule,
     MenuModule,
-  ],
+    CriacaoAtividadeComponent,
+    EditActivityComponent
+],
   styleUrls: ['./atividades.component.css']
 })
 export class AtividadesComponent {
 private readonly destroy$: Subject<void> = new Subject();
   public activityList: Array<GetAllActivityResponse> = [];
   //navbarData = navbarData;
-  public selectedProjectId: number | null = null;
+  public selectedActivityId: number | null = null;
   @Input() searchTerm: string = '';
 
 
@@ -34,7 +38,7 @@ private readonly destroy$: Subject<void> = new Subject();
   ){}
   ngOnInit(): void {
     this.getActivityDatas()
-    console.log("Id" + this.selectedProjectId);
+    console.log("Id" + this.selectedActivityId);
     /*this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
       this.searchTerm = searchTerm;
       this.getTasksByName();
@@ -57,18 +61,18 @@ private readonly destroy$: Subject<void> = new Subject();
     this.getActivityDatas()
   }
 
-  openModalView(projectId: number) {
-    this.selectedProjectId = projectId;
+  openModalView(activityId: number) {
+    this.selectedActivityId = activityId;
     this.isModalViewOpen = true;
-    console.log(projectId);
+    console.log(activityId);
   }
 
   closeModalView() {
     this.isModalViewOpen = false;  // Fecha o modal
   }
 
-  openModalEdit(projectId: number) {
-    this.selectedProjectId = projectId;
+  openModalEdit(activityId: number) {
+    this.selectedActivityId = activityId;
     this.isModalEditOpen = true;
   }
 
