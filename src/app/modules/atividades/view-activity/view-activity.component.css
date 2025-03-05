@@ -1,0 +1,89 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);  /* Fundo opaco */
+  z-index: 1000;  /* Faz o backdrop ficar por baixo do conteúdo do modal */
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001;  /* Modal fica sobre o backdrop */
+  margin-top: 50px;
+}
+
+.input-content input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.input-content label {
+  margin-bottom: 5px;
+  color: #fff;
+  text-align: left;
+}
+
+.textarea-content{
+  width: 300px;
+}
+
+.calendar-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between; /* Espaça os elementos igualmente */
+  width: 100%;
+}
+
+p-calendar {
+  display: block !important;
+}
+
+
+.calendar {
+  width: 145px;
+  margin-right: 10px;
+}
+.calendar icon {
+  color: #15bd87
+}
+
+.button-fechar-container {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
+
+.button-fechar {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #000;
+  font-size: 20px;
+}
+
+.button-fechar:hover{
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #15bd87;
+  font-size: 20px;
+}
+
+
+

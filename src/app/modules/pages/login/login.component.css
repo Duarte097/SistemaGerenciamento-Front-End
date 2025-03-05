@@ -1,7 +1,7 @@
 :root {
   --text-color: #fff;
-  --background: #001e3c;
-  --background-form: #002d5c;
+  --background: #1c1b2e;
+  --background-form: #15bd87;
 }
 
 /* TELA DE LOGIN*/
@@ -10,9 +10,9 @@
   background-color: var(--background);
   display: flex;
   align-items: center;
-  justify-content: center;
-  height: 100vh;
   width: 100vw;
+  height: 100vh;
+  justify-content: center;
 }
 
 .telaLogin {
@@ -27,7 +27,7 @@
   align-items: center;
   background-color: var(--background-form);
   border-radius: 20px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 10px rgba(10, 236, 150, 0.87);
 }
 
 .telaLogin h1 {
@@ -90,9 +90,9 @@
   height: 3.5rem;
   padding: 0 4rem;
   border-radius: 1.5rem;
-  background: #3d3a4e;
+  background: #fff;
   background-size: 400%;
-  color: #fff;
+  color: #15bd87;
   border: none;
   cursor: pointer;
 }
@@ -118,8 +118,8 @@
   border-radius: inherit;
   background: linear-gradient(
     82.3deg,
-    rgba(150, 93, 233, 1) 10.8%,
-    rgba(99, 88, 238, 1) 94.3%
+    rgb(21, 17, 39) 10.8%,
+    rgb(17, 12, 36) 94.3%
   );
   transition: all 0.475s;
 }

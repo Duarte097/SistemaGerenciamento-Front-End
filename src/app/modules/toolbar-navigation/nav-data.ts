@@ -1,15 +1,15 @@
 export const navbarData= [{
-  routerLink: '/dashboard',
+  routerLink: '/app/dashboard',
   icon: 'fas fa-home',
   label: 'Dashboard'
 },
 {
-  routerLink: '/projetos',
+  routerLink: '/app/projetos',
   icon: 'fa-solid fa-diagram-project',
   label: 'Projetos'
 },
 {
-  routerLink: '/atividades',
+  routerLink: '/app/atividades',
   icon: 'fa-solid fa-chart-line',
   label: 'Atividades'
 },

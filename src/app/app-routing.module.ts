@@ -5,31 +5,39 @@ import { LoginComponent } from './modules/pages/login/login.component';
 import { AuthGuard } from './guards/auth-guard.service';
 import { ProjetosComponent } from './modules/projetos/projetos.component';
 import { AtividadesComponent } from './modules/atividades/atividades.component';
+import { LayoutComponent } from './layout/layout.component';
 
-const routes: Routes = [{
-  path: '',
-  redirectTo: '/login',
-  pathMatch: 'full'
-},
-{
-  path: 'login',
-  component: LoginComponent,
-},
-{
-  path: 'dashboard',
-  component: DashboardHomeComponent,
-  //canActivate: [AuthGuard]
-},
-{
-  path: 'projetos',
-  component: ProjetosComponent,
-  //canActivate: [AuthGuard]
-},
-{
-  path: 'atividades',
-  component: AtividadesComponent,
-  //canActivate: [AuthGuard]
-},
+const routes: Routes = [
+  {
+    path: '',
+    component: LoginComponent
+  }, // Login é a tela inicial
+  {
+    path: 'app',
+    component: LayoutComponent,
+    children:
+    [
+      {
+        path: 'dashboard',
+        component: DashboardHomeComponent,
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'projetos',
+        component: ProjetosComponent,
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'atividades',
+        component: AtividadesComponent,
+        //canActivate: [AuthGuard]
+      },
+    ]
+  },
+  {
+    path: '**',
+    redirectTo: ''
+  }
 ];
 
 @NgModule({

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PrimeNGConfig } from 'primeng/api';
 import { navbarData } from './modules/toolbar-navigation/nav-data';
+import { Router } from '@angular/router';
 
 interface SideNavToggle {
   screenWidth: number;
@@ -15,8 +16,7 @@ interface SideNavToggle {
 export class AppComponent {
   title = 'SistemaGerenciamento-Front-End';
 
-  constructor(private primeNgConfig: PrimeNGConfig) {}
-
+  constructor(private primeNgConfig: PrimeNGConfig, private router: Router) {}
   navData = navbarData;
 
   isSideNavCollapsed = false;

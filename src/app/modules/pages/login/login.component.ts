@@ -65,7 +65,7 @@ export class LoginComponent implements OnDestroy {
               console.log("Token salvo:", this.cookieService.get('USER_INFO'));
 
               this.loginForm.reset();
-              this.router.navigate(['/dashboard']);
+              this.router.navigate(['/app/dashboard']);
 
               this.messageService.add({
                 severity: 'success',
