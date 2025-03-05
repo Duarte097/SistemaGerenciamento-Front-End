@@ -1,19 +1,18 @@
-import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import * as moment from 'moment';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { ToastModule } from 'primeng/toast';
-import { TasksService } from 'src/app/service/tasks/tasks.service';
+import { ActivityService } from 'src/app/service/activity/activity.service';
 
 @Component({
   selector: 'app-view-activity',
   templateUrl: './view-activity.component.html',
   standalone: true,
-  imports:
-  [
+  imports: [
     CommonModule,
     InputTextareaModule,
     FormsModule,
@@ -27,48 +26,56 @@ import { TasksService } from 'src/app/service/tasks/tasks.service';
 })
 export class ViewActivityComponent {
   @Output() closeModalView = new EventEmitter<void>();
-  @Input() projectId: number | null = null;
-  public projectData: any = {
-    usuarioResponsavel: {
+  @Input() activityId: number | null = null;
+
+  public activityData: any = {
+    projeto: {
+      id_projetos: null,
+      nomeProjeto: null
+    },
+    user: {
       id_usuarios: null,
       nome: null
-    }
+    },
+    dataInicio: null,
+    dataFim: null
   };
-  value: string | undefined = "Disabled"
 
-  constructor(private tasksService: TasksService) {}
+  constructor(private activityServices: ActivityService) {}
+
   ngOnInit(): void {
-    if (this.projectId) {
-      this.loadProjectData();
-      this.projectData.dataInicio = this.convertToDate(this.projectData.dataInicio);
-      this.projectData.dataFim = this.convertToDate(this.projectData.dataFim);
-    }else {
+    if (this.activityId) {
+      this.loadActivityData();
+    } else {
       console.log('Nenhum ID de projeto fornecido.');
     }
-
   }
 
   close() {
-    this.closeModalView.emit();  // Emite um evento para o componente pai fechar o modal
+    this.closeModalView.emit();
   }
 
   convertToDate(dateString: string): Date | null {
-    const date = moment(dateString, 'DD/MM/YYYY');
-    if (date.isValid()) {
-      return date.toDate();
-    }
-    return null;
+    if (!dateString) return null;
+    const date = moment(dateString, 'DD/MM/YYYY', true); // O `true` força a validação estrita
+    return date.isValid() ? date.toDate() : null;
   }
 
-  loadProjectData() {
-    console.log('Carregando projeto com ID:', this.projectId);
-    this.tasksService.getProjectById(this.projectId ?? 0).subscribe({
+  loadActivityData() {
+    console.log('Carregando atividade com ID:', this.activityId);
+    this.activityServices.getActivityById(this.activityId ?? 0).subscribe({
       next: (data) => {
-        console.log('Dados do projeto recebidos:', data);
-        this.projectData = data;
+        console.log('Dados da atividade recebidos:', data);
+
+        // Atribui os dados recebidos ao objeto local
+        this.activityData = data;
+
+        // Converte as datas APÓS receber os dados
+        this.activityData.dataInicio = this.convertToDate(this.activityData.dataInicio);
+        this.activityData.dataFim = this.convertToDate(this.activityData.dataFim);
       },
       error: (err) => {
-        console.error('Erro ao carregar projeto:', err);
+        console.error('Erro ao carregar atividade:', err);
       }
     });
   }

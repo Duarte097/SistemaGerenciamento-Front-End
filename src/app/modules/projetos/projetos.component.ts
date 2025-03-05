@@ -11,6 +11,7 @@ import { GetAllTasksResponse } from 'src/app/models/interfaces/tasks/response/Ge
 import { ViewProjectComponent } from "./view-project/view-project.component";
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { SearchService } from 'src/app/service/tasks/search.service';
+import * as moment from 'moment';
 
 
 interface Projetos {
@@ -149,12 +150,20 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     }
   }
 
-  convertToDate(dateString: string): Date {
-    const parts = dateString.split('/');
-    if (parts.length !== 3) return new Date(); // Retorna uma data padrão se o formato estiver errado
+  convertToDate(dateString: string | null): Date | null {
+    if (!dateString) return null;
 
-    const [day, month, year] = parts.map(Number); // Converte para números
-    return new Date(year, month - 1, day); // O mês em JavaScript começa do 0
+    console.log("Data recebida:", dateString);
+
+    // Converte de 'YYYY-MM-DDTHH:mm:ss' para Date
+    let date = moment(dateString, moment.ISO_8601, true);
+
+    if (!date.isValid()) {
+      console.warn("Erro ao converter data:", dateString);
+      return null;
+    }
+
+    return date.toDate();
   }
 
 

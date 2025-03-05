@@ -13,4 +13,9 @@ export const navbarData= [{
   icon: 'fa-solid fa-chart-line',
   label: 'Atividades'
 },
+{
+  routerLink: '/app/lancamentoHoras',
+  icon: 'fa-solid fa-clock',
+  label: 'LancamentoHoras'
+},
 ];

@@ -8,7 +8,7 @@
 /* Estiliza o cabeçalho */
 .table-header {
   display: grid;
-  grid-template-columns: 1fr 3fr 0.7fr 0.6fr 0.98fr 0.090fr;
+  grid-template-columns: 2.5fr 3fr 2fr 1.5fr 1fr 1.5fr 1fr;
   font-weight: bold;
   text-align: left;
   padding: 10px 0;
@@ -18,7 +18,7 @@
 /* Cada linha (projeto) */
 .table-row {
   display: grid;
-  grid-template-columns: 3fr 5fr 1.2fr 1.3fr 1.7fr 0.01fr;
+  grid-template-columns: 2fr 2.8fr 0.99fr 1fr 1fr 1.2fr 0.3fr;
   align-items: center;
   gap: 10px;
   padding: 12px;
@@ -42,14 +42,9 @@
   border: 1px solid #008000;
 }
 
-.table-row.ABERTA {
-  background-color: #ffebcc; /* Cor laranja clara */
-  border: 1px solid #ff9800; /* Borda laranja */
-}
-
-.table-row.PAUSADA {
-  background-color: #fff9c4; /* Cor amarela clara */
-  border: 1px solid #fbc02d; /* Borda amarela */
+.table-row.CANCELADO {
+  background-color: #fdeaea;
+  border: 1px solid #ff0000;
 }
 
 /* Ajuste no texto para evitar quebras desnecessárias */
@@ -122,11 +117,11 @@
 
 
 .table-header span:nth-child(2) {
-  margin-left: 6.3rem;
+  margin-left: 1.2rem;
 }
 
 .table-header span:nth-child(3) {
-  margin-left: 2rem;
+  margin-left: 2.8rem;
 }
 
 .table-header span:nth-child(4) {
@@ -134,10 +129,16 @@
 }
 
 .table-header span:nth-child(5) {
-  margin-left: 1rem;
+  margin-left: 1.5rem;
 }
 
+.table-header span:nth-child(6) {
+  padding-left: 2.5rem;
+}
 
+.table-header span:nth-child(7) {
+  padding-left: 1.7rem;
+}
 
 
 /* Responsividade */

@@ -55,11 +55,9 @@ export class ViewProjectComponent implements OnInit{
   }
 
   convertToDate(dateString: string): Date | null {
-    const date = moment(dateString, 'DD/MM/YYYY');
-    if (date.isValid()) {
-      return date.toDate();
-    }
-    return null;
+    if (!dateString) return null;
+    const date = moment(dateString, 'DD/MM/YYYY', true); // O `true` força a validação estrita
+    return date.isValid() ? date.toDate() : null;
   }
 
   loadProjectData() {
@@ -68,6 +66,8 @@ export class ViewProjectComponent implements OnInit{
       next: (data) => {
         console.log('Dados do projeto recebidos:', data);
         this.projectData = data;
+        this.projectData.dataInicio = this.convertToDate(this.projectData.dataInicio);
+        this.projectData.dataFim = this.convertToDate(this.projectData.dataFim);
       },
       error: (err) => {
         console.error('Erro ao carregar projeto:', err);

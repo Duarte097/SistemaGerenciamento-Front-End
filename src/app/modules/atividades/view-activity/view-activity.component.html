@@ -6,10 +6,10 @@
     </button>
   </div>
   <div class="input-content" >
-    <input  pTextarea [disabled]="true" [(ngModel)]="projectData.nomeProjeto" />
+    <input  pTextarea [disabled]="true" [(ngModel)]="activityData.nomeAtividade" />
     <div class="card flex justify-content-center">
       <textarea class="textarea-content"
-        [(ngModel)]="projectData.descricao"
+        [(ngModel)]="activityData.descricao_atividade"
         pTextarea [disabled]="true"
         rows="3"
         cols="30"
@@ -18,11 +18,25 @@
       </textarea>
     </div>
     <div class="calendar-container">
-      <p-calendar  [disabled]="true" [(ngModel)]="projectData.dataInicio"  [showIcon]="true" inputId="startDate" class="calendar"/>
-      <p-calendar  [disabled]="true" [(ngModel)]="projectData.dataFim" [showIcon]="true" inputId="endDate" class="calendar"/>
+      <p-calendar
+        [disabled]="true"
+        [(ngModel)]="activityData.dataInicio"
+        [showIcon]="true"
+        inputId="startDate"
+        class="calendar"
+        dateFormat="dd/mm/yy"
+      />
+      <p-calendar
+        [disabled]="true"
+        [(ngModel)]="activityData.dataFim"
+        [showIcon]="true"
+        inputId="endDate"
+        class="calendar"
+        dateFormat="dd/mm/yy"
+      />
     </div>
-    <input pInputText [disabled]="true" [(ngModel)]="projectData.usuarioResponsavel.nome" />
-    <input pInputText [disabled]="true" [(ngModel)]="projectData.status" />
-    <input  pInputText [disabled]="true" [(ngModel)]="projectData.prioridade" />
+    <input pInputText [disabled]="true" [(ngModel)]="activityData.user.nome" />
+    <input pInputText [disabled]="true" [(ngModel)]="activityData.status" />
+    <input  pInputText [disabled]="true" [(ngModel)]="activityData.projeto.nomeProjeto" />
   </div>
 </div>

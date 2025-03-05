@@ -1,45 +1,49 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
-import { MenuModule } from 'primeng/menu';
 import { Subject, takeUntil } from 'rxjs';
 import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/GetAllActivityResponse';
+import { GetAllReleaseHoursResponse } from 'src/app/models/interfaces/lancamentoHoras/GetAllReleaseHoursResponse';
 import { ActivityService } from 'src/app/service/activity/activity.service';
+import { LancamentoHorasService } from 'src/app/service/lancamentoHoras/lancamento-horas.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
-import { CriacaoAtividadeComponent } from "./criacao-atividade/criacao-atividade.component";
-import { EditActivityComponent } from "./edit-activity/edit-activity.component";
-import { ViewActivityComponent } from "./view-activity/view-activity.component";
-
+import { LancamentoHorasDataTransferService } from 'src/app/shared/services/lancamentoHoras/lancamento-horas-data-transfer.service';
 
 @Component({
-  selector: 'app-atividades',
-  templateUrl: './atividades.component.html',
+  selector: 'app-lancamento-horas',
+  templateUrl: './lancamento-horas.component.html',
   standalone: true,
   imports: [
-    CommonModule,
-    MenuModule,
-    CriacaoAtividadeComponent,
-    EditActivityComponent,
-    ViewActivityComponent
-],
-  styleUrls: ['./atividades.component.css']
+    CommonModule
+  ],
+  styleUrls: ['./lancamento-horas.component.css']
 })
-export class AtividadesComponent {
+export class LancamentoHorasComponent {
 private readonly destroy$: Subject<void> = new Subject();
+  public releaseHoursList: Array<GetAllReleaseHoursResponse> = [];
   public activityList: Array<GetAllActivityResponse> = [];
   //navbarData = navbarData;
   public selectedActivityId: number | null = null;
   @Input() searchTerm: string = '';
+  public releaseHoursData: any = {
+    atividade: {
+      id_atividade: null,
+      nomeAtividade: null
+    }
+  }
 
 
   constructor(
-    private activityDtService: ActivityDataTransferService,
     private activityServices: ActivityService,
+    private activityDtService: ActivityDataTransferService,
+    private releaseHoursDtService: LancamentoHorasDataTransferService,
+    private releaseHoursServices: LancamentoHorasService,
     private messageService: MessageService,
     //private searchService: SearchService,
   ){}
   ngOnInit(): void {
-    this.getActivityDatas()
+    this.getReleaseHoursDatas()
     console.log("Id" + this.selectedActivityId);
     /*this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
       this.searchTerm = searchTerm;
@@ -60,7 +64,7 @@ private readonly destroy$: Subject<void> = new Subject();
 
   closeModalCreate() {
     this.isModalCreateOpen = false;  // Fecha o modal
-    this.getActivityDatas()
+    this.getReleaseHoursDatas()
   }
 
   openModalView(activityId: number) {
@@ -80,19 +84,20 @@ private readonly destroy$: Subject<void> = new Subject();
 
   closeModalEdit() {
     this.isModalEditOpen = false;
-    this.getActivityDatas();
+    this.getReleaseHoursDatas();
   }
 
 
-  getActivityDatas(): void {
-    this.activityServices
-    .getAllActivity()
+  getReleaseHoursDatas(): void {
+    this.releaseHoursServices
+    .getAllReleaseHours()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
       next:(response) => {
         if(response.length > 0) {
-          this.activityList = response
-          this.activityDtService.setActivityDatas(this.activityList);
+          this.releaseHoursList = response
+          this.releaseHoursData = response
+          this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
         }
       },
       error: (err) => {
@@ -142,52 +147,6 @@ private readonly destroy$: Subject<void> = new Subject();
 
     const [day, month, year] = parts.map(Number); // Converte para números
     return new Date(year, month - 1, day); // O mês em JavaScript começa do 0
-  }
-
-
-  getStatusClass(status: string): any {
-    console.log('Status recebido:', status);
-    switch (status.trim()) {
-      case 'CONCLUIDO':
-        return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };
-      case 'EM_ANDAMENTO':
-        return { 'bg-blue-500': true, 'text-blue-700': true, 'border-blue-700': true };
-      case 'ABERTA':
-        return { 'bg-orange-500': true, 'text-orange-700': true, 'border-orange-700': true };
-      case 'PAUSADA':
-        return { 'bg-yellow-500': true, 'text-yellow-700': true, 'border-yellow-700': true };
-      default:
-        return { 'bg-blue-500': true, 'text-blue-700': true, 'border-gray-500': true };
-    }
-  }
-
-
-  getStatusIcon(status: string): string {
-    switch (status) {
-      case 'CONCLUIDO':
-        return 'pi pi-check-circle text-green-600'; // Ícone de check para concluído ✅
-      case 'EM_ANDAMENTO':
-        return 'pi pi-spin pi-spinner text-blue-600'; // Ícone de carregamento para andamento 🔄
-      case 'ABERTA':
-        return 'pi pi-lock-open text-red-600'; // icone de cadeado para aberto 🔑
-      case 'PAUSADA':
-        return 'pi pi-stop-circle text-gray-600'; // Ícone de pausa para pausado 🛑
-      default:
-        return 'pi pi-question-circle text-gray-500'; // Ícone de interrogação para status desconhecido ❓
-    }
-  }
-
-
-  getStatusBorderClass(status: string): any {
-    return { 'border-green-200': status === 'CONCLUIDO', 'border-yellow-200': status === 'EM_ANDAMENTO', 'border-red-200': status === 'ABERTA', 'border-gray-200': status === 'PAUSADA' };
-  }
-
-  getTextColorClass(status: string): any {
-    return { 'text-green-700': status === 'CONCLUIDO', 'text-yellow-700': status === 'EM_ANDAMENTO', 'text-red-700': status === 'ABERTA', 'text-gray-700': status === 'PAUSADA' };
-  }
-
-  getBadgeClass(status: string): any {
-    return { 'bg-green-400 text-green-900': status === 'CONCLUIDO', 'bg-yellow-400 text-yellow-900': status === 'EM_ANDAMENTO', 'bg-red-400 text-red-900': status === 'ABERTA', 'bg-gray-400 text-gray-900': status === 'PAUSADA' };
   }
 
 }

@@ -109,11 +109,9 @@ private readonly destroy$: Subject<void> = new Subject();
   }
 
   convertToDate(dateString: string): Date | null {
-    const date = moment(dateString, 'DD/MM/YYYY');
-    if (date.isValid()) {
-      return date.toDate();
-    }
-    return null;
+    if (!dateString) return null;
+    const date = moment(dateString, 'DD/MM/YYYY', true); // O `true` força a validação estrita
+    return date.isValid() ? date.toDate() : null;
   }
 
 
@@ -176,6 +174,8 @@ private readonly destroy$: Subject<void> = new Subject();
       next: (data) => {
         console.log('Dados do projeto recebidos:', data);
         this.activityData = data;
+        this.activityData.dataInicio = this.convertToDate(this.activityData.dataInicio);
+        this.activityData.dataFim = this.convertToDate(this.activityData.dataFim);
       },
       error: (err) => {
         console.error('Erro ao carregar projeto:', err);

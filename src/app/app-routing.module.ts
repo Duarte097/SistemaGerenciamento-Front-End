@@ -6,6 +6,7 @@ import { AuthGuard } from './guards/auth-guard.service';
 import { ProjetosComponent } from './modules/projetos/projetos.component';
 import { AtividadesComponent } from './modules/atividades/atividades.component';
 import { LayoutComponent } from './layout/layout.component';
+import { LancamentoHorasComponent } from './modules/lancamento-horas/lancamento-horas.component';
 
 const routes: Routes = [
   {
@@ -30,6 +31,11 @@ const routes: Routes = [
       {
         path: 'atividades',
         component: AtividadesComponent,
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'lancamentoHoras',
+        component: LancamentoHorasComponent,
         //canActivate: [AuthGuard]
       },
     ]

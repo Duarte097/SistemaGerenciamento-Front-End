@@ -19,8 +19,26 @@
         </textarea>
       </div>
       <div class="calendar-container">
-        <p-calendar placeholder="Data de Inicio" formControlName="dataInicio" [(ngModel)]="projectData.dataInicio" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
-        <p-calendar placeholder="Data de Fim" formControlName="dataFim" [(ngModel)]="projectData.dataFim" [iconDisplay]="'input'" [showIcon]="true" inputId="icondisplay" class="calendar"/>
+        <p-calendar
+          placeholder="Data de Inicio"
+          formControlName="dataInicio"
+          [(ngModel)]="projectData.dataInicio"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+          class="calendar"
+          dateFormat="dd/mm/yy"
+        />
+        <p-calendar
+          placeholder="Data de Fim"
+          formControlName="dataFim"
+          [(ngModel)]="projectData.dataFim"
+          [iconDisplay]="'input'"
+          [showIcon]="true"
+          inputId="icondisplay"
+          class="calendar"
+          dateFormat="dd/mm/yy"
+        />
       </div>
       <p-dropdown
         formControlName="status"

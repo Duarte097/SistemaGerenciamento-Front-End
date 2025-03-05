@@ -28,6 +28,7 @@ import { HeaderComponent } from "./modules/header/header.component";
 import { EditActivityComponent } from './modules/atividades/edit-activity/edit-activity.component';
 import { ViewActivityComponent } from './modules/atividades/view-activity/view-activity.component';
 import { LayoutComponent } from './layout/layout.component';
+import { LancamentoHorasComponent } from './modules/lancamento-horas/lancamento-horas.component';
 
 
 @NgModule({
@@ -37,7 +38,7 @@ import { LayoutComponent } from './layout/layout.component';
     UsuariosComponent,
     ToolbarNavigationComponent,
     BodyComponent,
-    LayoutComponent
+    LayoutComponent,
   ],
   imports: [
     CommonModule,

@@ -27,7 +27,7 @@
           {{ activity.nomeAtividade }}
         </span>
 
-        <span class="descricao">{{ activity.descricao_atividade }}</span>
+        <span class="descricao">{{ activity.descricao }}</span>
         <span class="data">{{ convertToDate(activity.dataInicio) | date: 'dd/MM/yyyy' }}</span>
         <span class="data">{{ convertToDate(activity.dataFim) | date: 'dd/MM/yyyy' }}</span>
         <span class="status">{{ activity.status }}</span>
@@ -46,6 +46,6 @@
 </div>
 
 <app-criacao-atividade *ngIf="isModalCreateOpen" (closeModal)="closeModalCreate()"></app-criacao-atividade>
-<!--app-view-project *ngIf="isModalViewOpen" [projectId]="selectedProjectId" (closeModalView)="closeModalView()"></!--app-view-project-->
+<app-view-activity *ngIf="isModalViewOpen" [activityId]="selectedActivityId" (closeModalView)="closeModalView()"></app-view-activity>
 <app-edit-activity *ngIf="isModalEditOpen" [activityId]="selectedActivityId" (closeModalEdit)="closeModalEdit()"></app-edit-activity>
 
