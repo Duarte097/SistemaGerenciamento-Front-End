@@ -1,6 +1,6 @@
 <div class="surface-card shadow-2 border-round p-4">
   <div class="flex justify-content-end align-items-center mb-5 card-tarefas">
-    <span class="text-xl text-900 font-medium">Projetos</span>
+    <span class="text-xl text-900 font-medium">Lancamento de Horas</span>
     <div style="display: flex; justify-content: flex-end; flex-grow: 1;">
       <button class="button-create-icon" (click)="openModalCreate()">
         <span class="p-button-icon pi pi-plus"></span>
@@ -9,7 +9,8 @@
   </div>
   <div class="surface-card shadow-2 border-round p-4 card-tarefas">
     <div class="table-header">
-      <span>Nome</span>
+      <span>Atividade</span>
+      <span>Usuario</span>
       <span>Descrição</span>
       <span>Início</span>
       <span>Fim</span>
@@ -22,18 +23,18 @@
         <span class="nome-com-icone">
           <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
           </span>
-          {{ releaseHoursData.atividade.nomeAtividade }}
+          {{ releaseHoursData.atividade?.nomeAtividade }}
         </span>
-
+        <span class="descricao">{{ releaseHoursData.user?.nome }}</span>
         <span class="descricao">{{ releaseHours.descricao }}</span>
         <span class="data">{{ releaseHours.dataInicio }}</span>
         <span class="data">{{releaseHours.dataFim}}</span>
 
         <div class="action-buttons">
-          <button class="edit-button" (click)="openModalEdit(releaseHours.id_lancamento_horas)">
+          <button class="edit-button" (click)="openModalEdit(releaseHours.id_lancamentos_horas)">
             <i class="fa-regular fa-pen-to-square"></i>
           </button>
-          <button class="view-button" (click)="openModalView(releaseHours.id_lancamento_horas)">
+          <button class="view-button" (click)="openModalView(releaseHours.id_lancamentos_horas)">
             <i class="pi pi-eye"></i>
           </button>
         </div>
@@ -43,6 +44,6 @@
 </div>
 
 <app-criacao-lancamento-horas *ngIf="isModalCreateOpen" (closeModal)="closeModalCreate()"></app-criacao-lancamento-horas>
-<!--app-view-project *ngIf="isModalViewOpen" [projectId]="selectedProjectId" (closeModalView)="closeModalView()"></!--app-view-project>
-<app-edit-project-- *ngIf="isModalEditOpen" [projectId]="selectedProjectId" (closeModalEdit)="closeModalEdit()"></app-edit-project-->
+<app-view-lancamento-horas *ngIf="isModalViewOpen" [releaseHoursId]="selectedReleaseHoursId" (closeModalView)="closeModalView()"></app-view-lancamento-horas>
+<app-edit-lancamento-horas *ngIf="isModalEditOpen" [releaseHoursId]="selectedReleaseHoursId" (closeModalEdit)="closeModalEdit()"></app-edit-lancamento-horas>
 

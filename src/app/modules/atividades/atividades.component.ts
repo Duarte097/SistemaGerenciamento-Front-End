@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 import { Subject, takeUntil } from 'rxjs';
@@ -24,7 +24,7 @@ import { ViewActivityComponent } from "./view-activity/view-activity.component";
 ],
   styleUrls: ['./atividades.component.css']
 })
-export class AtividadesComponent {
+export class AtividadesComponent implements OnInit, OnDestroy {
 private readonly destroy$: Subject<void> = new Subject();
   public activityList: Array<GetAllActivityResponse> = [];
   //navbarData = navbarData;

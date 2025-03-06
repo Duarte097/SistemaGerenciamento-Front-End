@@ -1,6 +1,6 @@
 export interface GetAllReleaseHoursResponse {
   amount: number;
-  id_lancamento_horas: number;
+  id_lancamentos_horas: number;
   descricao: string;
   dataInicio: string;
   dataFim: string;

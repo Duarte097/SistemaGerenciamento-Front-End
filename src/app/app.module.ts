@@ -21,24 +21,17 @@ import { RouterModule } from '@angular/router';
 import { MenubarModule } from 'primeng/menubar';
 import { BadgeModule } from 'primeng/badge';
 import { AvatarModule } from 'primeng/avatar';
-import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar-navigation.component';
 import { BodyComponent } from './modules/body/body.component';
 import { HeaderComponent } from "./modules/header/header.component";
-import { EditActivityComponent } from './modules/atividades/edit-activity/edit-activity.component';
-import { ViewActivityComponent } from './modules/atividades/view-activity/view-activity.component';
 import { LayoutComponent } from './layout/layout.component';
-import { LancamentoHorasComponent } from './modules/lancamento-horas/lancamento-horas.component';
-import { CriacaoLancamentoHorasComponent } from './modules/lancamento-horas/criacao-lancamento-horas/criacao-lancamento-horas.component';
-import { EditLancamentoHorasComponent } from './modules/lancamento-horas/edit-lancamento-horas/edit-lancamento-horas.component';
-import { ViewLancamentoHorasComponent } from './modules/lancamento-horas/view-lancamento-horas/view-lancamento-horas.component';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    UsuariosComponent,
     ToolbarNavigationComponent,
     BodyComponent,
     LayoutComponent

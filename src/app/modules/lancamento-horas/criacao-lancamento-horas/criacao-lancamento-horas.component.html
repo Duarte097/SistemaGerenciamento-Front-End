@@ -22,7 +22,7 @@
         [(ngModel)]="selectedAtividade"
         [options]="atividade"
         optionLabel="nomeAtividade"
-        optionValue="id_atividade"
+        optionValue="idAtividade"
         placeholder="Selecione a Atividade"
         [style]="{ minWidth: '14rem' }"
         class="dropdown-content">
@@ -62,7 +62,7 @@
         />
       </div>
       <div class="button-salvar-container">
-        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="createReleaseHoursForm.invalid">Salvar</button>
+        <button class="button-salvar" type="button" (click)="onSubmit()" >Salvar</button>
       </div>
     </div>
   </form>

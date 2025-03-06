@@ -14,8 +14,6 @@ import { LancamentoHorasService } from 'src/app/service/lancamentoHoras/lancamen
 import { UserService } from 'src/app/service/user/User.service';
 import { MessageService } from 'primeng/api';
 import { CreateReleaseHoursRequest } from 'src/app/models/interfaces/lancamentoHoras/CreateReleaseHoursRequest';
-import { TasksService } from 'src/app/service/tasks/tasks.service';
-import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
 import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/GetAllActivityResponse';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
@@ -180,12 +178,12 @@ export class CriacaoLancamentoHorasComponent {
           if (response.length > 0) {
             this.activityList = response; // Armazena a lista de usuários retornados
 
-            this.atividade = response.map(projeto => ({
-              nomeAtividade: projeto.nomeAtividade,
-              id_atividade: projeto.id_atividade
+            this.atividade = response.map(atividade => ({
+              nomeAtividade: atividade.nomeAtividade,
+              idAtividade: atividade.idAtividade
             }));
 
-            console.log('Usuários carregados:', this.atividade); // Log da lista de usuários carregados
+            console.log('Atividades carregadas:', this.atividade); // Log da lista de usuários carregados
             this.activityDtService.setActivityDatas(this.activityList);
           }
         },

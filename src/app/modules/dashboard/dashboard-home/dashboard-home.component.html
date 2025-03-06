@@ -1,1 +1,97 @@
-<h1>funfa</h1>
+<div class="storage-card">
+  <div class="grid">
+    <ng-container *ngFor="let meterItem of value">
+      <div class="storage-item">
+        <div class="storage-content">
+          <span class="label">{{ meterItem.label }}</span>
+          <span class="percentage">{{ meterItem.value }}%</span>
+        </div>
+        <span class="icon" [style.backgroundColor]="meterItem.color1">
+          <i [class]="meterItem.icon"></i>
+        </span>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Barra de Progresso -->
+  <div class="storage-info">
+    <span>Storage</span>
+    <span class="percentage-right">{{ "totalPercent" }}%</span>
+    <span class="size">1TB</span>
+  </div>
+  <div class="progress-bar">
+    <div class="progress" [style.width.%]=""></div>
+  </div>
+
+  <!-- Botões -->
+  <div class="buttons">
+    <p-button label="Manage Storage" [outlined]="true" size="small"></p-button>
+    <p-button label="Update Plan" class="update-btn" size="small"></p-button>
+  </div>
+</div>
+
+
+<div class="card-container">
+  <div class="card">
+    <div class="icon-container">
+      <img src="assets/images/stats-illustration-1.svg" width="38" height="38">
+    </div>
+    <div class="card-content">
+      <div class="card-title">Revenue</div>
+      <div class="card-subtitle">Sales Goal</div>
+      <div class="progress-info">
+        <span>Achieved</span>
+        <span>12/12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-blue"></div>
+        <div class="progress-blue"></div>
+        <div class="progress-blue"></div>
+        <div class="progress-blue"></div>
+        <div class="progress-blue"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="icon-container">
+      <img src="assets/images/stats-illustration-2.svg" width="38" height="38">
+    </div>
+    <div class="card-content">
+      <div class="card-title">Reviews</div>
+      <div class="card-subtitle">Client Messages</div>
+      <div class="progress-info">
+        <span>In Progress</span>
+        <span>4/12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-orange"></div>
+        <div class="progress-orange"></div>
+        <div class="progress-gray"></div>
+        <div class="progress-gray"></div>
+        <div class="progress-gray"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="icon-container">
+      <img src="assets/images/stats-illustration-3.svg" width="38" height="38">
+    </div>
+    <div class="card-content">
+      <div class="card-title">Tasks</div>
+      <div class="card-subtitle">Completed Tasks</div>
+      <div class="progress-info">
+        <span>In Progress</span>
+        <span>8/12</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-purple"></div>
+        <div class="progress-purple"></div>
+        <div class="progress-purple"></div>
+        <div class="progress-gray"></div>
+        <div class="progress-gray"></div>
+      </div>
+    </div>
+  </div>
+</div>

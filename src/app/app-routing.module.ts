@@ -7,6 +7,7 @@ import { ProjetosComponent } from './modules/projetos/projetos.component';
 import { AtividadesComponent } from './modules/atividades/atividades.component';
 import { LayoutComponent } from './layout/layout.component';
 import { LancamentoHorasComponent } from './modules/lancamento-horas/lancamento-horas.component';
+import { UsuariosComponent } from './modules/usuarios/usuarios.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,11 @@ const routes: Routes = [
       {
         path: 'lancamentoHoras',
         component: LancamentoHorasComponent,
+        //canActivate: [AuthGuard]
+      },
+      {
+        path: 'usuarios',
+        component: UsuariosComponent,
         //canActivate: [AuthGuard]
       },
     ]

@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MenuModule } from 'primeng/menu';
-import { navbarData } from './nav-data';
 import {CriacaoProjetoComponent} from './criacao-projeto/criacao-projeto.component'
 import { TasksDataTransferService } from 'src/app/shared/services/tasks/tasks-data-transfer.service';
 import { TasksService } from 'src/app/service/tasks/tasks.service';
@@ -39,7 +38,6 @@ interface Projetos {
 export class ProjetosComponent implements OnInit, OnDestroy{
   private readonly destroy$: Subject<void> = new Subject();
   public tasksList: Array<GetAllTasksResponse> = [];
-  navbarData = navbarData;
   public selectedProjectId: number | null = null;
   @Input() searchTerm: string = '';
 

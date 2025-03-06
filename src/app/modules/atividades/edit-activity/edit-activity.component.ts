@@ -34,7 +34,7 @@ import { UsersDataTransferService } from 'src/app/shared/services/users/users-da
   styleUrls: ['./edit-activity.component.css']
 })
 export class EditActivityComponent {
-private readonly destroy$: Subject<void> = new Subject();
+  private readonly destroy$: Subject<void> = new Subject();
   public tasksList: Array<GetAllTasksResponse> = [];
   public userList: Array<GetAllUsersResponse> = [];
   @Output() closeModalEdit = new EventEmitter<void>();

@@ -1,7 +1,7 @@
 export interface EditReleaseHoursRequest {
-  descricao_lancamentoHoras: string;
+  descricao: string;
   dataInicio: Date;
   dataFim: Date;
+  idUsuario: string;
   idAtividade: string;
-  idProjeto: string;
 }

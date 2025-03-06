@@ -18,4 +18,9 @@ export const navbarData= [{
   icon: 'fa-solid fa-clock',
   label: 'LancamentoHoras'
 },
+{
+  routerLink: '/app/usuarios',
+  icon: 'fa-solid fa-user',
+  label: 'Usuarios'
+}
 ];

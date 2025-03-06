@@ -20,6 +20,7 @@
       width: 3rem;
       min-width: 3rem;
       border-radius: 0.313rem;
+      color: #15bd87;
       padding: 0.313rem;
       font-size: 24px;
       font-weight: 900;
@@ -95,7 +96,7 @@
   .sidenav-nav-item:hover{
     .sidenav-nav-link{
       background: #fff;
-      color: #000;
+      color: #15bd87;
     }
   }
 }
@@ -106,6 +107,6 @@
 
   .sidenav-link-icon,
   .sidenav-link-text {
-    color: #000;
+    color: #15bd87;
   }
 }
