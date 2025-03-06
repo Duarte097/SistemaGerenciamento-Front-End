@@ -9,14 +9,17 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 import { LancamentoHorasService } from 'src/app/service/lancamentoHoras/lancamento-horas.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
 import { LancamentoHorasDataTransferService } from 'src/app/shared/services/lancamentoHoras/lancamento-horas-data-transfer.service';
+import { CriacaoLancamentoHorasComponent } from "./criacao-lancamento-horas/criacao-lancamento-horas.component";
+
 
 @Component({
   selector: 'app-lancamento-horas',
   templateUrl: './lancamento-horas.component.html',
   standalone: true,
   imports: [
-    CommonModule
-  ],
+    CommonModule,
+    CriacaoLancamentoHorasComponent
+],
   styleUrls: ['./lancamento-horas.component.css']
 })
 export class LancamentoHorasComponent {

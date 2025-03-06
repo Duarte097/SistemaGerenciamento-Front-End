@@ -1,0 +1,69 @@
+<div class="modal-backdrop"></div>
+<div class="modal-content">
+  <form [formGroup]="createReleaseHoursForm" (ngSubmit)="onSubmit()">
+    <div class="button-fechar-container">
+      <button icon="pi pi-times" class="button-fechar" (click)="close()">
+        <span class="p-button-icon pi pi-times"></span>
+      </button>
+    </div>
+    <div class="input-content">
+      <p-dropdown
+        formControlName="idUsuario"
+        [(ngModel)]="selectedUsuarios"
+        [options]="usuarios"
+        optionLabel="nome"
+        optionValue="id_usuarios"
+        placeholder="Selecione o Usuario responsavel"
+        [style]="{ minWidth: '14rem' }"
+        class="dropdown-content">
+      </p-dropdown>
+      <p-dropdown
+        formControlName="idAtividade"
+        [(ngModel)]="selectedAtividade"
+        [options]="atividade"
+        optionLabel="nomeAtividade"
+        optionValue="id_atividade"
+        placeholder="Selecione a Atividade"
+        [style]="{ minWidth: '14rem' }"
+        class="dropdown-content">
+      </p-dropdown>
+      <div class="card flex justify-content-center">
+        <textarea class="textarea-content"
+          formControlName="descricao"
+          placeholder="Digite a descrição do lancamento de horas"
+          rows="3"
+          cols="30"
+          pInputTextarea
+          [autoResize]="true">
+        </textarea>
+      </div>
+      <div class="calendar-container">
+        <p-calendar
+          placeholder="Data de Inicio"
+          formControlName="dataInicio"
+          [(ngModel)]="date2"
+          [timeOnly]="true"
+          [showIcon]="true"
+          inputId="icondisplay"
+          class="calendar"
+          hourFormat="24"
+          icon="pi pi-clock"
+        />
+        <p-calendar
+          placeholder="Data de Fim"
+          formControlName="dataFim"
+          [(ngModel)]="date3"
+          [timeOnly]="true"
+          [showIcon]="true"
+          inputId="icondisplay"
+          class="calendar"
+          hourFormat="24"
+          icon="pi pi-clock"
+        />
+      </div>
+      <div class="button-salvar-container">
+        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="createReleaseHoursForm.invalid">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

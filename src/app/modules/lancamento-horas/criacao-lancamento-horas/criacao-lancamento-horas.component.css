@@ -1,0 +1,114 @@
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);  /* Fundo opaco */
+  z-index: 1000;  /* Faz o backdrop ficar por baixo do conteúdo do modal */
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  z-index: 1001;  /* Modal fica sobre o backdrop */
+  margin-top: 50px;
+}
+
+.input-content input {
+  margin-top: 10px;
+  margin-bottom: 10px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  height: 45px;
+  border-radius: 5px;
+  background-color: #fff;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.input-content label {
+  margin-bottom: 5px;
+  color: #fff;
+  text-align: left;
+}
+
+.textarea-content{
+  width: 300px;
+  margin-top: 10px;
+}
+
+.calendar-container {
+  margin-top: 10px;
+  display: flex;
+  justify-content: space-between; /* Espaça os elementos igualmente */
+  width: 100%;
+}
+
+.calendar {
+  width: 145px;
+  margin-right: 10px;
+}
+.p-calendar .p-input-calendar .p-button-icon{
+  color: #15bd87
+}
+
+
+.dropdown-content {
+  margin-top: 10px;
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+}
+
+.button-salvar-container {
+  display: flex;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.button-salvar {
+  background-color: #15bd87;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.button-salvar:hover{
+  background-color: #15bd87;
+  color: #000;
+}
+
+.button-fechar-container {
+  display: flex;
+  margin-bottom: 10px;
+  justify-content: flex-end;
+}
+
+.button-fechar {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #000;
+  font-size: 20px;
+}
+
+.button-fechar:hover{
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #15bd87;
+  font-size: 20px;
+}
+
+
+
