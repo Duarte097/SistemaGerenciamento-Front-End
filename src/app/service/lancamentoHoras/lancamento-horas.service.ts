@@ -33,8 +33,8 @@ export class LancamentoHorasService {
     };
   }
 
-  getAllReleaseHours(): Observable<Array<GetAllReleaseHoursResponse>> {
-    return this.http.get<Array<GetAllReleaseHoursResponse>>(
+  getAllReleaseHours(): Observable<GetAllReleaseHoursResponse[]> {
+    return this.http.get<GetAllReleaseHoursResponse[]>(
       `${this.API_URL}/lancamentoHoras`,
       this.getHeaders() // Atualizando os headers dinamicamente
     );

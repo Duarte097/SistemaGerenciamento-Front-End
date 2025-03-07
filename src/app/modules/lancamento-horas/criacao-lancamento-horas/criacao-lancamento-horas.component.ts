@@ -17,6 +17,7 @@ import { CreateReleaseHoursRequest } from 'src/app/models/interfaces/lancamentoH
 import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/GetAllActivityResponse';
 import { ActivityService } from 'src/app/service/activity/activity.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
+import { format, formatISO } from 'date-fns';
 
 @Component({
   selector: 'app-criacao-lancamento-horas',
@@ -87,8 +88,8 @@ export class CriacaoLancamentoHorasComponent {
     if (this.createReleaseHoursForm.valid) {
       const releaseHoursData: CreateReleaseHoursRequest = {
         descricao: this.createReleaseHoursForm.value.descricao,
-        dataInicio: this.createReleaseHoursForm.value.dataInicio,
-        dataFim: this.createReleaseHoursForm.value.dataFim,
+        dataInicio: this.createReleaseHoursForm.value.dataInicio ? format(this.createReleaseHoursForm.value.dataInicio, "yyyy-MM-dd'T'HH:mm:ss") : '',
+        dataFim: this.createReleaseHoursForm.value.dataFim ? format(this.createReleaseHoursForm.value.dataFim, "yyyy-MM-dd'T'HH:mm:ss") : '',
         idUsuario: this.createReleaseHoursForm.value.idUsuario,
         idAtividade: this.createReleaseHoursForm.value.idAtividade
       };

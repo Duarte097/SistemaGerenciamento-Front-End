@@ -9,6 +9,7 @@ import { ActivityDataTransferService } from 'src/app/shared/services/activity/ac
 import { CriacaoAtividadeComponent } from "./criacao-atividade/criacao-atividade.component";
 import { EditActivityComponent } from "./edit-activity/edit-activity.component";
 import { ViewActivityComponent } from "./view-activity/view-activity.component";
+import * as moment from 'moment';
 
 
 @Component({
@@ -25,11 +26,16 @@ import { ViewActivityComponent } from "./view-activity/view-activity.component";
   styleUrls: ['./atividades.component.css']
 })
 export class AtividadesComponent implements OnInit, OnDestroy {
-private readonly destroy$: Subject<void> = new Subject();
-  public activityList: Array<GetAllActivityResponse> = [];
+  private readonly destroy$: Subject<void> = new Subject();
+ public activityList: GetAllActivityResponse[ ]= [];
+  public allactivity: GetAllActivityResponse[] = [];
   //navbarData = navbarData;
   public selectedActivityId: number | null = null;
   @Input() searchTerm: string = '';
+
+  public currentPage = 1;
+  public pageSize = 5; // Defina o tamanho da página desejado
+  public totalItems = 0;
 
 
   constructor(
@@ -89,11 +95,11 @@ private readonly destroy$: Subject<void> = new Subject();
     .getAllActivity()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
-      next:(response) => {
-        if(response.length > 0) {
-          this.activityList = response
-          this.activityDtService.setActivityDatas(this.activityList);
-        }
+      next:(response: GetAllActivityResponse[]) => {
+        this.allactivity = response;
+        this.totalItems = response.length;
+        this.changePage(1);
+        this.activityDtService.setActivityDatas(this.activityList);
       },
       error: (err) => {
         console.log(err);
@@ -136,13 +142,23 @@ private readonly destroy$: Subject<void> = new Subject();
     }
   }*/
 
-  convertToDate(dateString: string): Date {
-    const parts = dateString.split('/');
-    if (parts.length !== 3) return new Date(); // Retorna uma data padrão se o formato estiver errado
 
-    const [day, month, year] = parts.map(Number); // Converte para números
-    return new Date(year, month - 1, day); // O mês em JavaScript começa do 0
+  convertToDate(dateString: string | null): Date | null {
+    if (!dateString) return null;
+
+    console.log("Data recebida:", dateString);
+
+    // Converte de 'YYYY-MM-DDTHH:mm:ss' para Date
+    let date = moment(dateString, moment.ISO_8601, true);
+
+    if (!date.isValid()) {
+      console.warn("Erro ao converter data:", dateString);
+      return null;
+    }
+
+    return date.toDate();
   }
+
 
 
   getStatusClass(status: string): any {
@@ -188,6 +204,19 @@ private readonly destroy$: Subject<void> = new Subject();
 
   getBadgeClass(status: string): any {
     return { 'bg-green-400 text-green-900': status === 'CONCLUIDO', 'bg-yellow-400 text-yellow-900': status === 'EM_ANDAMENTO', 'bg-red-400 text-red-900': status === 'ABERTA', 'bg-gray-400 text-gray-900': status === 'PAUSADA' };
+  }
+
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.activityList = this.allactivity.slice(startIndex, endIndex); // Exiba apenas a página atual
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.totalItems / this.pageSize);
+    return Array(pageCount).fill(0).map((x, i) => i + 1);
   }
 
 }

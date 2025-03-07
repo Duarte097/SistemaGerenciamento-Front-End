@@ -1,53 +1,58 @@
 <div class="surface-card shadow-2 border-round p-4">
   <div class="flex justify-content-end align-items-center mb-5 card-tarefas">
     <span class="text-xl text-900 font-medium">Projetos</span>
-    <div style="display: flex; justify-content: flex-end; flex-grow: 1;">
-      <button class="button-create-icon" (click)="openModalCreate()">
+    <button class="button-create-icon" (click)="openModalCreate()">
         <span class="p-button-icon pi pi-plus"></span>
-      </button>
-    </div>
+    </button>
   </div>
   <div class="surface-card shadow-2 border-round p-4 card-tarefas">
-    <div class="table-header">
-      <span>Nome</span>
-      <span>Descrição</span>
-      <span>Prioridade</span>
-      <span>Início</span>
-      <span>Fim</span>
-      <span>Status</span>
-      <span>Ações</span>
-    </div>
+      <div class="table-header">
+          <span>Nome</span>
+          <span>Descrição</span>
+          <span>Prioridade</span>
+          <span>Início</span>
+          <span>Fim</span>
+          <span>Status</span>
+          <span>Ações</span>
+      </div>
 
-    <ul class="list-none p-0 m-0">
-      <li class="table-row" *ngFor="let task of tasksList" [ngClass]="getStatusClass(task.status)">
+      <ul class="list-none p-0 m-0">
+          <li class="table-row" *ngFor="let task of tasksList" [ngClass]="getStatusClass(task.status)">
 
-        <span class="nome-com-icone">
-          <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
-            <i [ngClass]="getStatusIcon(task.status)"></i>
-          </span>
-          {{ task.nomeProjeto }}
-        </span>
+              <span class="nome-com-icone">
+                  <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
+                      <i [ngClass]="getStatusIcon(task.status)"></i>
+                  </span>
+                  {{ task.nomeProjeto }}
+              </span>
 
-        <span class="descricao">{{ task.descricao }}</span>
-        <span class="prioridade">{{ task.prioridade }}</span>
-        <span class="data">{{ convertToDate(task.dataInicio) | date: 'dd/MM/yyyy' }}</span>
-        <span class="data">{{ convertToDate(task.dataFim) | date: 'dd/MM/yyyy' }}</span>
-        <span class="status">{{ task.status }}</span>
+              <span class="descricao">{{ task.descricao }}</span>
+              <span class="prioridade">{{ task.prioridade }}</span>
+              <span class="data">{{ convertToDate(task.dataInicio) | date: 'dd/MM/yyyy' }}</span>
+              <span class="data">{{ convertToDate(task.dataFim) | date: 'dd/MM/yyyy' }}</span>
+              <span class="status">{{ task.status }}</span>
 
-        <div class="action-buttons">
-          <button class="edit-button" (click)="openModalEdit(task.id_projeto)">
-            <i class="fa-regular fa-pen-to-square"></i>
-          </button>
-          <button class="view-button" (click)="openModalView(task.id_projeto)">
-            <i class="pi pi-eye"></i>
-          </button>
-        </div>
-      </li>
-    </ul>
+              <div class="action-buttons">
+                  <button class="edit-button" (click)="openModalEdit(task.id_projeto)">
+                      <i class="fa-regular fa-pen-to-square"></i>
+                  </button>
+                  <button class="view-button" (click)="openModalView(task.id_projeto)">
+                      <i class="pi pi-eye"></i>
+                  </button>
+              </div>
+          </li>
+      </ul>
+  </div>
+
+  <div class="pagination">
+      <button [disabled]="currentPage === 1" (click)="changePage(1)"><<</button>
+      <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)"><</button>
+      <button *ngFor="let page of getPages()" (click)="changePage(page)" [ngClass]="{'active': currentPage === page}">{{ page }}</button>
+      <button [disabled]="currentPage === getPages().length" (click)="changePage(currentPage + 1)">></button>
+      <button [disabled]="currentPage === getPages().length" (click)="changePage(getPages().length)">>></button>
   </div>
 </div>
 
 <app-criacao-projeto *ngIf="isModalCreateOpen" (closeModal)="closeModalCreate()"></app-criacao-projeto>
 <app-view-project *ngIf="isModalViewOpen" [projectId]="selectedProjectId" (closeModalView)="closeModalView()"></app-view-project>
 <app-edit-project *ngIf="isModalEditOpen" [projectId]="selectedProjectId" (closeModalEdit)="closeModalEdit()"></app-edit-project>
-

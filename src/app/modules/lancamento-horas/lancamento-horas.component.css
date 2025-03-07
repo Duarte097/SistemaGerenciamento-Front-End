@@ -75,14 +75,6 @@
   color: #d63031;
 }
 
-.button-create {
-  justify-content: flex-end;
-  margin-left: auto;/* Alinha o botão à direita */
-}
-
-.button-create button {
-  margin-left: auto;
-}
 
 .flex.justify-content-end.align-items-center.mb-5.card-tarefas {
   position: relative;
@@ -133,7 +125,36 @@
 }
 
 
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
 
+.pagination button, .pagination select {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #15bd87;
+  color: white;
+  border-color: #15bd87;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination select {
+  padding: 8px;
+}
 
 /* Responsividade */
 @media (max-width: 768px) {

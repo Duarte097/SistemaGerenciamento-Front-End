@@ -59,10 +59,10 @@ export class LoginComponent implements OnDestroy {
             console.log("Resposta da API:", response); // 🔹 Debugando a resposta
 
             const token = response?.accessToken; // 🔹 Pegue o token correto
-
+            localStorage.setItem('token', response.accessToken);
             if (token) {
               this.cookieService.set('USER_INFO', token, { path: '/' });
-              console.log("Token salvo:", this.cookieService.get('USER_INFO'));
+              console.log('Token armazenado:', localStorage.getItem('token'));
 
               this.loginForm.reset();
               this.router.navigate(['/app/dashboard']);

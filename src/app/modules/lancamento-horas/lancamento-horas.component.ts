@@ -30,12 +30,18 @@ import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersR
 })
 export class LancamentoHorasComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
-  public releaseHoursList: Array<GetAllReleaseHoursResponse> = [];
+  public releaseHoursList: GetAllReleaseHoursResponse[] = [];
+  private allreleaseHours: GetAllReleaseHoursResponse[]  = [];
   public activityList: Array<GetAllActivityResponse> = [];
   public userList: Array<GetAllUsersResponse> = [];
   //navbarData = navbarData;
   atividade: any[] = [];
   usuarios: any[] = [];
+
+  public currentPage = 1;
+  public pageSize = 5; // Defina o tamanho da página desejado
+  public totalItems = 0;
+
   public selectedReleaseHoursId: number | null = null;
   @Input() searchTerm: string = '';
   public releaseHoursData: any = {
@@ -113,13 +119,12 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
     .getAllReleaseHours()
     .pipe(takeUntil(this.destroy$))
     .subscribe({
-      next:(response) => {
-        if(response.length > 0) {
-          this.releaseHoursList = response
-          this.releaseHoursData = response.length > 0 ? response[0] : {};
-          console.log(this.releaseHoursList);
-          this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
-        }
+      next:(response: GetAllReleaseHoursResponse[]) => {
+        this.allreleaseHours = response
+        this.releaseHoursData = response.length > 0 ? response[0] : {};
+        this.totalItems = response.length
+        this.changePage(1);
+        this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
       },
       error: (err) => {
         console.log(err);
@@ -223,5 +228,17 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.releaseHoursList = this.allreleaseHours.slice(startIndex, endIndex); // Exiba apenas a página atual
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.totalItems / this.pageSize);
+    return Array(pageCount).fill(0).map((x, i) => i + 1);
   }
 }

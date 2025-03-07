@@ -37,9 +37,15 @@ interface Projetos {
 })
 export class ProjetosComponent implements OnInit, OnDestroy{
   private readonly destroy$: Subject<void> = new Subject();
-  public tasksList: Array<GetAllTasksResponse> = [];
+  private allTasks: GetAllTasksResponse[] = []; // Armazene todos os projetos
+  public tasksList: GetAllTasksResponse[] = [];
   public selectedProjectId: number | null = null;
   @Input() searchTerm: string = '';
+
+  // Propriedades de paginação
+  public currentPage = 1;
+  public pageSize = 5; // Defina o tamanho da página desejado
+  public totalItems = 0;
 
 
   constructor(
@@ -97,16 +103,14 @@ export class ProjetosComponent implements OnInit, OnDestroy{
 
   getTasksDatas(): void {
     this.tasksServices
-    .getAllTasks()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next:(response) => {
-        if(response.length > 0) {
-          this.tasksList = response
-          console.log(this.tasksList);
-          this.tasksDtService.setTasksDatas(this.tasksList);
-        }
-      },
+      .getAllTasks()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: GetAllTasksResponse[]) => {
+          this.allTasks = response; // Armazene todos os projetos
+          this.totalItems = response.length; // Atualize totalItems
+          this.changePage(1); // Exiba a primeira página
+        },
       error: (err) => {
         console.log(err);
         this.messageService.add({
@@ -209,5 +213,17 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     return { 'bg-green-400 text-green-900': status === 'CONCLUIDO', 'bg-yellow-400 text-yellow-900': status === 'EM_ANDAMENTO', 'bg-red-400 text-red-900': status === 'CANCELADO', 'bg-gray-400 text-gray-900': status === 'PLANEJADO' };
   }
 
+    // Métodos para controlar a paginação
+  changePage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.tasksList = this.allTasks.slice(startIndex, endIndex); // Exiba apenas a página atual
+  }
+
+  getPages(): number[] {
+    const pageCount = Math.ceil(this.totalItems / this.pageSize);
+    return Array(pageCount).fill(0).map((x, i) => i + 1);
+  }
 
 }

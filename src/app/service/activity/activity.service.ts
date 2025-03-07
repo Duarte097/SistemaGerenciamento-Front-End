@@ -32,12 +32,13 @@ export class ActivityService {
     };
   }
 
-  getAllActivity(): Observable<Array<GetAllActivityResponse>> {
-    return this.http.get<Array<GetAllActivityResponse>>(
+  getAllActivity(): Observable<GetAllActivityResponse[]> {
+    return this.http.get<GetAllActivityResponse[]>(
       `${this.API_URL}/atividades`,
       this.getHeaders() // Atualizando os headers dinamicamente
     );
   }
+
 
   getActivityById(id_atividade: number): Observable<Array<GetAllActivityResponse>>{
     return this.http.get<Array<GetAllActivityResponse>>(`${this.API_URL}/atividades/${id_atividade}`, this.getHeaders());

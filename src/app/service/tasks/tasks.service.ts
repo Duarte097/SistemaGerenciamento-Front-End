@@ -32,12 +32,13 @@ export class TasksService {
     };
   }
 
-  getAllTasks(): Observable<Array<GetAllTasksResponse>> {
-    return this.http.get<Array<GetAllTasksResponse>>(
+  getAllTasks(): Observable<GetAllTasksResponse[]> {
+    return this.http.get<GetAllTasksResponse[]>(
       `${this.API_URL}/projetos`,
       this.getHeaders() // Atualizando os headers dinamicamente
     );
   }
+
 
   getProjectById(id_projeto: number): Observable<Array<GetAllTasksResponse>>{
     return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos/${id_projeto}`, this.getHeaders());

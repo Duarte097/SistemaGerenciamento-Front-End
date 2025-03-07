@@ -1,5 +1,5 @@
 export interface GetAllTasksResponse {
-  amount: number;
+  totalItems: number;
   id_projeto: number;
   nomeProjeto: string;
   descricao: string;

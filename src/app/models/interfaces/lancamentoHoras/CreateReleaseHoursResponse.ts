@@ -1,7 +1,7 @@
 export interface CreateReleaseHoursResponse {
   descricao: string;
-  dataInicio: Date;
-  dataFim: Date;
+  dataInicio: string;
+  dataFim: string;
   idAtividade: string;
   idProjeto: string;
 }
