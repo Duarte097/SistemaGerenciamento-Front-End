@@ -57,7 +57,13 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       this.atividadesRecentes = atividades.slice(0, 5);
     });
 
-
+    /*this.lancamentoHorasService.getAllReleaseHours().pipe(takeUntil(this.destroy$)).subscribe(lancamentos => {
+      this.totalHorasLancadas = lancamentos.length;
+      this.lancamentosRecentes = lancamentos.slice(0, 5);
+      this.totalHorasLancadasMes = lancamentos
+        .filter(l => new Date(l.dataInicio).getMonth() === new Date().getMonth())
+        .reduce((total, lancamento) => total + lancamento., 0);
+    });*/
   }
 
   getProgressBarItems(completed: number, total: number): any[] {

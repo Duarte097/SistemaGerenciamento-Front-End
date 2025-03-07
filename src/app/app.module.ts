@@ -27,7 +27,6 @@ import { HeaderComponent } from "./modules/header/header.component";
 import { LayoutComponent } from './layout/layout.component';
 
 
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -57,8 +56,8 @@ import { LayoutComponent } from './layout/layout.component';
     MenubarModule,
     BadgeModule,
     AvatarModule,
-    HeaderComponent
-],
+    HeaderComponent,
+  ],
   providers: [
     CookieService,
     MessageService

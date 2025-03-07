@@ -17,26 +17,30 @@
     .logo {
       background: #fff;
       text-align: center;
-      width: 3rem;
-      min-width: 3rem;
+      width: 3.2rem;
+      min-width: 3.2rem;
       border-radius: 0.313rem;
       color: #15bd87;
-      padding: 0.313rem;
+      padding: 0.2rem;
       font-size: 24px;
       font-weight: 900;
       cursor: pointer;
       border: none;
     }
 
+    .logo img {
+      width: 2.5rem;
+    }
+
     .logo-text{
-      margin-left: 1.5rem;
+      margin-left: 1.2rem;
       font-size: 24px;
       font-weight: 700;
       color: #fff;
     }
 
     .btn-close{
-      margin-left: auto;
+      margin-left: 8px;
       cursor: pointer;
       width: 2rem;
       height: 2rem;
@@ -88,7 +92,7 @@
       }
 
       .sidenav-link-text {
-        margin-left: 1.5rem;
+        margin-left: 1.2rem;
       }
     }
   }
