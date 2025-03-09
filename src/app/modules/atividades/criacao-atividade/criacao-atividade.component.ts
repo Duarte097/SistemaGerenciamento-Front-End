@@ -92,7 +92,7 @@ export class CriacaoAtividadeComponent {
   onSubmit(): void {
     console.log('Formulário enviado', this.createActivityForm.value);
     if (this.createActivityForm.valid) {
-      const activityData: CreateActivityRequest = {
+      const atividadeData: CreateActivityRequest = {
         nomeAtividade: this.createActivityForm.value.nomeAtividade,
         descricao: this.createActivityForm.value.descricao,
         dataInicio: this.createActivityForm.value.dataInicio,
@@ -101,50 +101,50 @@ export class CriacaoAtividadeComponent {
         idUsuario: this.createActivityForm.value.idUsuario,
         idProjeto: this.createActivityForm.value.idProjeto
       };
-      console.log('Chamando tasksServices.createTask...');
-      this.activityServices.createActivity(activityData)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
-            this.close();
-            console.log('Chamando messageService.add() com sucesso...');
-            console.log('Mensagem de sucesso:', {
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Projeto criado com sucesso!',
-              life: 2000
-            });
-            this.messageService.add({
-              severity: 'success',
-              summary: 'Sucesso',
-              detail: 'Projeto criado com sucesso!',
-              life: 2000
-            });
-
-          },
-          error: (err) => {
-            console.log('Chamando messageService.add() com erro...');
-            console.log('Mensagem de erro:', {
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Erro ao criar o projeto!',
-              life: 2000
-            });
+      console.log('Chamando atividadeService.createAtividade...');
+      this.activityServices.createActivity(atividadeData)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          this.close();
+          console.log('Chamando messageService.add() com sucesso...');
+          console.log('Mensagem de sucesso:', {
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: 'Atividade criada com sucesso!',
+            life: 2000
+        });
+        this.messageService.add({
+          severity: 'success',
+          summary: 'Sucesso',
+          detail: 'Atividade criada com sucesso!',
+          life: 2000
+        });
+        },
+        error: (err) => {
+          console.log('Chamando messageService.add() com erro...');
+          if (err && err.error && err.error.message && err.error.message.includes("Apenas o responsável pelo projeto ou ADMINs pode criar atividades.")) {
             this.messageService.add({
               severity: 'error',
-              summary: 'Erro',
-              detail: 'Erro ao criar o projeto!',
+              summary: 'Erro de Permissão',
+              detail: 'Apenas o responsável pelo projeto ou ADMINs pode criar atividades!',
               life: 2000
             });
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Erro ao criar a atividade!',
+                life: 2000
+              });
+            }
             setTimeout(() => {
-              new this.closeModal(); // Fecha o modal após um pequeno delay
-            }, 1000);
-          }
+              new this.closeModal();
+          }, 1000);
         }
-      );
-    }
+      });
   }
-
+}
   getUsersDatas(): void {
     this.userService
       .getAllUsers()

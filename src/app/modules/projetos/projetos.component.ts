@@ -11,6 +11,8 @@ import { ViewProjectComponent } from "./view-project/view-project.component";
 import { EditProjectComponent } from './edit-project/edit-project.component';
 import { SearchService } from 'src/app/service/tasks/search.service';
 import * as moment from 'moment';
+import { jwtDecode } from 'jwt-decode';
+import { UserService } from 'src/app/service/user/User.service';
 
 
 interface Projetos {
@@ -41,7 +43,8 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   public tasksList: GetAllTasksResponse[] = [];
   public selectedProjectId: number | null = null;
   @Input() searchTerm: string = '';
-
+  @Input() userId: number | null = null;
+  public userData: any = {}
   // Propriedades de paginação
   public currentPage = 1;
   public pageSize = 5; // Defina o tamanho da página desejado
@@ -51,10 +54,18 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   constructor(
     private tasksDtService: TasksDataTransferService,
     private tasksServices: TasksService,
+    private userService: UserService,
     private messageService: MessageService,
     private searchService: SearchService,
   ){}
   ngOnInit(): void {
+    this.getUserIdFromToken();
+    this.loadUserData();
+    if(this.userData.perfil === 'ADMIN'){
+       this.getTasksDatas();
+    }else if(this.userData.perfil === 'USUARIO') {
+      this.getTasksDatasByUserId();
+    }
     this.getTasksDatas()
     console.log("Id" + this.selectedProjectId);
     this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
@@ -123,6 +134,28 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     })
   }
 
+  getTasksDatasByUserId(): void {
+    this.tasksServices
+      .getAllTasks()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: GetAllTasksResponse[]) => {
+          this.allTasks = response; // Armazene todos os projetos
+          this.totalItems = response.length; // Atualize totalItems
+          this.changePage(1); // Exiba a primeira página
+        },
+      error: (err) => {
+        console.log(err);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Erro ao buscar produtos!',
+          life: 2500,
+        })
+      }
+    })
+  }
+
   getTasksByName(): void {
     if (this.searchTerm) {
       this.tasksServices
@@ -168,6 +201,34 @@ export class ProjetosComponent implements OnInit, OnDestroy{
     return date.toDate();
   }
 
+  getUserIdFromToken(): void {
+    const token = localStorage.getItem('token');
+    if (token) {
+        try {
+            const decodedToken: any = jwtDecode(token);
+            this.userId = decodedToken.sub;
+            console.log("ID do usuario extraido do token: ", this.userId);
+        } catch (error) {
+            console.error('Erro ao decodificar o token:', error);
+            console.error('Token problemático:', token);
+        }
+    } else {
+        console.error('Token não encontrado no localStorage.');
+    }
+  }
+
+  loadUserData() {
+    console.log('Carregando projeto com ID:', this.userId);
+    this.userService.getUsersById(this.userId ?? 0).subscribe({
+      next: (data) => {
+        console.log('Dados do usuario recebido:', data);
+        this.userData = data;
+      },
+      error: (err) => {
+        console.error('Erro ao carregar projeto:', err);
+      }
+    });
+  }
 
   getStatusClass(status: string): any {
     switch (status) {

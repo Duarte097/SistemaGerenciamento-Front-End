@@ -103,9 +103,9 @@ export class CriacaoProjetoComponent implements OnInit, OnDestroy  {
       };
       console.log('Chamando tasksServices.createTask...');
       this.tasksServices.createTask(taskData)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe({
-          next: (response) => {
+      .pipe(takeUntil(this.destroy$))
+    .subscribe({
+        next: (response) => {
             this.close();
             console.log('Chamando messageService.add() com sucesso...');
             console.log('Mensagem de sucesso:', {
@@ -120,28 +120,29 @@ export class CriacaoProjetoComponent implements OnInit, OnDestroy  {
               detail: 'Projeto criado com sucesso!',
               life: 2000
             });
-
           },
           error: (err) => {
             console.log('Chamando messageService.add() com erro...');
-            console.log('Mensagem de erro:', {
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Erro ao criar o projeto!',
-              life: 2000
-            });
-            this.messageService.add({
-              severity: 'error',
-              summary: 'Erro',
-              detail: 'Erro ao criar o projeto!',
-              life: 2000
-            });
+            if (err && err.error && err.error.message && err.error.message.includes("Apenas usuários com perfil ADMIN podem criar projetos")) {
+                this.messageService.add({
+                    severity: 'error',
+                    summary: 'Erro de Permissão',
+                    detail: 'Apenas usuários ADMIN podem criar projetos!',
+                    life: 2000
+                });
+            } else {
+              this.messageService.add({
+                severity: 'error',
+                summary: 'Erro',
+                detail: 'Erro ao criar o projeto!',
+                life: 2000
+              });
+            }
             setTimeout(() => {
-              new this.closeModal(); // Fecha o modal após um pequeno delay
+              new this.closeModal();
             }, 1000);
           }
-        }
-      );
+        });
     }
   }
 
