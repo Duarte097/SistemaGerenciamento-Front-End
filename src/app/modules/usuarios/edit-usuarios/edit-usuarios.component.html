@@ -7,12 +7,12 @@
       </button>
     </div>
     <div class="input-content">
-      <input type="text" formControlName="nome" [(ngModel)]="projectData.nomeProjeto">
-      <input type="email" formControlName="email" [(ngModel)]="projectData.nomeProjeto">
-      <input type="password" formControlName="senha" [(ngModel)]="projectData.nomeProjeto">
+      <input type="text" formControlName="nome" [(ngModel)]="userData.nome">
+      <input type="email" formControlName="email" [(ngModel)]="userData.email">
+      <input type="password" formControlName="senha" [(ngModel)]="userData.senha">
       <p-dropdown
         formControlName="perfil"
-        [(ngModel)]="projectData.status"
+        [(ngModel)]="userData.perfil"
         [options]="perfil"
         optionLabel="name"
         optionValue="code"

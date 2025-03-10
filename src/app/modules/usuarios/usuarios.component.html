@@ -1,9 +1,61 @@
-<div class="surface-card shadow-2 border-round p-4">
-  <div class="flex justify-content-between align-items-center mb-5 card-tarefas">
-    <span class="text-xl text-900 font-medium">Usuários</span>
+<div class="surface-card shadow-2 border-round p-4"  *ngIf="userData.perfil === 'ADMIN'">
+  <div class="flex justify-content-end align-items-center mb-5 card-tarefas">
+    <span class="text-xl text-900 font-medium">Usuarios</span>
     <button class="button-create-icon" (click)="openModalCreate()">
-      <span class="p-button-icon pi pi-plus"></span>
+        <span class="p-button-icon pi pi-plus"></span>
     </button>
+  </div>
+  <div class="surface-card shadow-2 border-round p-4" *ngIf="userData.perfil === 'ADMIN'">
+    <div class="table-header">
+        <span>Nome</span>
+        <span>Email</span>
+        <span>Perfil</span>
+        <span>Ações</span>
+    </div>
+    <ul class="list-none p-0 m-0">
+        <li class="table-row" *ngFor="let user of userList">
+            <span class="nome-com-icone">
+                <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
+                </span>
+                {{ user.nome }}
+            </span>
+            <span class="email">{{ user.email }}</span>
+            <span class="perfil">{{ user.perfil }}</span>
+            <div class="action-buttons">
+                <button class="edit-button" *ngIf="userData.perfil === 'ADMIN'"  (click)="openModalEdit(user.id_usuarios)">
+                    <i class="fa-regular fa-pen-to-square"></i>
+                </button>
+                <button class="view-button" (click)="openModalView(user.id_usuarios)">
+                    <i class="pi pi-eye"></i>
+                </button>
+            </div>
+        </li>
+    </ul>
+  </div>
+
+  <div class="pagination">
+    <button [disabled]="currentPage === 1" (click)="changePage(1)"><<</button>
+    <button [disabled]="currentPage === 1" (click)="changePage(currentPage - 1)"><</button>
+    <button *ngFor="let page of getPages()" (click)="changePage(page)" [ngClass]="{'active': currentPage === page}">{{ page }}</button>
+    <button [disabled]="currentPage === getPages().length" (click)="changePage(currentPage + 1)">></button>
+    <button [disabled]="currentPage === getPages().length" (click)="changePage(getPages().length)">>></button>
+  </div>
+</div>
+
+<app-criacao-usuarios *ngIf="isModalCreateOpen" (closeModal)="closeModalCreate()"></app-criacao-usuarios>
+<!--app-view-project *ngIf="isModalViewOpen" [projectId]="selectedProjectId" (closeModalView)="closeModalView()"></app-view-project-->
+<app-edit-usuarios *ngIf="isModalEditOpen" [userId]="selectedUserId" (closeModalEdit)="closeModalEdit()"></app-edit-usuarios>
+
+
+
+<!--TELA APENAS PARA USUARIOS -->
+
+<div class="surface-card shadow-2 border-round p-4" *ngIf="userData.perfil === 'USER'">
+  <div class="flex justify-content-between align-items-center mb-5 card-tarefas">
+    <span class="text-xl text-900 font-medium">Perfil</span>
+    <!--button class="button-create-icon" (click)="openModalCreate()">
+      <span class="p-button-icon pi pi-plus"></span>
+    </button-->
   </div>
   <form [formGroup]="editUserForm" (ngSubmit)="onSubmit()">
     <div class="input-container">
@@ -13,19 +65,21 @@
       </div>
       <div class="input-group">
         <i class="pi pi-envelope"></i>
-        <input pInputText formControlName="email" [(ngModel)]="userData.email" placeholder="E-mail" />
+        <input pInputText  [disabled]="true" formControlName="email" [(ngModel)]="userData.email" placeholder="E-mail" />
       </div>
       <div class="input-group">
         <i class="pi pi-lock"></i>
         <input pInputText formControlName="senha" [(ngModel)]="userData.senha" placeholder="Senha" type="password"/>
       </div>
-      <div class="input-group">
+      <!--div class="input-group">
         <i class="pi pi-user-edit"></i>
         <input pInputText formControlName="perfil" [(ngModel)]="userData.perfil" placeholder="Perfil" />
-      </div>
+      </!--div-->
     </div>
     <div class="button-salvar-container">
       <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="editUserForm.invalid">Salvar</button>
     </div>
   </form>
 </div>
+
+

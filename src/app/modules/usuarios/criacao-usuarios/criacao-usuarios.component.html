@@ -1,1 +1,28 @@
-<p>criacao-usuarios works!</p>
+<div class="modal-backdrop"></div>
+<div class="modal-content">
+  <form [formGroup]="createUserForm" (ngSubmit)="onSubmit()">
+    <div class="button-fechar-container">
+      <button icon="pi pi-times" class="button-fechar" (click)="close()">
+        <span class="p-button-icon pi pi-times"></span>
+      </button>
+    </div>
+    <div class="input-content">
+      <input type="text" formControlName="nome" placeholder="Digite o nome do Usuario">
+      <input type="email" formControlName="email" placeholder="Digite o email do Usuario">
+      <input type="password" formControlName="senha" placeholder="Digite a senha do Usuario">
+      <p-dropdown
+        formControlName="perfil"
+        [(ngModel)]="selectedPerfil"
+        [options]="perfil"
+        optionLabel="name"
+        optionValue="code"
+        placeholder="Selecione a prioridade"
+        [style]="{ minWidth: '14rem' }"
+        class="dropdown-content">
+      </p-dropdown>
+      <div class="button-salvar-container">
+        <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="createUserForm.invalid">Salvar</button>
+      </div>
+    </div>
+  </form>
+</div>

@@ -91,3 +91,173 @@
     grid-template-columns: 1fr; /* Empilha os inputs em telas menores */
   }
 }
+
+
+/* TABELA DE USUARIOS */
+.surface-card {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Estiliza o cabeçalho */
+.table-header {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr 1fr;
+  font-weight: bold;
+  text-align: left;
+  padding: 12px 16px;
+  border-bottom: 2px solid #ddd;
+  gap: 10px;
+  font-size: 0.93rem;
+  align-items: center;
+}
+
+/* Cada linha (projeto) */
+.table-row {
+  display: grid;
+  grid-template-columns: 2fr 3fr 1fr 1fr;
+  align-items: center; /* Alinhamento vertical */
+  padding: 14px 16px; /* Aumentei o padding */
+  border: 1px solid #ddd;
+  border-radius: 7px;
+  margin-bottom: 12px; /* Aumentei a margem */
+  gap: 10px; /* Aumentei o gap */
+  font-size: 0.9rem;
+}
+
+/* Ajuste no texto para evitar quebras desnecessárias */
+.table-row span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.table-header span:last-child {
+  text-align: center; /* Centraliza o texto */
+}
+
+.table-header span:first-child {
+  padding-left: 0.6rem;
+}
+
+.text-xl {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.card-tarefas{
+  margin-bottom: 30px;
+}
+
+/* Fundo de acordo com o status */
+.table-row.CONCLUIDO {
+  background-color: #eafbe2;
+  border: 1px solid #008000;
+}
+
+.table-row.CANCELADO {
+  background-color: #fdeaea;
+  border: 1px solid #ff0000;
+}
+
+/* Ajuste no texto para evitar quebras desnecessárias */
+.table-row span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Botões de ação */
+.action-buttons {
+  display: flex;
+  justify-content: center; /* Centraliza os ícones */
+  gap: 8px;
+}
+
+.edit-button, .view-button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.edit-button i {
+  color: #ff9100;
+}
+
+.view-button i {
+  color: #d63031;
+}
+
+.flex.justify-content-end.align-items-center.mb-5.card-tarefas {
+  position: relative;
+}
+
+.button-create-icon{
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #000;
+  font-size: 20px;
+  position: absolute;
+  right: 0;
+}
+.button-create-icon:hover{
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #15bd87;
+  font-size: 20px;
+}
+
+.nome-com-icone {
+  display: flex;
+  align-items: center;
+  gap: 8px; /* Espaçamento entre o ícone e o nome */
+}
+
+/* Removido os ajustes de margin-left */
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.pagination button, .pagination select {
+  padding: 8px 12px;
+  margin: 0 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.pagination button.active {
+  background-color: #15bd87;
+  color: white;
+  border-color: #15bd87;
+}
+
+.pagination button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pagination select {
+  padding: 8px;
+}
+
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .table-header,
+  .table-row {
+      grid-template-columns: 1fr;
+      font-size: 14px;
+  }
+}
+

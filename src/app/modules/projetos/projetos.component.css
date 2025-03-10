@@ -8,23 +8,26 @@
 /* Estiliza o cabeçalho */
 .table-header {
   display: grid;
-  grid-template-columns: 2.5fr 3fr 2fr 1.5fr 1fr 1.5fr 1fr;
+  grid-template-columns: 3fr 2fr 1fr 1.5fr 1.5fr 1.5fr 0.5fr; /* Ajuste aqui */
   font-weight: bold;
   text-align: left;
-  padding: 10px 0;
+  padding: 10px 16px; /* Adicionado padding */
   border-bottom: 2px solid #ddd;
+  gap: 8px; /* Adicionado gap */
+  font-size: 0.93rem;
 }
 
 /* Cada linha (projeto) */
 .table-row {
   display: grid;
-  grid-template-columns: 2fr 2.8fr 0.99fr 1fr 1fr 1.2fr 0.3fr;
+  grid-template-columns: 3fr 2fr 1fr 1.5fr 1.5fr 1.5fr 0.5fr; /* Ajuste aqui */
   align-items: center;
-  gap: 10px;
-  padding: 12px;
+  padding: 12px 16px; /* Adicionado padding */
   border: 1px solid #ddd;
   border-radius: 7px;
   margin-bottom: 10px;
+  gap: 8px; /* Adicionado gap */
+  font-size: 0.9rem; /* Fonte menor */
 }
 
 .text-xl {
@@ -102,34 +105,7 @@
   gap: 8px; /* Espaçamento entre o ícone e o nome */
 }
 
-.table-header span:first-child {
-  padding-left: 2.3rem;
-}
-
-
-.table-header span:nth-child(2) {
-  margin-left: 1.2rem;
-}
-
-.table-header span:nth-child(3) {
-  margin-left: 2.8rem;
-}
-
-.table-header span:nth-child(4) {
-  margin-left: 1.8rem;
-}
-
-.table-header span:nth-child(5) {
-  margin-left: 1.5rem;
-}
-
-.table-header span:nth-child(6) {
-  padding-left: 2.5rem;
-}
-
-.table-header span:nth-child(7) {
-  padding-left: 1.7rem;
-}
+/* Removido os ajustes de margin-left */
 
 .pagination {
   display: flex;
@@ -162,15 +138,18 @@
   padding: 8px;
 }
 
+.table-header span:first-child {
+  padding-left: 1.6rem;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .table-header,
   .table-row {
-    grid-template-columns: 1fr 1fr;
-    font-size: 14px;
+      grid-template-columns: 1fr 1fr;
+      font-size: 14px;
   }
 }
-
 
 .bg-green-500 { background-color: #e8f5e9; }
 .border-green-700 { border-color: #a5d6a9; }
@@ -193,4 +172,3 @@ text-gray-700 { color: #424242; }
 .bg-pending-400 { background: #fff8e1; color: #ffc107; }
 .bg-paid-400 { background: #e8f5e9; color: #4caf50; }
 bg-unpaid-400 { background: #ffebee; color: #f44336; }
-

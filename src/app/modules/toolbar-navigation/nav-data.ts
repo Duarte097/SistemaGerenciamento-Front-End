@@ -19,8 +19,8 @@ export const navbarData= [{
   label: 'LancamentoHoras'
 },
 {
-  routerLink: '/app/usuarios',
+  routerLink: '/app/perfil',
   icon: 'fa-solid fa-user',
-  label: 'Usuarios'
+  label: 'Perfil'
 }
 ];

@@ -11,6 +11,8 @@ import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersR
 import { UsersDataTransferService } from 'src/app/shared/services/users/users-data-transfer.service';
 import { MessageService } from 'primeng/api';
 import { jwtDecode } from 'jwt-decode';
+import { CriacaoUsuariosComponent } from "./criacao-usuarios/criacao-usuarios.component";
+import { EditUsuariosComponent } from './edit-usuarios/edit-usuarios.component';
 
 @Component({
   selector: 'app-usuarios',
@@ -22,28 +24,27 @@ import { jwtDecode } from 'jwt-decode';
     DropdownModule,
     ReactiveFormsModule,
     ToastModule,
-    InputTextModule
-  ],
+    InputTextModule,
+    CriacaoUsuariosComponent,
+    EditUsuariosComponent
+],
   styleUrls: ['./usuarios.component.css']
 })
 export class UsuariosComponent {
   private readonly destroy$: Subject<void> = new Subject();
-  public userList: Array<GetAllUsersResponse> = [];
-  @Output() closeModalEdit = new EventEmitter<void>();
+  public userList: GetAllUsersResponse[] = [];
+  public allUsers: GetAllUsersResponse[] = [];
+  public selectedUserId: number | null = null;
   @Input() userId: number | null = null;
-  public projectData: any = {
-    usuarioResponsavel: {
-      id_usuarios: null,
-      nome: null
-    }
-  };
+
   public userData: any = {};
   editUserForm : FormGroup;
-  selectedStatus: any;
-  selectedUsuarios: any;
-  selectedPrioridade: any;
   perfil: any[] = [];
   usuarios: any[] = [];
+
+  public currentPage = 1;
+  public pageSize = 5; // Defina o tamanho da página desejado
+  public totalItems = 0;
 
 
   constructor(
@@ -56,12 +57,15 @@ export class UsuariosComponent {
       nome: ['', Validators.required],
       email: ['', Validators.required],
       senha: ['', Validators.required],
-      perfil: ['', Validators.required],
+      perfil:['', Validators.required]
     });
     this.userData ;
   }
 
   isModalCreateOpen = false;
+  isModalViewOpen = false;
+  isModalEditOpen = false;
+
 
   ngOnInit(): void {
     this.perfil = [
@@ -69,23 +73,47 @@ export class UsuariosComponent {
       { name: 'ADMIN', code: 'ADMIN' },
     ];
     this.getUserIdFromToken();
-    if (this.userId) {
-        this.loadProjectData();
-    } else {
-        console.log('Nenhum ID de projeto fornecido.');
+    if(this.userData.perfil === 'ADMIN') {
+     this.loadAllUsersData()
     }
-    console.log("ID do usuário:", this.projectData.usuarioResponsavel.id_usuarios);
+    this.loadAllUsersData()
+    if (this.userId) {
+      this.loadUsersData();
+  } else {
+      console.log('Nenhum ID de projeto fornecido.');
+    }
   }
 
-
-  close() {
-    this.closeModalEdit.emit();  // Emite um evento para o componente pai fechar o modal
-  }
 
   openModalCreate() {
     this.isModalCreateOpen = true;  // Abre o modal
   }
 
+  closeModalCreate() {
+    this.isModalCreateOpen = false;  // Fecha o modal
+    this.loadUsersData();
+  }
+
+
+  openModalView(userId: number) {
+    this.selectedUserId = userId;
+    this.isModalViewOpen = true;
+    console.log(userId);
+  }
+
+  closeModalView() {
+    this.isModalViewOpen = false;  // Fecha o modal
+  }
+
+  openModalEdit(userId: number) {
+    this.selectedUserId = userId;
+    this.isModalEditOpen = true;
+  }
+
+  closeModalEdit() {
+    this.isModalEditOpen = false;
+    this.loadUsersData();
+  }
 
   onSubmit(): void {
     console.log('Formulário enviado', this.editUserForm .value);
@@ -94,24 +122,23 @@ export class UsuariosComponent {
         nome: this.editUserForm .value.nome,
         email: this.editUserForm .value.email,
         senha: this.editUserForm .value.senha,
-        perfil: this.editUserForm .value.perfil
       };
       this.userServices.editUser(usersData, this.userId)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
-            this.close();
+            this.closeModalCreate();
             console.log('Chamando messageService.add() com sucesso...');
             console.log('Mensagem de sucesso:', {
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Projeto editado com sucesso!',
+              detail: 'Usuario editado com sucesso!',
               life: 2000
             });
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Projeto editado com sucesso!',
+              detail: 'Usuario editado com sucesso!',
               life: 2000
             });
 
@@ -121,13 +148,13 @@ export class UsuariosComponent {
             console.log('Mensagem de erro:', {
               severity: 'error',
               summary: 'Erro',
-              detail: 'Erro ao editar o projeto!',
+              detail: 'Erro ao editar o Usuario!',
               life: 2000
             });
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
-              detail: 'Erro ao editar o projeto!',
+              detail: 'Erro ao editar o Usuario!',
               life: 2000
             });
           }
@@ -136,15 +163,32 @@ export class UsuariosComponent {
     }
   }
 
-  loadProjectData() {
-    console.log('Carregando projeto com ID:', this.userId);
+  loadUsersData() {
     this.userServices.getUsersById(this.userId ?? 0).subscribe({
       next: (data) => {
-        console.log('Dados do projeto recebidos:', data);
+        console.log('Dados do Usuario recebidos:', data);
         this.userData = data;
       },
       error: (err) => {
-        console.error('Erro ao carregar projeto:', err);
+        console.error('Erro ao carregar o Usuario:', err);
+      }
+    });
+  }
+
+  loadAllUsersData() {
+    this.userServices
+    .getAllUsers()
+    .pipe(takeUntil(this.destroy$))
+    .subscribe({
+      next: (response: GetAllUsersResponse[]) => {
+        console.log('Dados dos Usuarios recebidos:', response);
+        this.allUsers = response;
+        this.totalItems = response.length; // Atualize totalItems aqui
+        this.changePage(1)
+      },
+
+      error: (err) => {
+        console.error('Erro ao carregar os Usuarios:', err);
       }
     });
   }
@@ -163,5 +207,17 @@ export class UsuariosComponent {
     } else {
         console.error('Token não encontrado no localStorage.');
     }
+  }
+
+  changePage(page: number): void {
+    this.currentPage = page;
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.userList = this.allUsers.slice(startIndex, endIndex); // Exiba apenas a página atual
+  }
+
+  getPages(): number[] {
+      const pageCount = Math.ceil(this.totalItems / this.pageSize);
+      return Array(pageCount).fill(0).map((x, i) => i + 1);
   }
 }

@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
 import { Subject, takeUntil } from 'rxjs';
-import { EditUserRequest } from 'src/app/models/interfaces/user/EditUserRequest';
+import { EditUserByAdminRequest } from 'src/app/models/interfaces/user/EditUserByAdminRequest';
 import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersResponse';
 import { UserService } from 'src/app/service/user/User.service';
 import { UsersDataTransferService } from 'src/app/shared/services/users/users-data-transfer.service';
@@ -25,22 +25,15 @@ import { UsersDataTransferService } from 'src/app/shared/services/users/users-da
   ],
   styleUrls: ['./edit-usuarios.component.css']
 })
-export class EditUsuariosComponent {
-private readonly destroy$: Subject<void> = new Subject();
+export class EditUsuariosComponent implements OnInit, OnDestroy {
+  private readonly destroy$: Subject<void> = new Subject();
   public userList: Array<GetAllUsersResponse> = [];
   @Output() closeModalEdit = new EventEmitter<void>();
   @Input() userId: number | null = null;
-  public projectData: any = {
-    usuarioResponsavel: {
-      id_usuarios: null,
-      nome: null
-    }
-  };
+
   public userData: any = {};
   editUserForm : FormGroup;
-  selectedStatus: any;
   selectedUsuarios: any;
-  selectedPrioridade: any;
   perfil: any[] = [];
   usuarios: any[] = [];
 
@@ -59,18 +52,20 @@ private readonly destroy$: Subject<void> = new Subject();
     });
     this.userData ;
   }
+  ngOnDestroy(): void {
+    throw new Error('Method not implemented.');
+  }
 
   ngOnInit(): void {
     this.perfil = [
-      { name: 'USUARIO', code: 'USUARIO' },
+      { name: 'USER', code: 'USER' },
       { name: 'ADMIN', code: 'ADMIN' },
     ];
     if (this.userId) {
-      this.loadProjectData();
+      this.loadUsersData();
     }else {
-      console.log('Nenhum ID de projeto fornecido.');
+      console.log('Nenhum ID de Usuario fornecido.');
     }
-    console.log("ID do usuário:", this.projectData.usuarioResponsavel.id_usuarios);
   }
 
 
@@ -82,14 +77,13 @@ private readonly destroy$: Subject<void> = new Subject();
 
   onSubmit(): void {
     console.log('Formulário enviado', this.editUserForm .value);
-    if (this.editUserForm .valid && this.userId) {
-      const usersData: EditUserRequest = {
-        nome: this.editUserForm .value.nome,
-        email: this.editUserForm .value.email,
-        senha: this.editUserForm .value.senha,
-        perfil: this.editUserForm .value.perfil
+    if (this.editUserForm.valid && this.userId) {
+      const usersData: EditUserByAdminRequest = {
+        nome: this.editUserForm.value.nome,
+        email: this.editUserForm.value.email,
+        senha: this.editUserForm.value.senha,
+        perfil: this.editUserForm.value.perfil
       };
-      console.log('Chamando tasksServices.createTask...');
       this.userServices.editUser(usersData, this.userId)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -99,13 +93,13 @@ private readonly destroy$: Subject<void> = new Subject();
             console.log('Mensagem de sucesso:', {
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Projeto editado com sucesso!',
+              detail: 'Usuario editado com sucesso!',
               life: 2000
             });
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
-              detail: 'Projeto editado com sucesso!',
+              detail: 'Usuario editado com sucesso!',
               life: 2000
             });
 
@@ -130,7 +124,7 @@ private readonly destroy$: Subject<void> = new Subject();
     }
   }
 
-  loadProjectData() {
+  loadUsersData() {
     console.log('Carregando projeto com ID:', this.userId);
     this.userServices.getUsersById(this.userId ?? 0).subscribe({
       next: (data) => {
@@ -142,4 +136,5 @@ private readonly destroy$: Subject<void> = new Subject();
       }
     });
   }
+
 }
