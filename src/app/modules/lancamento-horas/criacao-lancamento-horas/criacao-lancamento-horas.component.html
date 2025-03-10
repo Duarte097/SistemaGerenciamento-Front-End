@@ -60,6 +60,15 @@
           hourFormat="24"
           icon="pi pi-clock"
         />
+        <p-calendar
+        placeholder="Data de Lancamento"
+        formControlName="dataLancamento"
+        inputId="icondisplay"
+        [showIcon]="true"
+        inputId="icondisplay"
+        class="calendar"
+        dateFormat="dd/mm/yy"
+      />
       </div>
       <div class="button-salvar-container">
         <button class="button-salvar" type="button" (click)="onSubmit()" >Salvar</button>

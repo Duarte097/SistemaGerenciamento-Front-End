@@ -4,6 +4,7 @@ export interface GetAllReleaseHoursResponse {
   descricao: string;
   dataInicio: string;
   dataFim: string;
+  dataLancamento: string;
   idAtividade: string;
   idProjetos: string;
 }

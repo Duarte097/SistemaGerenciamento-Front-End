@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { format } from 'date-fns';
 import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
 import { CalendarModule } from 'primeng/calendar';
@@ -72,6 +73,7 @@ export class EditLancamentoHorasComponent {
       descricao: ['', Validators.required],
       dataInicio: ['', Validators.required],
       dataFim: ['', Validators.required],
+      dataLancamento: ['', Validators.required],
       idUsuario: ['', Validators.required],
       idAtividade: ['', Validators.required]
     });
@@ -81,13 +83,13 @@ export class EditLancamentoHorasComponent {
 
   ngOnInit(): void {
     if (this.releaseHoursId) {
-      this.loadProjectData();
+      this.loadReleaseHoursData();
       this.getUsersDatas();
       this.getActivityDatas();
-    }else {
+    } else {
       console.log('Nenhum ID de projeto fornecido.');
     }
-    console.log("ID do usuário:", this.activityData.usuarioResponsavel.id_usuarios);
+    console.log('formulario edit', this.editReleaseHoursForm);
   }
 
 
@@ -95,14 +97,20 @@ export class EditLancamentoHorasComponent {
     this.closeModalEdit.emit();  // Emite um evento para o componente pai fechar o modal
   }
 
+  convertToDate(dateString: string): Date | null {
+    if (!dateString) return null;
+    const date = moment(dateString, 'DD/MM/YYYY', true); // O `true` força a validação estrita
+    return date.isValid() ? date.toDate() : null;
+  }
 
   onSubmit(): void {
     console.log('Formulário enviado', this.editReleaseHoursForm.value);
     if (this.editReleaseHoursForm.valid && this.releaseHoursId ) {
       const releaseHoursData: EditReleaseHoursRequest = {
         descricao: this.editReleaseHoursForm.value.descricao,
-        dataInicio: this.editReleaseHoursForm.value.dataInicio,
-        dataFim: this.editReleaseHoursForm.value.dataFim,
+        dataInicio: this.editReleaseHoursForm.value.dataInicio ? format(this.editReleaseHoursForm.value.dataInicio, "yyyy-MM-dd'T'HH:mm:ss") : '',
+        dataFim: this.editReleaseHoursForm.value.dataFim ? format(this.editReleaseHoursForm.value.dataFim, "yyyy-MM-dd'T'HH:mm:ss") : '',
+        dataLancamento: this.editReleaseHoursForm.value.dataLancamento  ? format(this.editReleaseHoursForm.value.dataLancamento, "yyyy-MM-dd'T'HH:mm:ss") : '',
         idUsuario: this.editReleaseHoursForm.value.idUsuario,
         idAtividade: this.editReleaseHoursForm.value.idAtividade
       };
@@ -147,7 +155,7 @@ export class EditLancamentoHorasComponent {
     }
   }
 
-  loadProjectData() {
+  loadReleaseHoursData() {
     console.log('Carregando projeto com ID:', this.releaseHoursId);
     this.releaseHoursService.getReleaseHoursById(this.releaseHoursId ?? 0).subscribe({
       next: (data) => {
@@ -198,16 +206,14 @@ export class EditLancamentoHorasComponent {
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          console.log('Resposta da API de usuários:', response);
           if (response.length > 0) {
             this.activityList = response; // Armazena a lista de usuários retornados
 
             this.atividade = response.map(atividade => ({
               nomeAtividade: atividade.nomeAtividade,
-              id_projeto: atividade.idAtividade
+              id_atividade: atividade.idAtividade
             }));
 
-            console.log('Usuários carregados:', this.atividade); // Log da lista de usuários carregados
             this.activityDtService.setActivityDatas(this.activityList);
           }
         },
@@ -216,7 +222,7 @@ export class EditLancamentoHorasComponent {
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao buscar os usuários!',
+            detail: 'Erro ao buscar as Atividades!',
             life: 2500,
           });
         }

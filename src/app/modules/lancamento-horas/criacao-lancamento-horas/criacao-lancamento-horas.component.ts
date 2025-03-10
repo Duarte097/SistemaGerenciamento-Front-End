@@ -61,6 +61,7 @@ export class CriacaoLancamentoHorasComponent {
       descricao: ['', Validators.required],
       dataInicio: ['', Validators.required],
       dataFim: ['', Validators.required],
+      dataLancamento: ['', Validators.required],
       idUsuario: ['', Validators.required],
       idAtividade: ['', Validators.required]
     });
@@ -90,6 +91,7 @@ export class CriacaoLancamentoHorasComponent {
         descricao: this.createReleaseHoursForm.value.descricao,
         dataInicio: this.createReleaseHoursForm.value.dataInicio ? format(this.createReleaseHoursForm.value.dataInicio, "yyyy-MM-dd'T'HH:mm:ss") : '',
         dataFim: this.createReleaseHoursForm.value.dataFim ? format(this.createReleaseHoursForm.value.dataFim, "yyyy-MM-dd'T'HH:mm:ss") : '',
+        dataLancamento: this.createReleaseHoursForm.value.dataLancamento ? format(this.createReleaseHoursForm.value.dataLancamento, "yyyy-MM-dd'T'HH:mm:ss") : '',
         idUsuario: this.createReleaseHoursForm.value.idUsuario,
         idAtividade: this.createReleaseHoursForm.value.idAtividade
       };
