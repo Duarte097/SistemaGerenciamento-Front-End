@@ -7,4 +7,5 @@ export interface GetAllReleaseHoursResponse {
   dataLancamento: string;
   idAtividade: string;
   idProjetos: string;
+  totalHoras?: number;
 }

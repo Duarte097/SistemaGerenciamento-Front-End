@@ -10,6 +10,7 @@ import { CriacaoAtividadeComponent } from "./criacao-atividade/criacao-atividade
 import { EditActivityComponent } from "./edit-activity/edit-activity.component";
 import { ViewActivityComponent } from "./view-activity/view-activity.component";
 import * as moment from 'moment';
+import { SearchService } from 'src/app/service/tasks/search.service';
 
 
 @Component({
@@ -42,15 +43,15 @@ export class AtividadesComponent implements OnInit, OnDestroy {
     private activityDtService: ActivityDataTransferService,
     private activityServices: ActivityService,
     private messageService: MessageService,
-    //private searchService: SearchService,
+    private searchService: SearchService,
   ){}
   ngOnInit(): void {
     this.getActivityDatas()
     console.log("Id" + this.selectedActivityId);
-    /*this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
+    this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
       this.searchTerm = searchTerm;
-      this.getTasksByName();
-    });*/
+      this.getActivityByName();
+    });
   }
   ngOnDestroy(): void {
     throw new Error('Method not implemented.');
@@ -113,34 +114,25 @@ export class AtividadesComponent implements OnInit, OnDestroy {
     })
   }
 
-  /*getTasksByName(): void {
+  getActivityByName(): void {
     if (this.searchTerm) {
-      this.tasksServices
-      .getProjectByName(this.searchTerm)
+      this.activityServices
+      .getActivityByName(this.searchTerm)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response.length > 0) {
-            this.tasksList = response;
-            this.tasksDtService.setTasksDatas(this.tasksList);
+            this.activityList = response;
+            this.activityDtService.setActivityDatas(this.activityList);
           } else {
-            this.tasksList = [];
+            this.activityList = [];
           }
-        },
-        error: (err) => {
-          console.log(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar projetos!',
-            life: 2500,
-          });
         },
       });
     } else {
-        this.getTasksDatas(); // Se searchTerm estiver vazio, busca todos os projetos
+        this.getActivityDatas(); // Se searchTerm estiver vazio, busca todos os projetos
     }
-  }*/
+  }
 
 
   convertToDate(dateString: string | null): Date | null {
@@ -159,6 +151,10 @@ export class AtividadesComponent implements OnInit, OnDestroy {
     return date.toDate();
   }
 
+  onSearchSubmitted(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.getActivityByName();
+  }
 
 
   getStatusClass(status: string): any {

@@ -2,6 +2,7 @@
 <app-header
   [collapsed]="isSideNavCollapsed"
   [screenWidth]="screenWidth"
+  (searchSubmitted)="onSearchSubmitted($event)"
 ></app-header>
 <app-body
   [collapsed]="isSideNavCollapsed"

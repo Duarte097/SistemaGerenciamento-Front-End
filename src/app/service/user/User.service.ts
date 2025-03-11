@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { map, Observable } from 'rxjs';
 import { environment } from 'src/app/environment/environment';
@@ -46,6 +46,11 @@ export class UserService {
 
   getUsersById(id_usuarios: number): Observable<Array<GetAllUsersResponse>>{
     return this.http.get<Array<GetAllUsersResponse>>(`${this.API_URL}/users/${id_usuarios}`, this.getHeaders());
+  }
+
+  getUserByName(nome: string): Observable<Array<GetAllUsersResponse>> {
+    const params = new HttpParams().set('nome', nome);
+    return this.http.get<Array<GetAllUsersResponse>>(`${this.API_URL}/users`, { ...this.getHeaders(), params });
   }
 
   createUser(requestDatas: CreateUserRequest): Observable<CreateUserResponse>{

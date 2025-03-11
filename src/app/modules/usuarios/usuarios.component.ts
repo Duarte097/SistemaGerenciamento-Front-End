@@ -13,6 +13,7 @@ import { MessageService } from 'primeng/api';
 import { jwtDecode } from 'jwt-decode';
 import { CriacaoUsuariosComponent } from "./criacao-usuarios/criacao-usuarios.component";
 import { EditUsuariosComponent } from './edit-usuarios/edit-usuarios.component';
+import { SearchService } from 'src/app/service/tasks/search.service';
 
 @Component({
   selector: 'app-usuarios',
@@ -36,6 +37,7 @@ export class UsuariosComponent {
   public allUsers: GetAllUsersResponse[] = [];
   public selectedUserId: number | null = null;
   @Input() userId: number | null = null;
+  @Input() searchTerm: string = '';
 
   public userData: any = {};
   editUserForm : FormGroup;
@@ -52,6 +54,7 @@ export class UsuariosComponent {
     private usersDtService: UsersDataTransferService,
     private userServices : UserService,
     private messageService: MessageService,
+    private searchService: SearchService
   ) {
     this.editUserForm = this.formBuilder.group({
       nome: ['', Validators.required],
@@ -82,6 +85,10 @@ export class UsuariosComponent {
   } else {
       console.log('Nenhum ID de projeto fornecido.');
     }
+    this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
+      this.searchTerm = searchTerm;
+      this.getUsersByName();
+    });
   }
 
 
@@ -161,6 +168,31 @@ export class UsuariosComponent {
         }
       );
     }
+  }
+
+  getUsersByName(): void {
+    if (this.searchTerm) {
+      this.userServices
+      .getUserByName(this.searchTerm)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response) => {
+          if (response.length > 0) {
+            this.userList = response;
+            this.usersDtService.setUsersDatas(this.userList);
+          } else {
+            this.userList = [];
+          }
+        },
+      });
+    } else {
+        this.loadAllUsersData(); // Se searchTerm estiver vazio, busca todos os projetos
+    }
+  }
+
+  onSearchSubmitted(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.getUsersByName();
   }
 
   loadUsersData() {

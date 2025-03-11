@@ -36,6 +36,7 @@ export class HeaderComponent implements OnInit{
     this.checkCanShowSearchAsOverlay(window.innerWidth);
   }
 
+
   handleUserItemClick(item: any): void {
     if (item.click === 'logout') {
       this.handleLogout();
@@ -65,8 +66,12 @@ export class HeaderComponent implements OnInit{
       this.canShowSearchAsOverlay = false;
     }
   }
+
   submitSearch() {
-    this.searchSubmitted.emit(this.searchTerm);
+    this.searchService.setSearchTerm(this.searchTerm);
   }
 
+  onSearchTermChange() {
+    this.searchService.setSearchTerm(this.searchTerm);
+  }
 }

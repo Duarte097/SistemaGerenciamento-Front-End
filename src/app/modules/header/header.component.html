@@ -4,7 +4,7 @@
       <div class="search-container">
         <div *ngIf="!canShowSearchAsOverlay" class="normal-search">
           <input type="search" class="search"
-            placeholder="Pesquisar..." name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm">
+            placeholder="Pesquisar..." name="searchTerm" id="searchTerm" [(ngModel)]="searchTerm" (ngModelChange)="onSearchTermChange()">
           <i class="fas fa-search search-icon" (click)="submitSearch()"></i>
         </div>
         <div *ngIf="canShowSearchAsOverlay">

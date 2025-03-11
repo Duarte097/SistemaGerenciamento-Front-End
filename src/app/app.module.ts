@@ -25,6 +25,7 @@ import { ToolbarNavigationComponent } from './modules/toolbar-navigation/toolbar
 import { BodyComponent } from './modules/body/body.component';
 import { HeaderComponent } from "./modules/header/header.component";
 import { LayoutComponent } from './layout/layout.component';
+import { ProjetosComponent } from "./modules/projetos/projetos.component";
 
 
 @NgModule({
@@ -57,7 +58,8 @@ import { LayoutComponent } from './layout/layout.component';
     BadgeModule,
     AvatarModule,
     HeaderComponent,
-  ],
+    ProjetosComponent
+],
   providers: [
     CookieService,
     MessageService

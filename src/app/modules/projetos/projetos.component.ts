@@ -170,15 +170,6 @@ export class ProjetosComponent implements OnInit, OnDestroy{
             this.tasksList = [];
           }
         },
-        error: (err) => {
-          console.log(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar projetos!',
-            life: 2500,
-          });
-        },
       });
     } else {
         this.getTasksDatas(); // Se searchTerm estiver vazio, busca todos os projetos
@@ -228,6 +219,11 @@ export class ProjetosComponent implements OnInit, OnDestroy{
         console.error('Erro ao carregar projeto:', err);
       }
     });
+  }
+
+  onSearchSubmitted(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.getTasksByName();
   }
 
   getStatusClass(status: string): any {

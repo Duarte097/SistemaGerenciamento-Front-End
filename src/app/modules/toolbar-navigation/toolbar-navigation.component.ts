@@ -3,6 +3,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { navbarData } from './nav-data';
 import { animate, keyframes, style, transition, trigger } from '@angular/animations';
+import { SearchService } from 'src/app/service/tasks/search.service';
 
 interface SideNavToggle {
     screenWidth: number;
@@ -34,7 +35,7 @@ interface SideNavToggle {
   ]
 })
 export class ToolbarNavigationComponent implements OnInit{
-  constructor(private cookie: CookieService, private router: Router){}
+  constructor(private cookie: CookieService, private router: Router, private searchService: SearchService){}
   ngOnInit(): void {
     this.screenWidth = window.innerWidth;
   }
@@ -43,6 +44,7 @@ export class ToolbarNavigationComponent implements OnInit{
   collapsed = false;
   screenWidth = 0;
   navData = navbarData;
+  searchTerm = '';
 
 
   toggleCollapsed(): void {
@@ -56,5 +58,9 @@ export class ToolbarNavigationComponent implements OnInit{
   handleLogout(): void {
     this.cookie.delete('USER_INFO');
     this.router.navigate(['/login']);
+  }
+
+  onSearchSubmitted(searchTerm: string): void {
+    this.searchService.setSearchTerm(searchTerm);
   }
 }

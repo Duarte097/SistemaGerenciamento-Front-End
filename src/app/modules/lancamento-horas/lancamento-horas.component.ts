@@ -15,6 +15,7 @@ import { EditLancamentoHorasComponent } from "./edit-lancamento-horas/edit-lanca
 import { UserService } from 'src/app/service/user/User.service';
 import { UsersDataTransferService } from 'src/app/shared/services/users/users-data-transfer.service';
 import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersResponse';
+import { SearchService } from 'src/app/service/tasks/search.service';
 
 @Component({
   selector: 'app-lancamento-horas',
@@ -34,7 +35,6 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
   private allreleaseHours: GetAllReleaseHoursResponse[]  = [];
   public activityList: Array<GetAllActivityResponse> = [];
   public userList: Array<GetAllUsersResponse> = [];
-  //navbarData = navbarData;
   atividade: any[] = [];
   usuarios: any[] = [];
 
@@ -64,16 +64,16 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
     private releaseHoursDtService: LancamentoHorasDataTransferService,
     private releaseHoursServices: LancamentoHorasService,
     private messageService: MessageService,
-    //private searchService: SearchService,
+    private searchService: SearchService,
   ){}
   ngOnInit(): void {
     this.getReleaseHoursDatas()
     this.getActivityDatas()
     this.getUsersDatas();
-    /*this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
+    this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
       this.searchTerm = searchTerm;
-      this.getTasksByName();
-    });*/
+      this.getReleaseHoursByName();
+    });
   }
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -138,34 +138,25 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
     })
   }
 
-  /*getTasksByName(): void {
+  getReleaseHoursByName(): void {
     if (this.searchTerm) {
-      this.tasksServices
-      .getProjectByName(this.searchTerm)
+      this.releaseHoursServices
+      .getReleaseHoursByName(this.searchTerm)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
           if (response.length > 0) {
-            this.tasksList = response;
-            this.tasksDtService.setTasksDatas(this.tasksList);
+            this.releaseHoursList = response;
+            this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
           } else {
-            this.tasksList = [];
+            this.releaseHoursList = [];
           }
-        },
-        error: (err) => {
-          console.log(err);
-          this.messageService.add({
-            severity: 'error',
-            summary: 'Erro',
-            detail: 'Erro ao buscar projetos!',
-            life: 2500,
-          });
         },
       });
     } else {
-        this.getTasksDatas(); // Se searchTerm estiver vazio, busca todos os projetos
+        this.getReleaseHoursDatas(); // Se searchTerm estiver vazio, busca todos os projetos
     }
-  }*/
+  }
 
   getActivityDatas(): void {
     this.activityServices
@@ -228,6 +219,11 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  onSearchSubmitted(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.getReleaseHoursByName();
   }
 
   changePage(page: number): void {

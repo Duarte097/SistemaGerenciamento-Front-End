@@ -1,74 +1,39 @@
 <div class="surface-card shadow-2 border-round p-4">
+  <div class="flex justify-content-end align-items-center mb-5 card-tarefas">
+    <span class="text-xl text-900 font-medium">Dashboard</span>
+  </div>
   <div class="dashboard-container">
     <div class="card-container">
-      <div class="card">
-        <div class="icon-container">
-          <img src="assets/projetos.png" width="38" height="38">
+        <div class="card card-products">
+            <div class="card-title">Projetos</div>
+            <div class="card-value">{{ totalProjetosConcluidos }}</div>
         </div>
-        <div class="card-content">
-          <div class="card-title">Projetos</div>
-          <div class="card-subtitle">Meta de Vendas</div>
-          <div class="progress-info">
-            <span>Concluído</span>
-            <span>{{ totalProjetosConcluidos }}/{{ totalProjetos }}</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-blue" *ngFor="let item of getProgressBarItems(totalProjetosConcluidos, totalProjetos)"></div>
-          </div>
+        <div class="card card-categories">
+            <div class="card-title">Atividades</div>
+            <div class="card-value">{{ totalAtividadesEmAndamento }}</div>
         </div>
-      </div>
-
-      <div class="card">
-        <div class="icon-container">
-          <img src="assets/atividades.png" width="38" height="38">
+        <div class="card card-customers">
+            <div class="card-title">Horas Lançadas</div>
+            <div class="card-value">{{ totalHorasLancadas }}</div>
         </div>
-        <div class="card-content">
-          <div class="card-title">Atividades</div>
-          <div class="card-subtitle">Projetos Concluídos</div>
-          <div class="progress-info">
-            <span>Em Andamento</span>
-            <span>{{ totalAtividadesEmAndamento }}/{{ totalAtividades }}</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-orange" *ngFor="let item of getProgressBarItems(totalAtividadesEmAndamento, totalAtividades)"></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="icon-container">
-          <img src="assets/horas.png" width="38" height="38">
-        </div>
-        <div class="card-content">
-          <div class="card-title">Horas Lançadas</div>
-          <div class="card-subtitle">Horas do Mês</div>
-          <div class="progress-info">
-            <span>Total</span>
-            <span>{{ totalHorasLancadasMes }}</span>
-          </div>
-        </div>
-      </div>
+        <!--div class="card card-alerts">
+            <div class="card-title">ALERTS</div>
+            <div class="card-value">56</div>
+        </-div-->
     </div>
-
-    <div class="lists-container">
-      <div class="list-card">
-        <div class="list-title">Projetos Recentes</div>
-        <ul>
-          <li *ngFor="let projeto of projetosRecentes">{{ projeto.nomeProjeto }}</li>
-        </ul>
-      </div>
-      <div class="list-card">
-        <div class="list-title">Atividades Recentes</div>
-        <ul>
-          <li *ngFor="let atividade of atividadesRecentes">{{ atividade.nomeAtividade }}</li>
-        </ul>
-      </div>
-      <div class="list-card">
-        <div class="list-title">Lançamentos Recentes</div>
-        <ul>
-          <li *ngFor="let lancamento of lancamentosRecentes">{{ lancamento.descricao }}</li>
-        </ul>
-      </div>
+    <div class="charts-container">
+        <div class="chart-card">
+            <div class="chart-title">Projetos</div>
+            <canvas #projetoChart></canvas>
+        </div>
+        <div class="chart-card">
+            <div class="chart-title">Atividades</div>
+            <canvas #atividadeChart></canvas>
+        </div>
+        <div class="chart-card">
+          <div class="chart-title">Horas Lançadas</div>
+          <canvas #horasChart></canvas>
+        </div>
     </div>
   </div>
 </div>
