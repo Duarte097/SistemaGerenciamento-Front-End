@@ -44,10 +44,15 @@ export class LancamentoHorasService {
     return this.http.get<Array<GetAllReleaseHoursResponse>>(`${this.API_URL}/lancamentoHoras/${id_lancamento_horas}`, this.getHeaders());
   }
 
-  getReleaseHoursByName(nomeAtividade: string): Observable<Array<GetAllReleaseHoursResponse>> {
-    const params = new HttpParams().set('nomeAtividade', nomeAtividade);
-    return this.http.get<Array<GetAllReleaseHoursResponse>>(`${this.API_URL}/lancamentoHoras`, { ...this.getHeaders(), params });
+  getReleaseHoursByName(nomeAtividade: string): Observable<GetAllReleaseHoursResponse[]> {
+    let params = new HttpParams();
+    if (nomeAtividade) {
+        params = params.set('nomeAtividade', nomeAtividade);
+    }
+    return this.http.get<GetAllReleaseHoursResponse[]>(`${this.API_URL}/lancamentoHoras`, { ...this.getHeaders(), params });
   }
+
+
 
   createReleaseHours(requestDatas: CreateReleaseHoursRequest): Observable<CreateReleaseHoursResponse>{
     return this.http.post<CreateReleaseHoursResponse>(`${this.API_URL}/lancamentoHoras`, requestDatas, this.httpOptions);

@@ -40,13 +40,22 @@ export class ActivityService {
   }
 
 
-  getActivityById(id_atividade: number): Observable<Array<GetAllActivityResponse>>{
+  getActivityById(id_atividade: number | string): Observable<Array<GetAllActivityResponse>>{
     return this.http.get<Array<GetAllActivityResponse>>(`${this.API_URL}/atividades/${id_atividade}`, this.getHeaders());
   }
 
   getActivityByName(nomeAtividade: string): Observable<Array<GetAllActivityResponse>> {
     const params = new HttpParams().set('nomeAtividade', nomeAtividade);
     return this.http.get<Array<GetAllActivityResponse>>(`${this.API_URL}/atividades`, { ...this.getHeaders(), params });
+  }
+
+  getActivitiesByNameAndUserId(searchTerm: string): Observable<GetAllActivityResponse[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const params = new HttpParams().set('nomeAtividade', searchTerm);
+    return this.http.get<GetAllActivityResponse[]>(`${this.API_URL}/atividades/search/user`, { headers, params });
   }
 
   createActivity(requestDatas: CreateActivityRequest): Observable<CreateActivityResponse>{

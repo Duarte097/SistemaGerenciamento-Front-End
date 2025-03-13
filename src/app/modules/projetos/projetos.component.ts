@@ -61,11 +61,7 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.getUserIdFromToken();
     this.loadUserData();
-    if(this.userData.perfil === 'ADMIN'){
-       this.getTasksDatas();
-    }else if(this.userData.perfil === 'USUARIO') {
-      this.getTasksDatasByUserId();
-    }
+
     this.getTasksDatas()
     console.log("Id" + this.selectedProjectId);
     this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
@@ -157,36 +153,69 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   }
 
   getTasksByName(): void {
+    console.log('searchTerm:', this.searchTerm);
+    console.log('userId:', this.userId);
+    console.log('userData.perfil:', this.userData.perfil);
+
     if (this.searchTerm) {
-      this.tasksServices
-      .getProjectByName(this.searchTerm)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          if (response.length > 0) {
-            this.tasksList = response;
-            this.tasksDtService.setTasksDatas(this.tasksList);
-          } else {
-            this.tasksList = [];
-          }
-        },
-      });
+      if (this.userData.perfil === 'ADMIN') {
+        this.tasksServices
+          .getProjectByName(this.searchTerm)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              console.log('Resposta do serviço ADMIN:', response);
+              if (response.length > 0) {
+                this.tasksList = response;
+                this.tasksDtService.setTasksDatas(this.tasksList);
+              } else {
+                this.tasksList = [];
+              }
+            },
+          });
+      } else if (this.userData.perfil === 'USUARIO') {
+        this.tasksServices
+          .getProjectsByNameAndUserId(this.searchTerm)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: (response) => {
+              console.log('Resposta do serviço USUARIO:', response);
+              if (response.length > 0) {
+                this.tasksList = response;
+                this.tasksDtService.setTasksDatas(this.tasksList);
+              } else {
+                this.tasksList = [];
+              }
+            },
+          });
+      }
     } else {
-        this.getTasksDatas(); // Se searchTerm estiver vazio, busca todos os projetos
+      if (this.userData.perfil === 'ADMIN') {
+        this.getTasksDatas();
+      } else if (this.userData.perfil === 'USUARIO') {
+        this.getTasksDatasByUserId();
+      }
     }
   }
+
 
   convertToDate(dateString: string | null): Date | null {
     if (!dateString) return null;
 
-    console.log("Data recebida:", dateString);
+    console.log('Data recebida:', dateString);
 
-    // Converte de 'YYYY-MM-DDTHH:mm:ss' para Date
+    // Tente analisar a data no formato ISO 8601
     let date = moment(dateString, moment.ISO_8601, true);
 
     if (!date.isValid()) {
-      console.warn("Erro ao converter data:", dateString);
-      return null;
+      // Se falhar, tente analisar a data no formato DD/MM/YYYY
+      const format = 'DD/MM/YYYY';
+      date = moment(dateString, format, true);
+
+      if (!date.isValid()) {
+        console.warn('Erro ao converter data:', dateString);
+        return null;
+      }
     }
 
     return date.toDate();

@@ -9,9 +9,9 @@ import { ActivityService } from 'src/app/service/activity/activity.service';
 import { LancamentoHorasService } from 'src/app/service/lancamentoHoras/lancamento-horas.service';
 import { ActivityDataTransferService } from 'src/app/shared/services/activity/activity-data-transfer.service';
 import { LancamentoHorasDataTransferService } from 'src/app/shared/services/lancamentoHoras/lancamento-horas-data-transfer.service';
-import { CriacaoLancamentoHorasComponent } from "./criacao-lancamento-horas/criacao-lancamento-horas.component";
-import { ViewLancamentoHorasComponent } from './view-lancamento-horas/view-lancamento-horas.component'
-import { EditLancamentoHorasComponent } from "./edit-lancamento-horas/edit-lancamento-horas.component";
+import { CriacaoLancamentoHorasComponent } from './criacao-lancamento-horas/criacao-lancamento-horas.component';
+import { ViewLancamentoHorasComponent } from './view-lancamento-horas/view-lancamento-horas.component';
+import { EditLancamentoHorasComponent } from './edit-lancamento-horas/edit-lancamento-horas.component';
 import { UserService } from 'src/app/service/user/User.service';
 import { UsersDataTransferService } from 'src/app/shared/services/users/users-data-transfer.service';
 import { GetAllUsersResponse } from 'src/app/models/interfaces/user/GetAllUsersResponse';
@@ -25,16 +25,17 @@ import { SearchService } from 'src/app/service/tasks/search.service';
     CommonModule,
     CriacaoLancamentoHorasComponent,
     ViewLancamentoHorasComponent,
-    EditLancamentoHorasComponent
-],
-  styleUrls: ['./lancamento-horas.component.css']
+    EditLancamentoHorasComponent,
+  ],
+  styleUrls: ['./lancamento-horas.component.css'],
 })
 export class LancamentoHorasComponent implements OnInit, OnDestroy {
   private readonly destroy$: Subject<void> = new Subject();
   public releaseHoursList: GetAllReleaseHoursResponse[] = [];
-  private allreleaseHours: GetAllReleaseHoursResponse[]  = [];
+  private allreleaseHours: GetAllReleaseHoursResponse[] = [];
   public activityList: Array<GetAllActivityResponse> = [];
   public userList: Array<GetAllUsersResponse> = [];
+  public activityData: any = {};
   atividade: any[] = [];
   usuarios: any[] = [];
 
@@ -44,37 +45,36 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
 
   public selectedReleaseHoursId: number | null = null;
   @Input() searchTerm: string = '';
+  public activityId: number | null = null;
   public releaseHoursData: any = {
     atividade: {
-      idAtividade: null,
       nomeAtividade: null
     },
-    user: {
-      id_usuarios: null,
-      nome: null
-    },
-  }
-
+  };
 
   constructor(
     private activityServices: ActivityService,
     private activityDtService: ActivityDataTransferService,
-    private userService : UserService,
+    private userService: UserService,
     private usersDtService: UsersDataTransferService,
     private releaseHoursDtService: LancamentoHorasDataTransferService,
     private releaseHoursServices: LancamentoHorasService,
     private messageService: MessageService,
-    private searchService: SearchService,
-  ){}
+    private searchService: SearchService
+  ) {}
+
   ngOnInit(): void {
-    this.getReleaseHoursDatas()
-    this.getActivityDatas()
+    this.getReleaseHoursDatas();
+    this.getActivityDatas();
     this.getUsersDatas();
-    this.searchService.searchTerm$.pipe(takeUntil(this.destroy$)).subscribe(searchTerm => {
-      this.searchTerm = searchTerm;
-      this.getReleaseHoursByName();
-    });
+    this.searchService.searchTerm$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((searchTerm) => {
+        this.searchTerm = searchTerm;
+        this.getReleaseHoursByName();
+      });
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
@@ -85,12 +85,12 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
   isModalEditOpen = false;
 
   openModalCreate() {
-    this.isModalCreateOpen = true;  // Abre o modal
+    this.isModalCreateOpen = true; // Abre o modal
   }
 
   closeModalCreate() {
-    this.isModalCreateOpen = false;  // Fecha o modal
-    this.getReleaseHoursDatas()
+    this.isModalCreateOpen = false; // Fecha o modal
+    this.getReleaseHoursDatas();
   }
 
   openModalView(releaseHoursId: number) {
@@ -100,7 +100,7 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
   }
 
   closeModalView() {
-    this.isModalViewOpen = false;  // Fecha o modal
+    this.isModalViewOpen = false; // Fecha o modal
   }
 
   openModalEdit(releaseHoursId: number) {
@@ -113,50 +113,76 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
     this.getReleaseHoursDatas();
   }
 
-
   getReleaseHoursDatas(): void {
     this.releaseHoursServices
-    .getAllReleaseHours()
-    .pipe(takeUntil(this.destroy$))
-    .subscribe({
-      next:(response: GetAllReleaseHoursResponse[]) => {
-        this.allreleaseHours = response
-        this.releaseHoursData = response.length > 0 ? response[0] : {};
-        this.totalItems = response.length
-        this.changePage(1);
-        this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
-      },
-      error: (err) => {
-        console.log(err);
-        this.messageService.add({
-          severity: 'error',
-          summary: 'Erro',
-          detail: 'Erro ao buscar as atividades!',
-          life: 2500,
-        })
-      }
-    })
+      .getAllReleaseHours()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: GetAllReleaseHoursResponse[]) => {
+          this.allreleaseHours = response;
+          this.releaseHoursData = response.length > 0 ? response[0] : {};
+          this.activityId = this.releaseHoursData.idAtividade;
+          this.totalItems = response.length;
+          this.changePage(1);
+          this.releaseHoursDtService.setReleaseHoursDatas(
+            this.releaseHoursList
+          );
+          this.loadActivityData(this.releaseHoursList[0].idAtividade);
+          console.log(this.releaseHoursList[1].idAtividade);
+          if (this.releaseHoursList.length > 0) {
+            //this.loadActivityData(this.releaseHoursList[0]);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Erro ao buscar as atividades!',
+            life: 2500,
+          });
+        },
+      });
   }
 
   getReleaseHoursByName(): void {
     if (this.searchTerm) {
       this.releaseHoursServices
-      .getReleaseHoursByName(this.searchTerm)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: (response) => {
-          if (response.length > 0) {
-            this.releaseHoursList = response;
-            this.releaseHoursDtService.setReleaseHoursDatas(this.releaseHoursList);
-          } else {
-            this.releaseHoursList = [];
-          }
-        },
-      });
+        .getReleaseHoursByName(this.searchTerm)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe({
+          next: (response) => {
+            if (response.length > 0) {
+              this.releaseHoursList = response;
+              this.releaseHoursDtService.setReleaseHoursDatas(
+                this.releaseHoursList
+              );
+            } else {
+              this.releaseHoursList = [];
+            }
+          },
+        });
     } else {
-        this.getReleaseHoursDatas(); // Se searchTerm estiver vazio, busca todos os projetos
+      this.getReleaseHoursDatas(); // Se searchTerm estiver vazio, busca todos os projetos
     }
   }
+
+  loadActivityData(activityId: string | undefined): void {
+    console.log(activityId);
+    if (activityId) {
+        this.activityServices.getActivityById(activityId).subscribe({
+            next: (data) => {
+                console.log('Dados da atividade recebidos:', data);
+                this.activityData = data;
+            },
+            error: (err) => {
+                console.error('Erro ao carregar a atividade', err);
+            }
+        });
+    } else {
+        this.activityData = {}; // Ou outra inicialização adequada
+    }
+}
 
   getActivityDatas(): void {
     this.activityServices
@@ -168,9 +194,9 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
           if (response.length > 0) {
             this.activityList = response; // Armazena a lista de usuários retornados
 
-            this.atividade = response.map(atividade => ({
+            this.atividade = response.map((atividade) => ({
               idAtividade: atividade.idAtividade,
-              nomeAtividade: atividade.nomeAtividade
+              nomeAtividade: atividade.nomeAtividade,
             }));
 
             console.log('Atividades carregadas:', this.atividade); // Log da lista de usuários carregados
@@ -182,12 +208,11 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao buscar os usuários!',
+            detail: 'Erro ao buscar os usuários!',
             life: 2500,
           });
-        }
-      }
-    );
+        },
+      });
   }
   getUsersDatas(): void {
     this.userService
@@ -199,9 +224,9 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
           if (response.length > 0) {
             this.userList = response; // Armazena a lista de usuários retornados
 
-            this.usuarios = response.map(user => ({
+            this.usuarios = response.map((user) => ({
               nome: user.nome,
-              id_usuarios: user.id_usuarios
+              id_usuarios: user.id_usuarios,
             }));
 
             console.log('Usuários carregados:', this.usuarios); // Log da lista de usuários carregados
@@ -216,9 +241,8 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
             detail: 'Erro ao buscar os usuários!',
             life: 2500,
           });
-        }
-      }
-    );
+        },
+      });
   }
 
   onSearchSubmitted(searchTerm: string) {
@@ -235,6 +259,8 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
 
   getPages(): number[] {
     const pageCount = Math.ceil(this.totalItems / this.pageSize);
-    return Array(pageCount).fill(0).map((x, i) => i + 1);
+    return Array(pageCount)
+      .fill(0)
+      .map((x, i) => i + 1);
   }
 }

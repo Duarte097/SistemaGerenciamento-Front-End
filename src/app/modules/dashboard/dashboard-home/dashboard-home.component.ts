@@ -9,7 +9,8 @@ import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/Get
 import { GetAllReleaseHoursResponse } from 'src/app/models/interfaces/lancamentoHoras/GetAllReleaseHoursResponse';
 import { Chart, PieController, BarController, LineController, ArcElement, CategoryScale, LinearScale, BarElement } from 'chart.js';
 
-Chart.register(PieController, BarController, LineController, ArcElement, CategoryScale, LinearScale, BarElement );
+Chart.register(PieController, BarController, LineController, ArcElement, CategoryScale, LinearScale, BarElement);
+
 @Component({
   selector: 'app-dashboard-home',
   templateUrl: './dashboard-home.component.html',
@@ -30,6 +31,7 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   projetosRecentes: GetAllTasksResponse[] = [];
   atividadesRecentes: GetAllActivityResponse[] = [];
   lancamentosRecentes: GetAllReleaseHoursResponse[] = [];
+
   @ViewChild('projetoChart') projetoChart!: ElementRef;
   @ViewChild('atividadeChart') atividadeChart!: ElementRef;
   @ViewChild('horasChart') horasChart!: ElementRef;
@@ -55,7 +57,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
   carregarDados(): void {
     this.tasksService.getAllTasks().pipe(takeUntil(this.destroy$)).subscribe(projetos => {
-      console.log('Resposta do tasksService:', projetos);
       this.totalProjetos = projetos.length;
       this.totalProjetosConcluidos = projetos.filter(p => p.status === 'CONCLUIDO').length;
       this.projetosRecentes = projetos.slice(0, 5);
@@ -86,7 +87,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
   }
 
   criarProjetoChart(): void {
-    console.log('Dados do gráfico de projetos:', this.totalProjetosConcluidos, this.totalProjetos);
     const ctx = this.projetoChart.nativeElement.getContext('2d');
     new Chart(ctx, {
       type: 'pie',
@@ -130,28 +130,23 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
     });
   }
 
-
   calcularTotalHoras(dataInicio: string, dataFim: string): number {
-    console.log(`Data Início: ${dataInicio}, Data Fim: ${dataFim}`); // Adicione esta linha
-
     const inicio = new Date(dataInicio).getTime();
     const fim = new Date(dataFim).getTime();
     const diff = fim - inicio;
     return diff / (1000 * 60 * 60);
   }
 
-
-
   criarHorasChart(): void {
     const ctx = this.horasChart.nativeElement.getContext('2d');
-    const horasPorSemana = this.calcularHorasPorSemana(); // Calcula as horas por semana
+    const horasPorSemana = this.calcularHorasPorSemana();
     new Chart(ctx, {
-      type: 'bar', // Use um gráfico de barras
+      type: 'bar',
       data: {
         labels: ['Semana 1', 'Semana 2', 'Semana 3', 'Semana 4'],
         datasets: [{
           label: 'Horas Lançadas',
-          data: horasPorSemana, // Use os dados calculados
+          data: horasPorSemana,
           backgroundColor: '#17a2b8'
         }]
       }
@@ -171,15 +166,15 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
       const semana = Math.floor((diasDesdePrimeiroDia + primeiroDiaDaSemana) / 7);
 
       if (semana >= 0 && semana < 4) {
-        horasPorSemana[semana] += lancamento.totalHoras || 0; // Use totalHoras calculado
+        horasPorSemana[semana] += lancamento.totalHoras || 0;
       }
     });
 
     return horasPorSemana;
   }
 
-  getProgressBarItems(completed: number, total: number): any[] {
-    const items = [];
+  getProgressBarItems(completed: number, total: number): any{
+    const items : boolean[] = [];
     for (let i = 0; i < total; i++) {
       if (i < completed) {
         items.push(true);

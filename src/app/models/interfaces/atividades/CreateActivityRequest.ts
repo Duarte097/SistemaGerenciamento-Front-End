@@ -1,6 +1,6 @@
 export interface CreateActivityRequest {
   nomeAtividade: string;
-  descricao: string;
+  descricao_atividade: string;
   dataInicio: Date;
   dataFim: Date;
   status: string;

@@ -44,13 +44,29 @@ export class TasksService {
     return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos/${id_projeto}`, this.getHeaders());
   }
 
-  getProjectByName(nomeProjeto: string): Observable<Array<GetAllTasksResponse>> {
-    const params = new HttpParams().set('nomeProjeto', nomeProjeto);
-    return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos`, { ...this.getHeaders(), params });
+  getProjectByName(searchTerm: string): Observable<GetAllTasksResponse[]> {
+    const params = new HttpParams().set('nomeProjeto', searchTerm);
+    return this.http.get<GetAllTasksResponse[]>(`${this.API_URL}/projetos`, {
+      params,
+    });
+  }
+
+  getProjectsByNameAndUserId(
+    searchTerm: string
+  ): Observable<GetAllTasksResponse[]> {
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    const params = new HttpParams().set('nomeProjeto', searchTerm);
+    return this.http.get<GetAllTasksResponse[]>(
+      `${this.API_URL}/projetos/search/user`,
+      { headers, params }
+    );
   }
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
-    return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
+    return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos/search/user`, requestDatas, this.httpOptions);
   }
 
   editTask(requestDatas: EditTaskRequest, id_projeto: number): Observable<void>{

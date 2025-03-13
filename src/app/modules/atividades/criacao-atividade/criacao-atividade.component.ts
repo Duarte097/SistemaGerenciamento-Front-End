@@ -94,7 +94,7 @@ export class CriacaoAtividadeComponent {
     if (this.createActivityForm.valid) {
       const atividadeData: CreateActivityRequest = {
         nomeAtividade: this.createActivityForm.value.nomeAtividade,
-        descricao: this.createActivityForm.value.descricao,
+        descricao_atividade: this.createActivityForm.value.descricao,
         dataInicio: this.createActivityForm.value.dataInicio,
         dataFim: this.createActivityForm.value.dataFim,
         status: this.createActivityForm.value.status,
