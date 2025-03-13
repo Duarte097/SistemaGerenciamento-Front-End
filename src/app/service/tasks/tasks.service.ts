@@ -39,6 +39,9 @@ export class TasksService {
     );
   }
 
+  getProjetosEmAndamento(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URL}/projetos/emAndamento`);
+  }
 
   getProjectById(id_projeto: number): Observable<Array<GetAllTasksResponse>>{
     return this.http.get<Array<GetAllTasksResponse>>(`${this.API_URL}/projetos/${id_projeto}`, this.getHeaders());

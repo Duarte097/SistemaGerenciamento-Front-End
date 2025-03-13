@@ -3,6 +3,5 @@ export interface EditReleaseHoursRequest {
   dataInicio: string;
   dataFim: string;
   dataLancamento: string;
-  idUsuario: string;
   idAtividade: string;
 }

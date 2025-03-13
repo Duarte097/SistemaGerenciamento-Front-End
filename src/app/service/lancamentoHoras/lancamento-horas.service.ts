@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { CookieService } from 'ngx-cookie-service';
 import { Observable } from 'rxjs';
 import { enviroment } from 'src/app/environment/environment.prod';
+import { GetAllActivityResponse } from 'src/app/models/interfaces/atividades/GetAllActivityResponse';
 import { CreateReleaseHoursRequest } from 'src/app/models/interfaces/lancamentoHoras/CreateReleaseHoursRequest';
 import { CreateReleaseHoursResponse } from 'src/app/models/interfaces/lancamentoHoras/CreateReleaseHoursResponse';
 import { EditReleaseHoursRequest } from 'src/app/models/interfaces/lancamentoHoras/EditReleaseHoursRequest';
@@ -52,6 +53,9 @@ export class LancamentoHorasService {
     return this.http.get<GetAllReleaseHoursResponse[]>(`${this.API_URL}/lancamentoHoras`, { ...this.getHeaders(), params });
   }
 
+  getAtividadesDisponiveis(): Observable<GetAllActivityResponse[]> {
+    return this.http.get<GetAllActivityResponse[]>(`${this.API_URL}/lancamentoHoras/atividadesDisponiveis`);
+  }
 
 
   createReleaseHours(requestDatas: CreateReleaseHoursRequest): Observable<CreateReleaseHoursResponse>{

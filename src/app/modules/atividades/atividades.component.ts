@@ -177,13 +177,12 @@ export class AtividadesComponent implements OnInit, OnDestroy {
     }
 
     loadUserData() {
-        console.log('Carregando projeto com ID:', this.userId);
         this.userServices.getUsersById(this.userId ?? 0).subscribe({
             next: (data) => {
                 this.userData = data;
             },
             error: (err) => {
-                console.error('Erro ao carregar projeto:', err);
+                console.error('Erro ao carregar atividade:', err);
             }
         });
     }
@@ -212,19 +211,22 @@ export class AtividadesComponent implements OnInit, OnDestroy {
     }
 
     getStatusClass(status: string): any {
-        switch (status.trim()) {
-            case 'CONCLUIDO':
-                return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };
-            case 'EM_ANDAMENTO':
-                return { 'bg-blue-500': true, 'text-blue-700': true, 'border-blue-700': true };
-            case 'ABERTA':
-                return { 'bg-orange-500': true, 'text-orange-700': true, 'border-orange-700': true };
-            case 'PAUSADA':
-                return { 'bg-yellow-500': true, 'text-yellow-700': true, 'border-yellow-700': true };
-            default:
-                return { 'bg-blue-500': true, 'text-blue-700': true, 'border-gray-500': true };
-        }
+      const normalizedStatus = status?.trim().toUpperCase();
+
+      switch (normalizedStatus) {
+        case 'CONCLUIDO':
+          return { 'bg-green-500': true, 'text-green-700': true, 'border-green-700': true };
+        case 'EM_ANDAMENTO':
+          return { 'bg-blue-500': true, 'text-blue-700': true, 'border-blue-700': true };
+        case 'ABERTA':
+          return { 'bg-orange-500': true, 'text-orange-700': true, 'border-orange-700': true };
+        case 'PAUSADA':
+          return { 'bg-yellow-500': true, 'text-yellow-700': true, 'border-yellow-700': true };
+        default:
+        return { 'bg-blue-500': true, 'text-blue-700': true, 'border-gray-500': true };
+      }
     }
+
 
     getStatusIcon(status: string): string {
         switch (status) {

@@ -19,11 +19,7 @@
     <ul class="list-none p-0 m-0">
       <li class="table-row" *ngFor="let releaseHours of releaseHoursList">
 
-        <span class="nome-com-icone">
-          <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
-          </span>
-          {{ releaseHoursData.atividade.nomeAtividade}}
-        </span>
+        <span class="descricao">{{ releaseHours.atividade.nomeAtividade }}</span>
         <span class="descricao">{{ releaseHoursData.user?.nome }}</span>
         <span class="descricao">{{ releaseHours.descricao }}</span>
         <span class="data">{{ releaseHours.dataLancamento }}</span>

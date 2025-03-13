@@ -1,3 +1,4 @@
+import { animate } from '@angular/animations';
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import * as moment from 'moment';
@@ -45,9 +46,10 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
 
   public selectedReleaseHoursId: number | null = null;
   @Input() searchTerm: string = '';
-  public activityId: number | null = null;
+  public activityId: number | string | null = null;
   public releaseHoursData: any = {
     atividade: {
+      idAtividade: null,
       nomeAtividade: null
     },
   };
@@ -120,17 +122,22 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (response: GetAllReleaseHoursResponse[]) => {
           this.allreleaseHours = response;
+          this.releaseHoursList = response;
+          console.log("Release Hours List:", this.releaseHoursList);
           this.releaseHoursData = response.length > 0 ? response[0] : {};
-          this.activityId = this.releaseHoursData.idAtividade;
+          console.log("Informações que vieram do lancamento de horas", response);
           this.totalItems = response.length;
           this.changePage(1);
           this.releaseHoursDtService.setReleaseHoursDatas(
             this.releaseHoursList
           );
-          this.loadActivityData(this.releaseHoursList[0].idAtividade);
-          console.log(this.releaseHoursList[1].idAtividade);
           if (this.releaseHoursList.length > 0) {
-            //this.loadActivityData(this.releaseHoursList[0]);
+            const firstActivityId = this.releaseHoursList[0].atividade.id_atividade;
+            console.log("ID da atividade:", firstActivityId);
+
+            if (firstActivityId) {
+              this.loadActivityData(firstActivityId);
+            }
           }
         },
         error: (err) => {
@@ -167,8 +174,8 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
     }
   }
 
-  loadActivityData(activityId: string | undefined): void {
-    console.log(activityId);
+  loadActivityData(activityId: any): void {
+    console.log("id da atividade", activityId);
     if (activityId) {
         this.activityServices.getActivityById(activityId).subscribe({
             next: (data) => {
@@ -195,7 +202,7 @@ export class LancamentoHorasComponent implements OnInit, OnDestroy {
             this.activityList = response; // Armazena a lista de usuários retornados
 
             this.atividade = response.map((atividade) => ({
-              idAtividade: atividade.idAtividade,
+              idAtividade: atividade.id_atividade,
               nomeAtividade: atividade.nomeAtividade,
             }));
 

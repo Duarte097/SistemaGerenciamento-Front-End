@@ -1,6 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Output } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  FormsModule,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputTextareaModule } from 'primeng/inputtextarea';
@@ -31,9 +37,9 @@ import { format, formatISO } from 'date-fns';
     DropdownModule,
     InputTextareaModule,
     ReactiveFormsModule,
-    ToastModule
+    ToastModule,
   ],
-  styleUrls: ['./criacao-lancamento-horas.component.css']
+  styleUrls: ['./criacao-lancamento-horas.component.css'],
 })
 export class CriacaoLancamentoHorasComponent {
   private readonly destroy$: Subject<void> = new Subject();
@@ -52,36 +58,33 @@ export class CriacaoLancamentoHorasComponent {
     private formBuilder: FormBuilder,
     private usersDtService: UsersDataTransferService,
     private releaseHoursServices: LancamentoHorasService,
-    private userService : UserService,
+    private userService: UserService,
     private activityServices: ActivityService,
     private activityDtService: ActivityDataTransferService,
-    private messageService: MessageService,
-  ){
+    private messageService: MessageService
+  ) {
     this.createReleaseHoursForm = this.formBuilder.group({
       descricao: ['', Validators.required],
       dataInicio: ['', Validators.required],
       dataFim: ['', Validators.required],
       dataLancamento: ['', Validators.required],
-      idUsuario: ['', Validators.required],
-      idAtividade: ['', Validators.required]
+      idAtividade: ['', Validators.required],
     });
   }
-
 
   @Output() closeModal = new EventEmitter<void>();
 
   close() {
-    this.closeModal.emit();  // Emite um evento para o componente pai fechar o modal
+    this.closeModal.emit(); // Emite um evento para o componente pai fechar o modal
   }
 
   selectedStatus: any;
   selectedUsuarios: any;
   selectedAtividade: any;
 
-
   ngOnInit() {
-    this.getUsersDatas()
-    this.getActivityDatas()
+    this.getUsersDatas();
+    this.getActivityDatas();
   }
 
   onSubmit(): void {
@@ -89,14 +92,29 @@ export class CriacaoLancamentoHorasComponent {
     if (this.createReleaseHoursForm.valid) {
       const releaseHoursData: CreateReleaseHoursRequest = {
         descricao: this.createReleaseHoursForm.value.descricao,
-        dataInicio: this.createReleaseHoursForm.value.dataInicio ? format(this.createReleaseHoursForm.value.dataInicio, "yyyy-MM-dd'T'HH:mm:ss") : '',
-        dataFim: this.createReleaseHoursForm.value.dataFim ? format(this.createReleaseHoursForm.value.dataFim, "yyyy-MM-dd'T'HH:mm:ss") : '',
-        dataLancamento: this.createReleaseHoursForm.value.dataLancamento ? format(this.createReleaseHoursForm.value.dataLancamento, "yyyy-MM-dd'T'HH:mm:ss") : '',
-        idUsuario: this.createReleaseHoursForm.value.idUsuario,
-        idAtividade: this.createReleaseHoursForm.value.idAtividade
+        dataInicio: this.createReleaseHoursForm.value.dataInicio
+          ? format(
+              this.createReleaseHoursForm.value.dataInicio,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            )
+          : '',
+        dataFim: this.createReleaseHoursForm.value.dataFim
+          ? format(
+              this.createReleaseHoursForm.value.dataFim,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            )
+          : '',
+        dataLancamento: this.createReleaseHoursForm.value.dataLancamento
+          ? format(
+              this.createReleaseHoursForm.value.dataLancamento,
+              "yyyy-MM-dd'T'HH:mm:ss"
+            )
+          : '',
+        idAtividade: this.createReleaseHoursForm.value.idAtividade,
       };
       console.log('Chamando tasksServices.createTask...');
-      this.releaseHoursServices.createReleaseHours(releaseHoursData)
+      this.releaseHoursServices
+        .createReleaseHours(releaseHoursData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
           next: (response) => {
@@ -106,15 +124,14 @@ export class CriacaoLancamentoHorasComponent {
               severity: 'success',
               summary: 'Sucesso',
               detail: 'Projeto criado com sucesso!',
-              life: 2000
+              life: 2000,
             });
             this.messageService.add({
               severity: 'success',
               summary: 'Sucesso',
               detail: 'Projeto criado com sucesso!',
-              life: 2000
+              life: 2000,
             });
-
           },
           error: (err) => {
             console.log('Chamando messageService.add() com erro...');
@@ -122,20 +139,19 @@ export class CriacaoLancamentoHorasComponent {
               severity: 'error',
               summary: 'Erro',
               detail: 'Erro ao criar o projeto!',
-              life: 2000
+              life: 2000,
             });
             this.messageService.add({
               severity: 'error',
               summary: 'Erro',
               detail: 'Erro ao criar o projeto!',
-              life: 2000
+              life: 2000,
             });
             setTimeout(() => {
               new this.closeModal(); // Fecha o modal após um pequeno delay
             }, 1000);
-          }
-        }
-      );
+          },
+        });
     }
   }
 
@@ -149,9 +165,9 @@ export class CriacaoLancamentoHorasComponent {
           if (response.length > 0) {
             this.userList = response; // Armazena a lista de usuários retornados
 
-            this.usuarios = response.map(user => ({
+            this.usuarios = response.map((user) => ({
               nome: user.nome,
-              id_usuarios: user.id_usuarios
+              id_usuarios: user.id_usuarios,
             }));
 
             console.log('Usuários carregados:', this.usuarios); // Log da lista de usuários carregados
@@ -166,41 +182,35 @@ export class CriacaoLancamentoHorasComponent {
             detail: 'Erro ao buscar os usuários!',
             life: 2500,
           });
-        }
-      }
-    );
+        },
+      });
   }
 
   getActivityDatas(): void {
-    this.activityServices
-      .getAllActivity()
+    this.releaseHoursServices
+      .getAtividadesDisponiveis()
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (response) => {
-          console.log('Resposta da API de usuários:', response);
           if (response.length > 0) {
-            this.activityList = response; // Armazena a lista de usuários retornados
-
-            this.atividade = response.map(atividade => ({
+            this.activityList = response;
+            this.atividade = response.map((atividade) => ({
               nomeAtividade: atividade.nomeAtividade,
-              idAtividade: atividade.idAtividade
+              id_atividade: atividade.id_atividade,
             }));
-
-            console.log('Atividades carregadas:', this.atividade); // Log da lista de usuários carregados
+            console.log("Id_atividade", this.activityList);
             this.activityDtService.setActivityDatas(this.activityList);
           }
         },
         error: (err) => {
-          console.log(err);
           this.messageService.add({
             severity: 'error',
             summary: 'Erro',
-            detail: 'Erro ao buscar os usuários!',
+            detail: 'Erro ao buscar as atividades!',
             life: 2500,
           });
-        }
-      }
-    );
+        },
+      });
   }
 
   ngOnDestroy(): void {

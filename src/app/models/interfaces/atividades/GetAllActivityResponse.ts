@@ -1,5 +1,6 @@
 export interface GetAllActivityResponse {
   amount: number;
+  id_atividade: number;
   idAtividade: number;
   nomeAtividade: string;
   descricao_atividade: string;

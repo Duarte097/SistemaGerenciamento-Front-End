@@ -250,3 +250,29 @@ bg-unpaid-400 {
   background: #ffebee;
   color: #f44336;
 }
+
+.bg-yellow-500 {
+  background: #fffae6;
+  color: #facc15;
+}
+
+.bg-orange-500 {
+ background: #fcece0;
+ color: #f97316; /* laranja */
+}
+
+.text-yellow-700 {
+ color: #a16207;
+}
+
+.text-orange-700 {
+ color: #c2410c;
+}
+
+.border-yellow-700 {
+ border-color: #a17538;
+}
+
+.border-orange-700 {
+ border-color: #c56f4c;
+}

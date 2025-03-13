@@ -18,7 +18,7 @@
     <ul class="list-none p-0 m-0">
       <li class="table-row" *ngFor="let activity of activityList" [ngClass]="getStatusClass(activity.status)">
 
-        <span class="nome-com-icone">
+        <span class="descricao min-w-0rem">
           <span class="inline-flex justify-content-center align-items-center w-2rem h-2rem border-circle ">
             <i [ngClass]="getStatusIcon(activity.status)"></i>
           </span>

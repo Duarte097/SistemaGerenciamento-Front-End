@@ -74,7 +74,6 @@ export class EditLancamentoHorasComponent {
       dataInicio: ['', Validators.required],
       dataFim: ['', Validators.required],
       dataLancamento: ['', Validators.required],
-      idUsuario: ['', Validators.required],
       idAtividade: ['', Validators.required]
     });
     this.userData;
@@ -111,7 +110,6 @@ export class EditLancamentoHorasComponent {
         dataInicio: this.editReleaseHoursForm.value.dataInicio ? format(this.editReleaseHoursForm.value.dataInicio, "yyyy-MM-dd'T'HH:mm:ss") : '',
         dataFim: this.editReleaseHoursForm.value.dataFim ? format(this.editReleaseHoursForm.value.dataFim, "yyyy-MM-dd'T'HH:mm:ss") : '',
         dataLancamento: this.editReleaseHoursForm.value.dataLancamento  ? format(this.editReleaseHoursForm.value.dataLancamento, "yyyy-MM-dd'T'HH:mm:ss") : '',
-        idUsuario: this.editReleaseHoursForm.value.idUsuario,
         idAtividade: this.editReleaseHoursForm.value.idAtividade
       };
       console.log('Chamando tasksServices.createTask...');
@@ -211,7 +209,7 @@ export class EditLancamentoHorasComponent {
 
             this.atividade = response.map(atividade => ({
               nomeAtividade: atividade.nomeAtividade,
-              id_atividade: atividade.idAtividade
+              id_atividade: atividade.id_atividade
             }));
 
             this.activityDtService.setActivityDatas(this.activityList);

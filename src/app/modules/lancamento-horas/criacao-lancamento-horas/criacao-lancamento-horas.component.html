@@ -7,7 +7,7 @@
       </button>
     </div>
     <div class="input-content">
-      <p-dropdown
+      <!--p-dropdown
         formControlName="idUsuario"
         [(ngModel)]="selectedUsuarios"
         [options]="usuarios"
@@ -16,13 +16,13 @@
         placeholder="Selecione o Usuario responsavel"
         [style]="{ minWidth: '14rem' }"
         class="dropdown-content">
-      </p-dropdown>
+      </-p-dropdown-->
       <p-dropdown
         formControlName="idAtividade"
         [(ngModel)]="selectedAtividade"
         [options]="atividade"
         optionLabel="nomeAtividade"
-        optionValue="idAtividade"
+        optionValue="id_atividade"
         placeholder="Selecione a Atividade"
         [style]="{ minWidth: '14rem' }"
         class="dropdown-content">

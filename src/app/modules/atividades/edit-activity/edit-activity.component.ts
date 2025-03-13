@@ -92,7 +92,7 @@ export class EditActivityComponent {
       { name: 'PAUSADA', code: 'PAUSADA' }
     ];
     if (this.activityId) {
-      this.loadProjectData();
+      this.loadActivityData();
       this.getUsersDatas();
       this.getTaskDatas();
       this.activityData.dataInicio = this.convertToDate(this.activityData.dataInicio);
@@ -168,8 +168,8 @@ export class EditActivityComponent {
     }
   }
 
-  loadProjectData() {
-    console.log('Carregando projeto com ID:', this.activityId);
+  loadActivityData() {
+    console.log('Carregando atividade com ID:', this.activityId);
     this.activityServices.getActivityById(this.activityId ?? 0).subscribe({
       next: (data) => {
         console.log('Dados do projeto recebidos:', data);
