@@ -202,7 +202,6 @@ export class ProjetosComponent implements OnInit, OnDestroy{
   convertToDate(dateString: string | null): Date | null {
     if (!dateString) return null;
 
-    console.log('Data recebida:', dateString);
 
     // Tente analisar a data no formato ISO 8601
     let date = moment(dateString, moment.ISO_8601, true);

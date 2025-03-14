@@ -7,6 +7,16 @@
       </button>
     </div>
     <div class="input-content">
+      <p-dropdown
+        formControlName="idAtividade"
+        [(ngModel)]="activityData.nomeAtividade"
+        [options]="atividade"
+        optionLabel="nomeAtividade"
+        optionValue="id_atividade"
+        placeholder="Selecione a Atividade"
+        [style]="{ minWidth: '14rem' }"
+        class="dropdown-content">
+      </p-dropdown>
       <div class="card flex justify-content-center">
         <textarea class="textarea-content"
           [(ngModel)]="releaseHoursData.descricao"
@@ -53,6 +63,7 @@
           inputId="icondisplay"
           class="calendar"
           dateFormat="dd/mm/yy"
+          [minDate]="editReleaseHoursForm.get('dataInicio')?.value"
         />
       </div>
       <!--p-dropdown
@@ -65,16 +76,6 @@
         [style]="{ minWidth: '14rem' }"
         class="dropdown-content">
       </-p-dropdown-->
-      <p-dropdown
-        formControlName="idAtividade"
-        [(ngModel)]="activityData.nomeAtividade"
-        [options]="atividade"
-        optionLabel="nomeAtividade"
-        optionValue="id_atividade"
-        placeholder="Selecione a Atividade"
-        [style]="{ minWidth: '14rem' }"
-        class="dropdown-content">
-      </p-dropdown>
       <div class="button-salvar-container">
         <button class="button-salvar" type="button" (click)="onSubmit()" [disabled]="editReleaseHoursForm.invalid">Salvar</button>
       </div>

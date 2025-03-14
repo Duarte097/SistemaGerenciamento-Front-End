@@ -6,16 +6,23 @@
     </button>
   </div>
   <div class="input-content" >
-    <input  pTextarea [disabled]="true" [(ngModel)]="projectData.nomeProjeto" />
-    <div class="card flex justify-content-center">
+    <div class="float-container">
+      <input  type="text" id="projeto"  [disabled]="true" [(ngModel)]="projectData.nomeProjeto" class="float-input" />
+      <label for="projeto" class="float-label">Projeto</label>
+    </div>
+    <div class="card flex justify-content-center float-container">
       <textarea class="textarea-content"
         [(ngModel)]="projectData.descricao"
+        id="descricao"
+        type="text"
+        class="float-input"
         pTextarea [disabled]="true"
         rows="3"
         cols="30"
         pInputTextarea
         [autoResize]="true">
       </textarea>
+      <label for="descricao" class="float-label">Descrição</label>
     </div>
     <div class="calendar-container">
       <p-calendar
@@ -35,8 +42,17 @@
         dateFormat="dd/mm/yy"
       />
     </div>
-    <input pInputText [disabled]="true" [(ngModel)]="projectData.usuarioResponsavel.nome" />
-    <input pInputText [disabled]="true" [(ngModel)]="projectData.status" />
-    <input  pInputText [disabled]="true" [(ngModel)]="projectData.prioridade" />
+    <div class="float-container">
+      <input type="text" id="usuario" [disabled]="true" [(ngModel)]="projectData.usuarioResponsavel.nome" class="float-input" />
+      <label for="usuario" class="float-label">Usuario</label>
+    </div>
+    <div class="float-container">
+      <input type="text" id="status" [disabled]="true" [(ngModel)]="projectData.status"  class="float-input"/>
+      <label for="status" class="float-label">Status</label>
+    </div>
+    <div class="float-container">
+      <input  type="text" id="prioridade" [disabled]="true" [(ngModel)]="projectData.prioridade" class="float-input"/>
+      <label for="prioridade" class="float-label">Prioridade</label>
+    </div>
   </div>
 </div>

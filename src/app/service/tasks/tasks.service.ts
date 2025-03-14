@@ -69,7 +69,7 @@ export class TasksService {
   }
 
   createTask(requestDatas: CreateTaskRequest): Observable<CreateTaskResponse>{
-    return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos/search/user`, requestDatas, this.httpOptions);
+    return this.http.post<CreateTaskResponse>(`${this.API_URL}/projetos`, requestDatas, this.httpOptions);
   }
 
   editTask(requestDatas: EditTaskRequest, id_projeto: number): Observable<void>{

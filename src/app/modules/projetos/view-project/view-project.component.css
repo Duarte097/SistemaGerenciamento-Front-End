@@ -86,4 +86,37 @@ p-calendar {
 }
 
 
+.float-container {
+  position: relative;
+  width: 100%;
+}
+
+.float-input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  background: transparent;
+}
+
+.float-label {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  padding: 0 5px;
+  transition: 0.3s;
+  color: #777;
+  font-size: 14px;
+}
+
+.float-input:focus + .float-label,
+.float-input:not(:placeholder-shown) + .float-label {
+  top: 1px;
+  font-size: 12px;
+  color: #777;
+}
+
 

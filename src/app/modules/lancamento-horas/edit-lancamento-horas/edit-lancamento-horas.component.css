@@ -59,7 +59,7 @@
 }
 
 .dropdown-content {
-  margin-top: 10px;
+  margin-bottom: 10px;
   display: flex;
   width: 300px;
   flex-direction: column;

@@ -61,7 +61,7 @@ private readonly destroy$: Subject<void> = new Subject();
 
   ngOnInit(): void {
     this.perfil = [
-      { name: 'USER', code: 'USER' },
+      { name: 'USUARIO', code: 'USUARIO' },
       { name: 'ADMIN', code: 'ADMIN' },
     ];
     this.getUserIdFromToken();

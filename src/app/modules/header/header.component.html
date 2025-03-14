@@ -18,16 +18,16 @@
     </div>
     <div class="head-content-right">
       <div class="head-menu">
-        <div class="head-menu-item">
-          <button class="head-menu-item-btn ripple" [cdkMenuTriggerFor]="notificationOverlay">
+        <!--div class="head-menu-item">
+          <button class="head-menu-item-btn ripple" [cdkMenuTriggerFor]="">
             <i class="fas fa-bell menu-icon"></i>
           </button>
-        </div>
-        <div class="head-menu-item">
+        </!--div>
+        <div-- class="head-menu-item">
           <button class="head-menu-item-btn ripple" >
             <i class="fas fa-comment menu-icon"></i>
           </button>
-        </div>
+        </div-->
         <div class="head-menu-item" >
           <button class="head-menu-item-btn ripple" [cdkMenuTriggerFor]="userOverlay" >
             <i class="fas fa-user menu-icon"></i>
@@ -47,7 +47,7 @@
   </div>
 </ng-template>
 
-<ng-template #notificationOverlay>
+<!--ng-template #notificationOverlay>
   <div class="overlay overlay-notification overlay-fall" cdkMenu>
     <ul>
       <li class="notification-head-container">
@@ -72,7 +72,7 @@
       </li>
     </ul>
   </div>
-</ng-template>
+</!--ng-template-->
 
 <ng-template #userOverlay>
   <div class="overlay overlay-user overlay-fall" cdkMenu>

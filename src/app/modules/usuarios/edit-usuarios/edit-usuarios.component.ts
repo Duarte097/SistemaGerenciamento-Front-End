@@ -58,7 +58,7 @@ export class EditUsuariosComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.perfil = [
-      { name: 'USER', code: 'USER' },
+      { name: 'USUARIO', code: 'USUARIO' },
       { name: 'ADMIN', code: 'ADMIN' },
     ];
     if (this.userId) {

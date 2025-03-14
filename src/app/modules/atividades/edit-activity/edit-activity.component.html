@@ -38,6 +38,7 @@
           inputId="icondisplay"
           class="calendar"
           dateFormat="dd/mm/yy"
+          [minDate]="editActivityForm.get('dataInicio')?.value"
         />
       </div>
       <p-dropdown

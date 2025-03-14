@@ -184,6 +184,7 @@ export class CriacaoAtividadeComponent {
         }
       });
   }
+
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();

@@ -38,6 +38,7 @@
           inputId="icondisplay"
           class="calendar"
           dateFormat="dd/mm/yy"
+          [minDate]="createProjetoForm.get('dataInicio')?.value"
         />
       </div>
       <p-dropdown

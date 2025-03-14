@@ -59,6 +59,7 @@
           class="calendar"
           hourFormat="24"
           icon="pi pi-clock"
+          [minDate]="createReleaseHoursForm.get('dataInicio')?.value"
         />
       </div>
       <div class="calendar-container">

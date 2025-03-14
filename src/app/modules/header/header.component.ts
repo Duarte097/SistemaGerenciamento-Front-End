@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, HostListener, EventEmitter, Output } from '@angular/core';
-import { notifications, userItems } from './header-dummy-data';
+import { userItems } from './header-dummy-data';
 import { CommonModule } from '@angular/common';
 import { CdkMenuModule } from '@angular/cdk/menu';
 import { NgModule } from '@angular/core';
@@ -22,7 +22,6 @@ export class HeaderComponent implements OnInit{
   public searchTerm: string = '';
 
   canShowSearchAsOverlay = false;
-  notifications = notifications;
   userItems = userItems;
 
   constructor(private searchService: SearchService, private cookie: CookieService, private router: Router){}
