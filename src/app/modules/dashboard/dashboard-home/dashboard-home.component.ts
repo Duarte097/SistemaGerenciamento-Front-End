@@ -94,7 +94,6 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
 
 
   criarProjetoChart(): void {
-    console.log('Dados para o gráfico de projetos:', this.totalProjetosConcluidos, this.totalProjetos - this.totalProjetosConcluidos); // Adicionado console.log
     const ctx = this.projetoChart.nativeElement.getContext('2d');
     new Chart(ctx, {
       type: 'pie',
@@ -103,8 +102,16 @@ export class DashboardHomeComponent implements OnInit, OnDestroy {
         datasets: [{
           label: 'Projetos',
           data: [this.totalProjetosConcluidos, this.totalProjetos - this.totalProjetosConcluidos],
-          backgroundColor: ['#007bff', '#6c757d']
-        }]
+          backgroundColor: [
+            'rgba(33, 204, 56, 0.8)',
+            'rgba(54, 162, 235, 0.8)'
+          ],
+          borderColor: [
+             'rgba(33, 204, 56, 0.8)',
+             'rgba(54, 162, 235, 1)'
+          ],
+          borderWidth: 1
+        }],
       },
       options: {
         plugins: {

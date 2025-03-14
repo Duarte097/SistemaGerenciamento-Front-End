@@ -171,3 +171,16 @@ canvas {
 .d-block {
   display: block;
 }
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.legend-item {
+  display: inline-block;
+  margin-right: 1rem;
+}

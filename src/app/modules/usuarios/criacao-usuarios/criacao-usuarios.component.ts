@@ -89,6 +89,7 @@ private readonly destroy$: Subject<void> = new Subject();
         senha: this.createUserForm.value.senha,
         perfil: this.createUserForm.value.perfil
       };
+      this.close();
       this.userServices.createUser(usersData)
         .pipe(takeUntil(this.destroy$))
         .subscribe({
@@ -109,7 +110,7 @@ private readonly destroy$: Subject<void> = new Subject();
                 detail: 'Usuario criado com sucesso!',
                 life: 2000
               });
-            } else {
+            } /*else {
               // Trate o caso em que a resposta é nula ou indefinida (possível erro inesperado)
               console.error('Resposta inesperada do servidor.');
               this.messageService.add({
@@ -118,9 +119,9 @@ private readonly destroy$: Subject<void> = new Subject();
                 detail: 'Erro inesperado ao criar Usuario!',
                 life: 2000
               });
-            }
+            }*/
           },
-          error: (err: HttpErrorResponse) => { // Use HttpErrorResponse para acessar o status
+          /*error: (err: HttpErrorResponse) => { // Use HttpErrorResponse para acessar o status
             console.log('Chamando messageService.add() com erro...');
             console.log('Mensagem de erro:', {
               severity: 'error',
@@ -135,7 +136,7 @@ private readonly destroy$: Subject<void> = new Subject();
               life: 2000
             });
             console.error('Erro ao criar usuário:', err); // Log do erro completo
-          }
+          }*/
         }
       );
     }
